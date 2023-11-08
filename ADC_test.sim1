@@ -1,0 +1,53 @@
+<circuit version="1.0.0-SR1" rev="1402" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="MCU" CircId="mega328-1" mainComp="false" Show_id="true" Show_Val="false" Pos="744,508" rotation="0" hflip="1" vflip="1" label="mega328-1" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Auto_Load="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" />
+
+<item itemtype="Resistor" CircId="Resistor-3" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="860,520" rotation="-90" hflip="1" vflip="1" label="Resistor-3" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="1000 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-4" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="860,596" rotation="-90" hflip="1" vflip="1" label="Resistor-4" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="1000 Ω" />
+
+<item itemtype="Ground" CircId="Ground-9" mainComp="false" Show_id="false" Show_Val="false" Pos="860,640" rotation="0" hflip="1" vflip="1" label="Ground-9" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Battery" CircId="Battery-12" mainComp="false" Show_id="false" Show_Val="false" Pos="860,472" rotation="-450" hflip="1" vflip="1" label="Battery-12" idLabPos="-18,-22" labelrot="0" valLabPos="-10,10" valLabRot="0" Voltage="5 V" Resistance="1e-14 Ω" />
+
+<item itemtype="VarResistor" CircId="VarResistor-16" mainComp="false" Show_id="false" Show_Val="false" Pos="820,452" rotation="90" hflip="1" vflip="1" label="VarResistor-16" idLabPos="-16,-24" labelrot="0" valLabPos="-16,30" valLabRot="0" Min_Resistance="1e-12 Ω" Max_Resistance="1000 Ω" Value_Ohm="461 Ω" Dial_Step="0 Ω" />
+
+<item itemtype="Ground" CircId="Ground-17" mainComp="false" Show_id="false" Show_Val="false" Pos="820,500" rotation="0" hflip="1" vflip="1" label="Ground-17" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Battery" CircId="Battery-19" mainComp="false" Show_id="false" Show_Val="false" Pos="820,412" rotation="-450" hflip="1" vflip="1" label="Battery-19" idLabPos="-18,-22" labelrot="0" valLabPos="-10,10" valLabRot="0" Voltage="5 V" Resistance="1e-14 Ω" />
+
+<item itemtype="Battery" CircId="Battery-40" mainComp="false" Show_id="false" Show_Val="false" Pos="696,492" rotation="-450" hflip="1" vflip="1" label="Battery-40" idLabPos="-18,-22" labelrot="0" valLabPos="-10,10" valLabRot="0" Voltage="5 V" Resistance="1e-14 Ω" />
+
+<item itemtype="Led" CircId="Led-42" mainComp="false" Show_id="false" Show_Val="false" Pos="696,572" rotation="90" hflip="1" vflip="1" label="Led-42" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="0.6 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-57" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="696,532" rotation="90" hflip="1" vflip="1" label="Resistor-57" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Node" CircId="Node-7" mainComp="false" Pos="860,556" />
+
+<item itemtype="Node" CircId="Node-37" mainComp="false" Pos="820,468" />
+
+<item itemtype="Connector" uid="connector-58" startpinid="mega328-1-PORTC0" endpinid="Node-7-0" pointList="784,556,860,556" />
+
+<item itemtype="Connector" uid="connector-59" startpinid="Resistor-4-rPin" endpinid="Node-7-1" pointList="860,580,860,556" />
+
+<item itemtype="Connector" uid="connector-60" startpinid="Node-7-2" endpinid="Resistor-3-lPin" pointList="860,556,860,536" />
+
+<item itemtype="Connector" uid="connector-61" startpinid="Resistor-4-lPin" endpinid="Ground-9-Gnd" pointList="860,612,860,624" />
+
+<item itemtype="Connector" uid="connector-62" startpinid="Ground-17-Gnd" endpinid="Node-37-0" pointList="820,484,820,468" />
+
+<item itemtype="Connector" uid="connector-63" startpinid="mega328-1-PORTC5" endpinid="Node-37-1" pointList="784,516,784,468,820,468" />
+
+<item itemtype="Connector" uid="connector-64" startpinid="Node-37-2" endpinid="VarResistor-16-rPin" pointList="820,468,820,468" />
+
+<item itemtype="Connector" uid="connector-65" startpinid="Battery-19-lPin" endpinid="VarResistor-16-lPin" pointList="820,428,820,436" />
+
+<item itemtype="Connector" uid="connector-66" startpinid="Battery-12-lPin" endpinid="Resistor-3-rPin" pointList="860,488,860,504" />
+
+<item itemtype="Connector" uid="Connector-67" startpinid="Resistor-57-rPin" endpinid="Led-42-lPin" pointList="696,548,696,556" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Battery-40-lPin" endpinid="Resistor-57-lPin" pointList="696,508,696,516" />
+
+<item itemtype="Connector" uid="Connector-69" startpinid="mega328-1-PORTD5" endpinid="Led-42-rPin" pointList="736,596,696,596,696,588" />
+
+</circuit>
