@@ -1,5 +1,5 @@
-baud=115200
-src=~/avr_src/project
+baud=230400
+src = ~/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC
 avrType=atmega328
 avrFreq=16000000 # 16MHz for accurate baudrate timing
 programmerDev=/dev/ttyACM0
