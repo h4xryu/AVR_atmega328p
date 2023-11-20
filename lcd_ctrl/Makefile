@@ -77,7 +77,7 @@ eeprom: hex
 	date
 
 fuses: hex
-	avrdude -p$(avrType) -c$(programmerType) -P$(programmerDev) -b$(baud) -v -U lfuse:w:.lfuse.hex
+	avrdude -p$(avrType) -c$(programmerType) -P$(programmerDev) -b$(baud) -v -U lfuse:w:0xFF:m -U hfuse:w:0xDE:m -U efuse:w:0x05:m
 
 	date
 

@@ -10,9 +10,11 @@
 #define AT24CxxPORT PORTC
 #define AT24CxxDDR DDRC
 #define AT24CxxPIN PINC
-#define AT24Cxx_SCL 0x04
-#define AT24Cxx_SDA 0x08
+#define AT24Cxx_SCL 0b00010000
+#define AT24Cxx_SDA 0b00100000
 
+#define E_BIT 0x04 //location of E BIT
+#define B_BIT 0x08 //location of bright
 #define I2CLCD_ADDR 0x27
 #define SLAVE2_ADDR 0xC0
 #define AT24Cxx_DELAY 5
@@ -41,13 +43,14 @@ void write_AT24Cxx_i2c_byte(unsigned char byte);
 void write_AT24Cxx_i2cControl(unsigned char byte);
 unsigned char read_AT24Cxx_i2c_byte(void);
 unsigned char AT24Cxx_Read(unsigned char address, unsigned char sub_addr1, unsigned char sub_addr2);
-void AT24Cxx_Write(unsigned char address, unsigned char sub_addr1, unsigned char sub_addr2, unsigned char data);
+void LCD_Write(unsigned char address, unsigned char data);
+void send_EFalling_edge(unsigned char byte);
 
 void write_AT24Cxx_i2c_LCDPrint(unsigned char line, unsigned char location, unsigned char data);
 void write_AT24Cxx_i2c_LCDAddressing(unsigned char byte);
 void I2C_LCDSendControl();
 void I2C_LCDSendChar(unsigned char c_data);
-void I2C_LCD_init();
+void I2C_LCD_init(unsigned char data);
 
 void Port_init();
 void Timer_init();
@@ -60,25 +63,70 @@ unsigned char save_data = 0, read_data = 0;
 unsigned char temp_1, temp_2;
 unsigned char ADC_buff;
 int first_timer = 0;
-
+int flag = 0;
+int E_flag = 0;
 void setup(){
   
 	Port_init();
 	Timer_init();
 	ADC_init();
 	USART0_init();
-	//I2C_LCD_init();
-	
+  AT24Cxx_i2c_start();
+	write_AT24Cxx_i2c_LCDAddressing((I2CLCD_ADDR << 1)); //to write
+  LCD_Write(I2CLCD_ADDR, 0x20);
+  write_AT24Cxx_i2c_LCDAddressing(0x20);
+  LCD_Write(I2CLCD_ADDR, 0x20);
+  write_AT24Cxx_i2c_LCDAddressing(0x20);
+  LCD_Write(I2CLCD_ADDR, 0x00);
+write_AT24Cxx_i2c_LCDAddressing(0x00);
+  LCD_Write(I2CLCD_ADDR, 0x00);
+  write_AT24Cxx_i2c_LCDAddressing(0x00);
+  LCD_Write(I2CLCD_ADDR, 0xE0);
+  write_AT24Cxx_i2c_LCDAddressing(0xE0);
+  LCD_Write(I2CLCD_ADDR, 0x00);
+  write_AT24Cxx_i2c_LCDAddressing(0x00);
+  LCD_Write(I2CLCD_ADDR, 0x60);
+write_AT24Cxx_i2c_LCDAddressing(0x60);
+
+
+  //글자 영역
+  LCD_Write(I2CLCD_ADDR, 0x31);
+  write_AT24Cxx_i2c_LCDAddressing(0x31);
+  LCD_Write(I2CLCD_ADDR, 0x01);
+write_AT24Cxx_i2c_LCDAddressing(0x01);
+
+LCD_Write(I2CLCD_ADDR, 0x31);
+  write_AT24Cxx_i2c_LCDAddressing(0x31);
+  LCD_Write(I2CLCD_ADDR, 0x11);
+write_AT24Cxx_i2c_LCDAddressing(0x11);
+
+LCD_Write(I2CLCD_ADDR, 0x31);
+  write_AT24Cxx_i2c_LCDAddressing(0x31);
+  LCD_Write(I2CLCD_ADDR, 0x21);
+write_AT24Cxx_i2c_LCDAddressing(0x21);
+
+LCD_Write(I2CLCD_ADDR, 0x31);
+  write_AT24Cxx_i2c_LCDAddressing(0x31);
+  LCD_Write(I2CLCD_ADDR, 0x31);
+write_AT24Cxx_i2c_LCDAddressing(0x31);
+
+
+AT24Cxx_i2c_stop();
+  
 }
  void loop(){
+
+  // D7 D6 D5 D4   X  E  RW RS
+  // P7 P6 P5 P4   P3 P2 P1 P0
 	
-	AT24Cxx_Write(I2CLCD_ADDR , 2, 0, 0x80);
-	_delay_ms(100);
+
+
+  
 }
 
 void Port_init(void){
-	PORTC = 0x0C; // PD1 = 1
-	DDRC = 0x0F; 
+	PORTC = 0xFF; // PD1 = 1
+	DDRC = 0xFF; 
 	DDRB = 0x00;
 }
 
@@ -142,9 +190,9 @@ void AT24Cxx_i2c_init(void){
 void AT24Cxx_i2c_start(void) { //start condition
 	
 	AT24Cxx_SDA_LOW(); //clear SDA
-	_delay_us(AT24Cxx_DELAY);
+	_delay_us(1);
 	AT24Cxx_SCL_LOW();
-	_delay_us(AT24Cxx_DELAY);
+	_delay_us(1);
 }
 
 
@@ -153,72 +201,55 @@ void AT24Cxx_ACK_send(unsigned char ack_data){
 	else AT24Cxx_SDA_LOW(); //ACK
 	AT24Cxx_SDA_OUT(); //set SDA to Output
 	AT24Cxx_SCL_HIGH(); //9th clk rising edge
-	_delay_us(AT24Cxx_DELAY);
+	_delay_us(1);
 	AT24Cxx_SCL_LOW();
-	_delay_us(AT24Cxx_DELAY);
+	_delay_us(1);
 }
 
 void AT24Cxx_i2c_stop(void){
-	AT24Cxx_SDA_OUT(); //set SDA to output
+	//AT24Cxx_SDA_OUT(); //set SDA to output
 	AT24Cxx_SDA_LOW(); //clear SDA
 	
-	_delay_us(AT24Cxx_DELAY);
+	_delay_us(1);
 	
 	AT24Cxx_SCL_HIGH(); // set SCL High
-	_delay_us(AT24Cxx_DELAY);
+	_delay_us(1);
 	AT24Cxx_SDA_HIGH(); // set SDA High
 }
 
 void write_AT24Cxx_i2c_LCDAddressing(unsigned char byte){//SDA의 바이트를 읽어노는 과정
-	_delay_us(AT24Cxx_DELAY);
+	_delay_us(1);
+ 
 	for(int i = 0; i <8; i++){
     
 		if(byte & 0x80) AT24Cxx_SDA_HIGH(); //MSB
 		else AT24Cxx_SDA_LOW(); //Clear
 		
 		AT24Cxx_SCL_HIGH(); //clock data
-		byte = byte << 1; //shift data in buffer right
-		_delay_us(AT24Cxx_DELAY);
+		byte = byte << 1; 
+		_delay_us(1);
 		AT24Cxx_SCL_LOW();
-		_delay_us(AT24Cxx_DELAY);
+		_delay_us(1);
 		 
 	}
 	AT24Cxx_SDA_LOW();
-	//AT24Cxx_SDA_IN(); //get ACK
-	_delay_us(AT24Cxx_DELAY);
+	_delay_us(1);
 	
 	AT24Cxx_SCL_HIGH();
-  _delay_us(AT24Cxx_DELAY);
-	//while(!(AT24CxxPIN & AT24Cxx_SDA)); // wait for ack
-  //AT24Cxx_SDA_OUT(); //set to output
-  
+  _delay_us(1);
 	AT24Cxx_SCL_LOW();
 }
 
-void write_AT24Cxx_i2c_byte(unsigned char byte){//SDA의 바이트를 읽어노는 과정
-	_delay_us(AT24Cxx_DELAY);
-	for(int i = 0; i <8; i++){
-    
-		if(byte & 0x80) AT24Cxx_SDA_HIGH(); //MSB
-		else AT24Cxx_SDA_LOW(); //Clear
-		
-		AT24Cxx_SCL_HIGH(); //clock data
-		byte = byte << 1; //shift data in buffer right
-		_delay_us(AT24Cxx_DELAY);
-		AT24Cxx_SCL_LOW();
-		_delay_us(AT24Cxx_DELAY);
-		 
-	}
-	AT24Cxx_SDA_LOW();
-	//AT24Cxx_SDA_IN(); //get ACK
-	_delay_us(AT24Cxx_DELAY);
-	
-	AT24Cxx_SCL_HIGH();
-	//while(!(AT24CxxPIN & AT24Cxx_SDA)); // wait for ack
-  //AT24Cxx_SDA_OUT(); //set to output
-  _delay_us(AT24Cxx_DELAY);
-	AT24Cxx_SCL_LOW();
-  _delay_us(AT24Cxx_DELAY);
+void send_EFalling_edge(unsigned char byte){
+  write_AT24Cxx_i2c_LCDAddressing(byte);
+}
+
+void write_AT24Cxx_i2c_byte(unsigned char byte){//SDA의 바이트를 읽어노는 과정 상승에지 하강에지 모두 구현
+	_delay_us(1);
+  if(!(byte & E_BIT)) byte |= E_BIT;
+  if(!(byte & B_BIT)) byte |= B_BIT;
+	write_AT24Cxx_i2c_LCDAddressing(byte);
+
 }
 
 void write_AT24Cxx_i2cControl(unsigned char byte){//control
@@ -249,86 +280,24 @@ void write_AT24Cxx_i2c_LCDPrint(unsigned char line, unsigned char location, unsi
   write_AT24Cxx_i2c_byte(data);
 }
 
-unsigned char read_AT24Cxx_i2c_byte(unsigned char byte){ 
-	unsigned char i, buff=0;
-	
-	for(i=0; i<8; i++){
-		buff <<= 1;
-		
-		AT24Cxx_SCL_HIGH();
-		_delay_us(AT24Cxx_DELAY);
-		
-		if ((AT24CxxPIN & AT24Cxx_SDA)) buff |= 0x01;
-		else buff &= (~0x01);
-		
-		AT24Cxx_SCL_LOW();
-		_delay_us(AT24Cxx_DELAY);
-	}
-	return buff;
-}
 
-unsigned char AT24Cxx_Read(unsigned char address, unsigned char sub_addr1, unsigned char sub_addr2){
-	unsigned char buffer;
-	
-	AT24Cxx_i2c_start();
-	write_AT24Cxx_i2c_LCDAddressing((address << 1) ); 
-
-	AT24Cxx_i2c_stop();
-	
-	_delay_us(AT24Cxx_DELAY);
-	
-	AT24Cxx_i2c_start();
-  write_AT24Cxx_i2c_LCDAddressing((address << 1) ); 
-	buffer = read_AT24Cxx_i2c_byte(0);
-	
-	AT24Cxx_ACK_send(NACK);
-	
-	AT24Cxx_i2c_stop();
-	
-	return buffer;
-}
-
-void AT24Cxx_Write(unsigned char address, unsigned char line, unsigned char location, unsigned char data){
-	AT24Cxx_i2c_start();
+void LCD_Write(unsigned char address, unsigned char data){
   
-	write_AT24Cxx_i2c_LCDAddressing((address << 1) ); //to write
-  _delay_us(AT24Cxx_DELAY);
-
-
-  write_AT24Cxx_i2c_byte(0x08);
-
-  write_AT24Cxx_i2c_byte(0x24);
-  write_AT24Cxx_i2c_byte(0x88);
-  _delay_us(AT24Cxx_DELAY);
-  write_AT24Cxx_i2c_byte(0x06);
-
-  _delay_us(AT24Cxx_DELAY);
-	AT24Cxx_i2c_stop();
-	_delay_ms(EEP_WRITE_WAIT);
+  // D7 D6 D5 D4   X  E  RW RS
+  // P7 P6 P5 P4   P3 P2 P1 P0
+  _delay_us(1);
+  write_AT24Cxx_i2c_byte(data); //function set
+  
+	//AT24Cxx_i2c_stop();
 }
+
+void I2C_LCD_init(unsigned char address){
+  
+}
+
 
 void I2C_LCDSendChar(unsigned char c_data);
 
-void I2C_LCD_init(){
-
-  TWCR = ((1 << TWEN) | (1 << TWINT) | (1 << TWSTA));
-  wait_for_completion;
-  TWDR = 0x27;  
-  wait_for_completion;
-  TWDR = 0x09;                         // register address
-  wait_for_completion;
-
-  TWCR = ((1 << TWEN | (1 << TWINT)));
-  wait_for_completion;
-  TWDR = 0xE2;                         // data byte
-  wait_for_completion;
-  TWCR = ((1 << TWEN | (1 << TWINT)));
-}
 void Hex2Dec(unsigned char data);
 unsigned char Digit2ASCII(unsigned char data);
 
-
-ISR(TIMER1_COMPA_vect)
-{
-	if(Wait_time) Wait_time --;
-}
