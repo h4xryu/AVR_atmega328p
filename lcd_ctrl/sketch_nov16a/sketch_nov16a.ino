@@ -71,47 +71,7 @@ void setup(){
 	Timer_init();
 	ADC_init();
 	USART0_init();
-  AT24Cxx_i2c_start();
-	write_AT24Cxx_i2c_LCDAddressing((I2CLCD_ADDR << 1)); //to write
-  LCD_Write(I2CLCD_ADDR, 0x20);
-  write_AT24Cxx_i2c_LCDAddressing(0x20);
-  LCD_Write(I2CLCD_ADDR, 0x20);
-  write_AT24Cxx_i2c_LCDAddressing(0x20);
-  LCD_Write(I2CLCD_ADDR, 0x00);
-write_AT24Cxx_i2c_LCDAddressing(0x00);
-  LCD_Write(I2CLCD_ADDR, 0x00);
-  write_AT24Cxx_i2c_LCDAddressing(0x00);
-  LCD_Write(I2CLCD_ADDR, 0xE0);
-  write_AT24Cxx_i2c_LCDAddressing(0xE0);
-  LCD_Write(I2CLCD_ADDR, 0x00);
-  write_AT24Cxx_i2c_LCDAddressing(0x00);
-  LCD_Write(I2CLCD_ADDR, 0x60);
-write_AT24Cxx_i2c_LCDAddressing(0x60);
-
-
-  //글자 영역
-  LCD_Write(I2CLCD_ADDR, 0x31);
-  write_AT24Cxx_i2c_LCDAddressing(0x31);
-  LCD_Write(I2CLCD_ADDR, 0x01);
-write_AT24Cxx_i2c_LCDAddressing(0x01);
-
-LCD_Write(I2CLCD_ADDR, 0x31);
-  write_AT24Cxx_i2c_LCDAddressing(0x31);
-  LCD_Write(I2CLCD_ADDR, 0x11);
-write_AT24Cxx_i2c_LCDAddressing(0x11);
-
-LCD_Write(I2CLCD_ADDR, 0x31);
-  write_AT24Cxx_i2c_LCDAddressing(0x31);
-  LCD_Write(I2CLCD_ADDR, 0x21);
-write_AT24Cxx_i2c_LCDAddressing(0x21);
-
-LCD_Write(I2CLCD_ADDR, 0x31);
-  write_AT24Cxx_i2c_LCDAddressing(0x31);
-  LCD_Write(I2CLCD_ADDR, 0x31);
-write_AT24Cxx_i2c_LCDAddressing(0x31);
-
-
-AT24Cxx_i2c_stop();
+  
   
 }
  void loop(){

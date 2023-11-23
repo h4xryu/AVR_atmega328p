@@ -1,10 +1,34 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 
 #define CH_HUMIDITY 0
 #define CH_TEMPERATURE 1 
 #define FALLING_EDGE 0
 #define RISING_EDGE 1
+#define AT24CxxPORT PORTC
+#define AT24CxxDDR DDRC
+#define AT24CxxPIN PINC
+#define AT24Cxx_SCL 0b00010000
+#define AT24Cxx_SDA 0b00100000
+#define AT24CxxPORT PORTD
+#define AT24CxxDDR DDRD
+#define AT24CxxPIN PIND
+#define AT24Cxx_SDA_HIGH() (AT24CxxPORT |= AT24Cxx_SDA)
+#define AT24Cxx_SDA_LOW() (AT24CxxPORT &= ~AT24Cxx_SDA)
+#define AT24Cxx_SCL_HIGH() (AT24CxxPORT |= AT24Cxx_SCL)
+#define AT24Cxx_SCL_LOW() (AT24CxxPORT &= ~(AT24Cxx_SCL))
+#define AT24Cxx_SDA_IN() (AT24CxxDDR &= ~AT24Cxx_SDA)
+#define AT24Cxx_SDA_OUT() (AT24CxxDDR |= AT24Cxx_SDA)
+#define wait_for_completion while(!(TWCR & (1 << TWINT)));
+#define E_BIT 0x04 //location of E BIT
+#define B_BIT 0x08 //location of bright
+#define I2CLCD_ADDR 0x27
+#define SLAVE2_ADDR 0xC0
+#define AT24Cxx_DELAY 5
+#define ACK 0x00 // ACK LOW
+#define NACK 0x01 // NACK HIGH
+#define EEP_WRITE_WAIT 10 // write wait time
 
 volatile unsigned char Flag_dht11_error = 0;
 volatile unsigned char Flag_temperature = 0;
@@ -22,6 +46,95 @@ volatile unsigned int Temperature = 0;
 volatile unsigned int I_buffer1 = 0;
 volatile unsigned int I_buffer2 = 0;
 volatile unsigned char Flag_edge_int = 0;
+volatile unsigned long highDuty[40];
+volatile unsigned char recData[5];
+volatile unsigned char ASCII_Table[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+volatile unsigned char i2c_status = TWSR & 0b11111100;
+volatile unsigned char Wait_time = 0;
+volatile unsigned char digit[3];
+volatile unsigned char  sub_addr = 0x80;
+volatile unsigned char  save_data = 0, read_data = 0;
+volatile unsigned char  temp_1, temp_2;
+volatile unsigned char  ADC_buff;
+volatile unsigned char  first_timer = 0;
+volatile unsigned char  flag = 0;
+volatile unsigned char  E_flag = 0;
+void AT24Cxx_i2c_init(void);
+void AT24Cxx_i2c_start(void);
+void AT24Cxx_ACK_send(unsigned char ack_data);
+void AT24Cxx_i2c_stop(void);
+void write_AT24Cxx_i2c_byte(unsigned char byte);
+void write_AT24Cxx_i2cControl(unsigned char byte);
+unsigned char read_AT24Cxx_i2c_byte(void);
+unsigned char AT24Cxx_Read(unsigned char address, unsigned char sub_addr1, unsigned char sub_addr2);
+void LCD_Write(unsigned char address, unsigned char data);
+void send_EFalling_edge(unsigned char byte);
+void write_AT24Cxx_i2c_LCDPrint(unsigned char line, unsigned char location, unsigned char data);
+void write_AT24Cxx_i2c_LCDAddressing(unsigned char byte);
+void I2C_LCDSendControl();
+void I2C_LCDSendChar(unsigned char c_data);
+void I2C_LCD_init(unsigned char data);
+void Port_init();
+void Timer_init();
+void ADC_init();
+void interrupt_edge_set(unsigned char ch, unsigned char Flag_edge);
+void ext_interrupt_set(unsigned char ch);
+void init_dht11(void);
+void dht11_error(void);
+unsigned char EvenParityCheck(unsigned int temp_value);
+void readCHIPCAP(void);
+void I2CPRINTLCD(void);
+
+void setup(){
+  init_dht11();
+}
+
+void loop(){
+  readCHIPCAP();
+  I2CPRINTLCD();
+}
+
+void I2CPRINTLCD(void){
+  AT24Cxx_i2c_start();
+	write_AT24Cxx_i2c_LCDAddressing((I2CLCD_ADDR << 1)); //to write
+  LCD_Write(I2CLCD_ADDR, 0x20);
+  write_AT24Cxx_i2c_LCDAddressing(0x20);
+  LCD_Write(I2CLCD_ADDR, 0x20);
+  write_AT24Cxx_i2c_LCDAddressing(0x20);
+  LCD_Write(I2CLCD_ADDR, 0x00);
+write_AT24Cxx_i2c_LCDAddressing(0x00);
+  LCD_Write(I2CLCD_ADDR, 0x00);
+  write_AT24Cxx_i2c_LCDAddressing(0x00);
+  LCD_Write(I2CLCD_ADDR, 0xE0);
+  write_AT24Cxx_i2c_LCDAddressing(0xE0);
+  LCD_Write(I2CLCD_ADDR, 0x00);
+  write_AT24Cxx_i2c_LCDAddressing(0x00);
+  LCD_Write(I2CLCD_ADDR, 0x60);
+write_AT24Cxx_i2c_LCDAddressing(0x60);
+
+
+  //글자 영역
+  LCD_Write(I2CLCD_ADDR, 0x31);
+  write_AT24Cxx_i2c_LCDAddressing(0x31);
+  LCD_Write(I2CLCD_ADDR, 0x01);
+write_AT24Cxx_i2c_LCDAddressing(0x01);
+
+LCD_Write(I2CLCD_ADDR, 0x31);
+  write_AT24Cxx_i2c_LCDAddressing(0x31);
+  LCD_Write(I2CLCD_ADDR, 0x11);
+write_AT24Cxx_i2c_LCDAddressing(0x11);
+
+LCD_Write(I2CLCD_ADDR, 0x31);
+  write_AT24Cxx_i2c_LCDAddressing(0x31);
+  LCD_Write(I2CLCD_ADDR, 0x21);
+write_AT24Cxx_i2c_LCDAddressing(0x21);
+
+LCD_Write(I2CLCD_ADDR, 0x31);
+  write_AT24Cxx_i2c_LCDAddressing(0x31);
+  LCD_Write(I2CLCD_ADDR, 0x31);
+write_AT24Cxx_i2c_LCDAddressing(0x31);
+AT24Cxx_i2c_stop();
+}
 
 void interrupt_edge_set(unsigned char ch, unsigned char Flag_edge){
   unsigned char edge;
@@ -54,29 +167,19 @@ void ext_interrupt_set(unsigned char ch){
     dht11_job = 0;
     interrupt_edge_set(CH_HUMIDITY, FALLING_EDGE);
     Sig_channel = CH_HUMIDITY;
-    while(((PIND & 0x04)>>2));
-    EIMSK |= (1 << INT0) & ~(1 << INT1);
+    
   }
   
-}
-
-void sensor_init(){
-  DDRD &= ~(0x04);
-  PIND &= ~(0x04);
-  _delay_ms(18);
-  while(!(PIND & 0x04)>>2);
 }
 
 void init_dht11(void){
 
   unsigned char ch;
-
-  //while(!(((PIND & 0x08) >> 3) || ((PIND & 0x04) >> 2))); //3번이나 4번핀 값 들어올 때 까지 대기
-  //if((PIND & 0x08) >> 3) ch = CH_TEMPERATURE;
-  //if((PIND & 0x04) >> 2) ch = CH_HUMIDITY;
-
-
-  ext_interrupt_set(CH_HUMIDITY); //플래그 설정해서 외부 인터럽트를 그때마다 바꿔서 쓴다.
+  EIMSK = 0;
+  DDRD |= 0x08;
+  PORTD |= 0x08;
+  _delay_ms(1000);
+  //ext_interrupt_set(CH_HUMIDITY); //플래그 설정해서 외부 인터럽트를 그때마다 바꿔서 쓴다.
   TIMSK2 |= 1 << TOIE2;
   OCR2A = 0;
   TIFR2;
@@ -100,81 +203,22 @@ unsigned char EvenParityCheck(unsigned int temp_value){
 
 
 ISR(INT0_vect){
-  Serial.println("인터럽트 발생");
   unsigned char bit_ratio = 0;
   unsigned int I_value = 0, sum = 0;
 
   if(Flag_edge_int == RISING_EDGE){
     Low_time = TCNT2; //업카운터 레지스터, FF에서 00될 때 인터럽트 됨
     interrupt_edge_set(CH_HUMIDITY, FALLING_EDGE);
-    if(bit_counter == 8) return;
+    if(bit_counter != 8) return;
   }
   else {
     High_time = TCNT2;
     interrupt_edge_set(CH_HUMIDITY, RISING_EDGE);
-    if(bit_counter == 8) Time_sum = (High_time + Low_time) << 4;
+    if(bit_counter != 8) Time_sum = (High_time + Low_time) << 4;
 
     bit_ratio = Time_sum/Low_time;
   }
-  switch(dht11_job) 
-    {
-      /*---------------------------------------------------------------------------------*/
-      /*                                      습도 부분                                    */
-      /*---------------------------------------------------------------------------------*/
-      case 0:
-        Serial.println("case 0 접근");
-        if((bit_ratio>16) && (bit_ratio < 26)) bit_ratio = 1;
-        if((bit_ratio > 27) && (bit_ratio < 48)) {Flag_data_start = 1; bit_counter= 0; Humidity |= 0x0001;}
-        else dht11_error();
-        return;
-    
-      case 1:
-        Serial.println("case 1 접근");
-        if((bit_ratio > 16)&&(bit_ratio <=26)) Humidity |= 0x0001;
-        else if((bit_ratio > 26)&&(bit_ratio <= 48)) Humidity &= 0xFFFE;
-        else dht11_error();
-        Humidity <<= 1; bit_counter ++;
-        if(bit_counter != 9) return;
-        if(!EvenParityCheck(Humidity)) {
-          init_dht11();
-          return;
-        }
-        Flag_humidity = 1; 
-        Flag_data_start = 0;
-        ext_interrupt_set(CH_HUMIDITY);
-        break;
-
-      /*---------------------------------------------------------------------------------*/
-      /*                                      온도 부분                                    */
-      /*---------------------------------------------------------------------------------*/
-      case 3:
-        if((bit_ratio > 27) && (bit_ratio < 48)) {Flag_data_start = 1; bit_counter= 0; I_buffer1 = 0; I_buffer2 = 0; dht11_job++;}
-        else dht11_error();
-        return;
-    
-      case 4:
-        if((bit_ratio > 16)&&(bit_ratio <=26)) I_buffer1 |= 0x0001;
-        else if((bit_ratio > 26)&&(bit_ratio <= 48)) I_buffer1 &= 0xFFFE;
-        else dht11_error();
-        I_buffer1 <<= 1; bit_counter ++;
-        if(bit_counter == 9) dht11_job++;
-        break;
-      case 5:
-        if((bit_ratio > 16) && (bit_ratio <= 26)) I_buffer2 |= 0x0001;
-        else if ((bit_ratio > 26)&&(bit_ratio <= 48)) I_buffer2 &= 0xFFFE;
-        else dht11_error();
-        I_buffer2 <<= 1; bit_counter ++;
-
-        if(bit_counter != 18) return;
-        if(!EvenParityCheck((I_buffer1 >> 1) << 8) || !EvenParityCheck(I_buffer2)) {init_dht11(); return;}
-        Flag_temperature = 1; Flag_data_start = 0;
-        ext_interrupt_set(CH_HUMIDITY);
-        break;
-      
-      default:
-        dht11_error();
-        break;
-  }
+  
   
 }
 
@@ -191,18 +235,27 @@ void readCHIPCAP(void){
   float Humidity_float;
   sei();
   //Serial.print("Temperature: ");
-  if(Flag_temperature){
-    Flag_temperature = 0;
-    Temp_float = ((float)Temperature / 1023 * 200) - 50;
-    Serial.println(Temp_float);
+  PORTD &= ~(0x08);
+  _delay_ms(20);
+  PORTD |= 0x08;
+  _delay_ms(40);
+  DDRD &= ~(0X08);
+  EIMSK |= (1 << INT0) & ~(1 << INT1);
+  while(((PIND & 0x08)>>2) == 0);
+
+  // Data Analysis
+  for(int i = 0 ; i < 5 ; i++){
+    for(int j = 0 ; j < 8 ; j++){
+      int temp = (8 * i) + j;
+      if(highDuty[temp] > 50){
+        recData[i] |= 1 << 7-j;                 
+      }
+    }
   }
-  //Serial.print("Humidity: ");
-  if(Flag_humidity){
-    Flag_humidity = 0;
-    Humidity_float = ((float)Humidity / 255*100);
-    Serial.print(Humidity_float);
-  }
-  if((Flag_dht11_error) && !Time_error_wait){ //다중 인터럽트 구현법 모르므로 일단 대기 -> 타임아웃 못씀
+
+
+
+  if((Flag_dht11_error) && !Time_error_wait){ 
     Flag_dht11_error = 0;
     Time_error_wait = 5;
     init_dht11();
@@ -211,19 +264,143 @@ void readCHIPCAP(void){
   cli();
 }
 
-void setup(){
-  //DDRD |= (0x04);
-  //PORTD |= (0x04);
-  Serial.begin(9600);
-  init_dht11();
-  
+
+void Port_init(void){
+	PORTC = 0xFF; // PD1 = 1
+	DDRC = 0xFF; 
+	DDRB = 0x00;
 }
 
-void loop(){
-   
-  // while(((PIND & 0x04)>>2)) {
-    
-  // }; 
+void Timer_init(void){
+	TCCR1A = (0 << COM1A1) | (0 << COM1A0) | (0 << COM1B1) | (0 << COM1B0) |
+	 (0 << WGM11) | (0 << WGM10);
+	TCCR1B = (0 << WGM13) | (1 << WGM12) | (0 << CS12) | (1 << CS11) | (1 << CS10);
+	TCCR1C = 0;
+	OCR1A = 0x09C4;
+	TIMSK0 = (1 << OCIE1A); 
+}
 
-  readCHIPCAP();
+void ADC_init(void){
+	ADMUX = 0x60;
+	ADCSRA = 0x87;
+}
+
+unsigned char ADC_read(unsigned char Ch){
+	Ch &= 0x01;
+	
+	ADMUX |= (Ch & 0b00011111);
+	ADCSRA |= 0x40;
+}
+
+
+void Hex2Dec(unsigned char data){
+	digit[2] = data % 100;
+	data = data - digit[2]*100;
+	digit[1] = data%10;
+	digit[0] = data - digit[1]*10;
+}
+
+unsigned char Digit2ASCII(unsigned char data){
+	data &= 0x0F;
+	if (data < 10) return (data + '0');
+	return (data + 'A');
+}
+
+void USART0_init(void){
+	UCSR0A = 0x20;
+	UCSR0B = 0x18;
+	UCSR0C = 0x06;
+	UBRR0H = 0;
+	UBRR0L = 103;
+}
+
+void AT24Cxx_i2c_init(void){
+	
+	AT24CxxPORT |= (AT24Cxx_SDA + AT24Cxx_SCL);
+	AT24CxxDDR |= (AT24Cxx_SDA + AT24Cxx_SCL);
+	_delay_us(AT24Cxx_DELAY);
+	AT24Cxx_SCL_LOW();
+	_delay_us(AT24Cxx_DELAY);
+}
+
+void AT24Cxx_i2c_start(void) { //start condition
+	
+	AT24Cxx_SDA_LOW(); //clear SDA
+	_delay_us(1);
+	AT24Cxx_SCL_LOW();
+	_delay_us(1);
+}
+
+
+void AT24Cxx_ACK_send(unsigned char ack_data){
+	if(ack_data) AT24Cxx_SDA_HIGH(); //NACK
+	else AT24Cxx_SDA_LOW(); //ACK
+	AT24Cxx_SDA_OUT(); //set SDA to Output
+	AT24Cxx_SCL_HIGH(); //9th clk rising edge
+	_delay_us(1);
+	AT24Cxx_SCL_LOW();
+	_delay_us(1);
+}
+
+void AT24Cxx_i2c_stop(void){
+	//AT24Cxx_SDA_OUT(); //set SDA to output
+	AT24Cxx_SDA_LOW(); //clear SDA
+	
+	_delay_us(1);
+	
+	AT24Cxx_SCL_HIGH(); // set SCL High
+	_delay_us(1);
+	AT24Cxx_SDA_HIGH(); // set SDA High
+}
+
+void write_AT24Cxx_i2c_LCDAddressing(unsigned char byte){//SDA의 바이트를 읽어노는 과정
+	_delay_us(1);
+ 
+	for(int i = 0; i <8; i++){
+    
+		if(byte & 0x80) AT24Cxx_SDA_HIGH(); //MSB
+		else AT24Cxx_SDA_LOW(); //Clear
+		
+		AT24Cxx_SCL_HIGH(); //clock data
+		byte = byte << 1; 
+		_delay_us(1);
+		AT24Cxx_SCL_LOW();
+		_delay_us(1);
+		 
+	}
+	AT24Cxx_SDA_LOW();
+	_delay_us(1);
+	
+	AT24Cxx_SCL_HIGH();
+  _delay_us(1);
+	AT24Cxx_SCL_LOW();
+}
+
+void send_EFalling_edge(unsigned char byte){
+  write_AT24Cxx_i2c_LCDAddressing(byte);
+}
+
+void write_AT24Cxx_i2c_byte(unsigned char byte){//SDA의 바이트를 읽어노는 과정 상승에지 하강에지 모두 구현
+	_delay_us(1);
+  if(!(byte & E_BIT)) byte |= E_BIT;
+  if(!(byte & B_BIT)) byte |= B_BIT;
+	write_AT24Cxx_i2c_LCDAddressing(byte);
+
+}
+
+void write_AT24Cxx_i2cControl(unsigned char byte){//control
+  AT24Cxx_i2c_start();
+  write_AT24Cxx_i2c_LCDAddressing((I2CLCD_ADDR << 1)); 
+	write_AT24Cxx_i2c_byte(byte);
+  AT24Cxx_i2c_stop();
+  _delay_us(AT24Cxx_DELAY);
+}
+
+
+void LCD_Write(unsigned char address, unsigned char data){
+  // D7 D6 D5 D4   X  E  RW RS
+  // P7 P6 P5 P4   P3 P2 P1 P0
+  _delay_us(1);
+  write_AT24Cxx_i2c_byte(data); //function set
+
 }

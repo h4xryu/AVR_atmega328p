@@ -9,6 +9,7 @@ CPP=g++
 CFILES=$(wildcard ./*.c)
 CPPFILES=$(wildcard ./*.cpp)
 OBJ=$(CFILES:.c=.o) $(CPPFILES:.cpp=.o)
+hexFile = $(src).flash.hex
 
 cflags=-g -DF_CPU=$(avrFreq) -Wall -Os -Wextra
 
@@ -87,8 +88,9 @@ dumpelf: elf
 program: flash eeprom fuses
 
 flash: hex
-	avrdude -p$(avrType) -c$(programmerType) -P$(programmerDev) -b$(baud) -v -U lfuse:w:0xFF:m -U hfuse:w:0xDE:m -U efuse:w:0x05:m
+	avrdude -p$(avrType) -P$(programmerDev)  -c $(programmerType) -U flash:w:$(hexFile):i
 	date
+	
 
 backup:
 	@for memory in $(memoryTypes); do \
