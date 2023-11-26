@@ -36,7 +36,7 @@ void setup_watchdog();
 int main(void){
     setup_watchdog();
     Port_init();
-    Timer0_init();
+    Timer2_init();
     USART_init();
     sei();
     
@@ -45,9 +45,6 @@ int main(void){
 	while(1){
         if(flag_time){
             flag_time = 0;
-        
-
-
         }
         if(key_flag){
             key_flag = 0;
@@ -74,18 +71,21 @@ void setup_watchdog() {
   // WDTCSR: Watchdog Timer Control Register
   // WDCE (Watchdog Change Enable)
   // WDTO_1S: Watchdog Timeout 
-  WDTCSR |= (1<<WDCE) | (1<<WDE);
-  WDTCSR = (1<<WDIE) | (1<<WDP3) | (1<<WDP1) | (1<<WDP0); // 1초의 Watchdog Timeout 설정
+  WDTCSR |= (1<<WDE) | (1<<WDCE) | (1<<WDIE) | (1<<WDP3) | (1<<WDP2) | (1<<WDP1) | (0<<WDP0); 
 }
-//====================================================
+//===================================================
 void Timer0_init(){
-
     TCCR0B = (1 << WGM02) | (0 << CS02) | (1 << CS01) | (0 << CS00);
-    OCR0A = 0x09c4;
+    OCR0A = 0x07c4; //0.0625 * 25000;
     TIMSK0 = (1 << TOIE0) | (1 << OCIE0A);
 }
 
-
+void Timer2_init(){
+    TCCR2A = 0;
+    TCCR2B = (1 << WGM22) | (1 << CS22) | (0 << CS21) | (0 << CS20);
+    OCR2A = 0x09c4; //0.0625 * 25000;
+    TIMSK2 = (1 << TOIE2) | (1 << OCIE2A);
+}
 
 void Port_init(){
 
@@ -114,6 +114,14 @@ ISR(TIMER0_COMPA_vect){
     //PORTC ^= 0xff;
 }
 
+ISR(TIMER2_OVF_vect){
+    
+    flag_time = 1;
+    key_data = key_scan();
+
+    //PORTC ^= 0xff;
+}
+
 
 
 ISR(INT0_vect){
@@ -125,7 +133,7 @@ void USART_init(){
     UCSR0A = 0x20;
     UCSR0B = 0x18;
     UCSR0C = 0x06;
-    UBRR0 = 8;
+    UBRR0 = 9;
 }
 
 void Tx_char(unsigned char data){
@@ -143,7 +151,7 @@ unsigned char key_scan(){
     PORTD &= ~(0x70);
     new_key = (PINB) & 0x0f;
 
-            Tx_char('0'+old_key);
+
 
     /* procedure to prevent signals chattering */
     if(new_key != old_key){  
@@ -182,12 +190,12 @@ unsigned char key_scan(){
                 //key &= 0x0f;
         
                 if(new_key == 0x0f){ // + when raw is LOW
-// Tx_char('0'+4);     
+                   //Tx_char('a');
                     bit_shift <<= 1;
                     continue;
                 }
                 else {
-// Tx_char('0'+5);
+                    //Tx_char('b');
                     pressing_flag = 1;
                     key_flag = 1;
                     return key_analysis(new_key, Raw);
@@ -207,15 +215,17 @@ unsigned char key_analysis(unsigned char key, unsigned char Raw){
   switch(Raw){
     case 0:
         switch(key){
+
             case 0b11100000:
                 key_flag = 1;
                 return 1;            
-            case 0x02:
+            case 0b11010000:
+                key_flag = 1;
                 return 4;
-            case 0x04:
-
+            case 0b10110000:
+                key_flag = 1;
                 return 7;
-            case 0x08:
+            case 0b01110000:
                 return 10; 
             default:
                 return -1;
@@ -223,13 +233,13 @@ unsigned char key_analysis(unsigned char key, unsigned char Raw){
 
     case 1:
         switch(key){
-            case 0x01:
+            case 0b11100000:
                 return 2;
-            case 0x02:
+            case 0b11010000:
                 return 5;
-            case 0x04:
+            case 0b10110000:
                 return 8;
-            case 0x08:
+            case 0b01110000:
                 return 0;
             default:
                 return -1;
@@ -237,13 +247,13 @@ unsigned char key_analysis(unsigned char key, unsigned char Raw){
 
     case 2:
         switch(key){
-            case 0x01:
+            case 0b11100000:
                 return 3;
-            case 0x02:
+            case 0b11010000:
                 return 6;
-            case 0x04:
+            case 0b10110000:
                 return 9;
-            case 0x08:
+            case 0b01110000:
                 return 11;
             default:
                 return -1;
