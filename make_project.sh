@@ -4,7 +4,8 @@ read project_name
 mkdir ./${project_name}
 cd ${project_name}
 cp ../Makefile_default Makefile
-touch ${project_name}.cpp
+touch ${project_name}.c
+
 
 
 
@@ -21,7 +22,7 @@ int main(void){
 
     }
     return 0;
-}" > ${project_name}.cpp
+}" > ${project_name}.c
 
 	
 

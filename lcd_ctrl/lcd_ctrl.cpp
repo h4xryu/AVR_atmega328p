@@ -6,11 +6,11 @@
 #define CLCD_RS 0b00100000
 #define CLCD_RW 0b01000000
 #define CLCD_EBIT 0b01000000
-#define AT24CxxPORT PORTC
-#define AT24CxxDDR DDRC
-#define AT24CxxPIN PINC
-#define AT24Cxx_SCL 0b00010000
-#define AT24Cxx_SDA 0b00100000
+#define AT24CxxPORT PORTD
+#define AT24CxxDDR DDRD
+#define AT24CxxPIN PIND
+#define AT24Cxx_SCL 0b00001000
+#define AT24Cxx_SDA 0b00000100
 
 #define E_BIT 0x04 //location of E BIT
 #define B_BIT 0x08 //location of bright
@@ -66,7 +66,7 @@ int flag = 0;
 int E_flag = 0;
 
 
- int main(){
+int main(){
 
   // D7 D6 D5 D4   X  E  RW RS
   // P7 P6 P5 P4   P3 P2 P1 P0
@@ -76,12 +76,89 @@ int E_flag = 0;
 	ADC_init();
 	USART0_init();
 
-  while(1);
+	_delay_ms(500);
+		AT24Cxx_i2c_start();
+		write_AT24Cxx_i2c_LCDAddressing((I2CLCD_ADDR << 1)); //to write
+  		LCD_Write(I2CLCD_ADDR, 0x20);
+		_delay_ms(20);
+  		write_AT24Cxx_i2c_LCDAddressing(0x20);
+  		LCD_Write(I2CLCD_ADDR, 0x20);
+  		write_AT24Cxx_i2c_LCDAddressing(0x20);
+  		LCD_Write(I2CLCD_ADDR, 0x00);
+		_delay_ms(20);
+		write_AT24Cxx_i2c_LCDAddressing(0x00);
+  		LCD_Write(I2CLCD_ADDR, 0x00);
+  		write_AT24Cxx_i2c_LCDAddressing(0x00);
+		_delay_ms(20);
+  		LCD_Write(I2CLCD_ADDR, 0xE0);
+  		write_AT24Cxx_i2c_LCDAddressing(0xE0);
+		_delay_ms(20);
+  		LCD_Write(I2CLCD_ADDR, 0x00);
+  		write_AT24Cxx_i2c_LCDAddressing(0x00);
+		_delay_ms(20);
+  		LCD_Write(I2CLCD_ADDR, 0x60);
+		write_AT24Cxx_i2c_LCDAddressing(0x60);
+		AT24Cxx_i2c_stop();
+
+
+  	while(1){
+		
+		AT24Cxx_i2c_start();
+		write_AT24Cxx_i2c_LCDAddressing((I2CLCD_ADDR << 1)); //to write
+  		//글자 영역
+		LCD_Write(I2CLCD_ADDR, 0x31);
+		write_AT24Cxx_i2c_LCDAddressing(0x31);
+  		LCD_Write(I2CLCD_ADDR, 0x01);
+		write_AT24Cxx_i2c_LCDAddressing(0x01);
+
+		LCD_Write(I2CLCD_ADDR, 0x31);
+  		write_AT24Cxx_i2c_LCDAddressing(0x31);
+  		LCD_Write(I2CLCD_ADDR, 0x11);
+		write_AT24Cxx_i2c_LCDAddressing(0x11);
+
+
+		LCD_Write(I2CLCD_ADDR, 0x31);
+  		write_AT24Cxx_i2c_LCDAddressing(0x31);
+  		LCD_Write(I2CLCD_ADDR, 0x21);
+		write_AT24Cxx_i2c_LCDAddressing(0x21);
+
+		LCD_Write(I2CLCD_ADDR, 0x31);
+  		write_AT24Cxx_i2c_LCDAddressing(0x31);
+  		LCD_Write(I2CLCD_ADDR, 0x31);
+		write_AT24Cxx_i2c_LCDAddressing(0x31);
+
+
+ 		LCD_Write(I2CLCD_ADDR, 0x31);
+  		write_AT24Cxx_i2c_LCDAddressing(0x31);
+  		LCD_Write(I2CLCD_ADDR, 0x41);
+		write_AT24Cxx_i2c_LCDAddressing(0x41);
+
+		LCD_Write(I2CLCD_ADDR, 0x31);
+  		write_AT24Cxx_i2c_LCDAddressing(0x31);
+  		LCD_Write(I2CLCD_ADDR, 0x51);
+		write_AT24Cxx_i2c_LCDAddressing(0x51);
+
+
+		LCD_Write(I2CLCD_ADDR, 0x31);
+  		write_AT24Cxx_i2c_LCDAddressing(0x31);
+  		LCD_Write(I2CLCD_ADDR, 0x61);
+		write_AT24Cxx_i2c_LCDAddressing(0x61);
+
+		LCD_Write(I2CLCD_ADDR, 0x31);
+  		write_AT24Cxx_i2c_LCDAddressing(0x31);
+  		LCD_Write(I2CLCD_ADDR, 0x71);
+		write_AT24Cxx_i2c_LCDAddressing(0x71);
+
+
+
+		AT24Cxx_i2c_stop();
+		_delay_ms(1);
+	}
 }
 
 void Port_init(void){
-	PORTC = 0xFF; // PD1 = 1
-	DDRC = 0xFF; 
+	PORTD |= 0xFF; // PD1 = 1
+	DDRD |= 0xFF; 
 	DDRB = 0x00;
 }
 

@@ -9,7 +9,7 @@ CPP=g++
 CFILES=$(wildcard ./*.c)
 CPPFILES=$(wildcard ./*.cpp)
 OBJ=$(CFILES:.c=.o) $(CPPFILES:.cpp=.o)
-hexFile = $(src).flash.hex
+hexFile = lcd_ctrl.flash.hex
 
 cflags=-g -DF_CPU=$(avrFreq) -Wall -Os -Wextra
 
@@ -90,6 +90,10 @@ program: flash eeprom fuses
 flash: hex
 	avrdude -p$(avrType) -P$(programmerDev)  -c $(programmerType) -U flash:w:$(hexFile):i
 	date
+	
+arduino-flash: hex
+	avrdude -p$(avrType) -P$(programmerDev)  -c $(programmerType) -U flash:w:$(hexFile):i
+	avrdude
 	
 
 backup:
