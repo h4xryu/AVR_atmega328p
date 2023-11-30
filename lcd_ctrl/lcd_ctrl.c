@@ -6,11 +6,11 @@
 #define CLCD_RS 0b00100000
 #define CLCD_RW 0b01000000
 #define CLCD_EBIT 0b01000000
-#define AT24CxxPORT PORTD
-#define AT24CxxDDR DDRD
-#define AT24CxxPIN PIND
-#define AT24Cxx_SCL 0b00001000
-#define AT24Cxx_SDA 0b00000100
+#define AT24CxxPORT PORTB
+#define AT24CxxDDR DDRB
+#define AT24CxxPIN PINB
+#define AT24Cxx_SCL 0b00100000
+#define AT24Cxx_SDA 0b00010000
 
 #define E_BIT 0x04 //location of E BIT
 #define B_BIT 0x08 //location of bright
@@ -29,7 +29,7 @@
 #define AT24Cxx_SDA_OUT() (AT24CxxDDR |= AT24Cxx_SDA)
 
 unsigned char ASCII_Table[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-uint8_t i2c_status = TWSR & 0b11111100;
+//uint8_t i2c_status = TWSR & 0b11111100;
 #define wait_for_completion while(!(TWCR & (1 << TWINT)));
 
 void USART0_init(void);
@@ -157,9 +157,9 @@ int main(){
 }
 
 void Port_init(void){
-	PORTD |= 0xFF; // PD1 = 1
-	DDRD |= 0xFF; 
-	DDRB = 0x00;
+	PORTB |= 0xFF; // PD1 = 1
+	DDRB |= 0xFF; 
+
 }
 
 void Timer_init(void){

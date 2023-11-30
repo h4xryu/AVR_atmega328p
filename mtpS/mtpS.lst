@@ -1,0 +1,2387 @@
+   1               		.file	"mtpS.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.stabs	"/home/student/avr_linux_compiler/",100,0,2,.Ltext0
+   8               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c",100,0,2,.Ltext0
+   9               		.text
+  10               	.Ltext0:
+  11               		.stabs	"gcc2_compiled.",60,0,0,0
+  12               		.stabs	"int:t(0,1)=r(0,1);-32768;32767;",128,0,0,0
+  13               		.stabs	"char:t(0,2)=r(0,2);0;127;",128,0,0,0
+  14               		.stabs	"long int:t(0,3)=@s32;r(0,3);020000000000;017777777777;",128,0,0,0
+  15               		.stabs	"unsigned int:t(0,4)=r(0,4);0;0177777;",128,0,0,0
+  16               		.stabs	"long unsigned int:t(0,5)=@s32;r(0,5);0;037777777777;",128,0,0,0
+  17               		.stabs	"__int128:t(0,6)=@s128;r(0,6);02000000000000000000000000000000000000000000;0177777777777777
+  18               		.stabs	"__int128 unsigned:t(0,7)=@s128;r(0,7);0;03777777777777777777777777777777777777777777;",128
+  19               		.stabs	"long long int:t(0,8)=@s64;r(0,8);01000000000000000000000;00777777777777777777777;",128,0,0
+  20               		.stabs	"long long unsigned int:t(0,9)=@s64;r(0,9);0;01777777777777777777777;",128,0,0,0
+  21               		.stabs	"short int:t(0,10)=r(0,10);-32768;32767;",128,0,0,0
+  22               		.stabs	"short unsigned int:t(0,11)=r(0,11);0;0177777;",128,0,0,0
+  23               		.stabs	"signed char:t(0,12)=@s8;r(0,12);-128;127;",128,0,0,0
+  24               		.stabs	"unsigned char:t(0,13)=@s8;r(0,13);0;255;",128,0,0,0
+  25               		.stabs	"float:t(0,14)=r(0,1);4;0;",128,0,0,0
+  26               		.stabs	"double:t(0,15)=r(0,1);4;0;",128,0,0,0
+  27               		.stabs	"long double:t(0,16)=r(0,1);4;0;",128,0,0,0
+  28               		.stabs	"short _Fract:t(0,17)=r(0,1);1;0;",128,0,0,0
+  29               		.stabs	"_Fract:t(0,18)=r(0,1);2;0;",128,0,0,0
+  30               		.stabs	"long _Fract:t(0,19)=r(0,1);4;0;",128,0,0,0
+  31               		.stabs	"long long _Fract:t(0,20)=r(0,1);8;0;",128,0,0,0
+  32               		.stabs	"unsigned short _Fract:t(0,21)=r(0,1);1;0;",128,0,0,0
+  33               		.stabs	"unsigned _Fract:t(0,22)=r(0,1);2;0;",128,0,0,0
+  34               		.stabs	"unsigned long _Fract:t(0,23)=r(0,1);4;0;",128,0,0,0
+  35               		.stabs	"unsigned long long _Fract:t(0,24)=r(0,1);8;0;",128,0,0,0
+  36               		.stabs	"_Sat short _Fract:t(0,25)=r(0,1);1;0;",128,0,0,0
+  37               		.stabs	"_Sat _Fract:t(0,26)=r(0,1);2;0;",128,0,0,0
+  38               		.stabs	"_Sat long _Fract:t(0,27)=r(0,1);4;0;",128,0,0,0
+  39               		.stabs	"_Sat long long _Fract:t(0,28)=r(0,1);8;0;",128,0,0,0
+  40               		.stabs	"_Sat unsigned short _Fract:t(0,29)=r(0,1);1;0;",128,0,0,0
+  41               		.stabs	"_Sat unsigned _Fract:t(0,30)=r(0,1);2;0;",128,0,0,0
+  42               		.stabs	"_Sat unsigned long _Fract:t(0,31)=r(0,1);4;0;",128,0,0,0
+  43               		.stabs	"_Sat unsigned long long _Fract:t(0,32)=r(0,1);8;0;",128,0,0,0
+  44               		.stabs	"short _Accum:t(0,33)=r(0,1);2;0;",128,0,0,0
+  45               		.stabs	"_Accum:t(0,34)=r(0,1);4;0;",128,0,0,0
+  46               		.stabs	"long _Accum:t(0,35)=r(0,1);8;0;",128,0,0,0
+  47               		.stabs	"long long _Accum:t(0,36)=r(0,1);8;0;",128,0,0,0
+  48               		.stabs	"unsigned short _Accum:t(0,37)=r(0,1);2;0;",128,0,0,0
+  49               		.stabs	"unsigned _Accum:t(0,38)=r(0,1);4;0;",128,0,0,0
+  50               		.stabs	"unsigned long _Accum:t(0,39)=r(0,1);8;0;",128,0,0,0
+  51               		.stabs	"unsigned long long _Accum:t(0,40)=r(0,1);8;0;",128,0,0,0
+  52               		.stabs	"_Sat short _Accum:t(0,41)=r(0,1);2;0;",128,0,0,0
+  53               		.stabs	"_Sat _Accum:t(0,42)=r(0,1);4;0;",128,0,0,0
+  54               		.stabs	"_Sat long _Accum:t(0,43)=r(0,1);8;0;",128,0,0,0
+  55               		.stabs	"_Sat long long _Accum:t(0,44)=r(0,1);8;0;",128,0,0,0
+  56               		.stabs	"_Sat unsigned short _Accum:t(0,45)=r(0,1);2;0;",128,0,0,0
+  57               		.stabs	"_Sat unsigned _Accum:t(0,46)=r(0,1);4;0;",128,0,0,0
+  58               		.stabs	"_Sat unsigned long _Accum:t(0,47)=r(0,1);8;0;",128,0,0,0
+  59               		.stabs	"_Sat unsigned long long _Accum:t(0,48)=r(0,1);8;0;",128,0,0,0
+  60               		.stabs	"void:t(0,49)=(0,49)",128,0,0,0
+  61               		.stabs	"/usr/lib/avr/include/avr/io.h",130,0,0,0
+  62               		.stabs	"/usr/lib/avr/include/avr/sfr_defs.h",130,0,0,0
+  63               		.stabs	"/usr/lib/avr/include/inttypes.h",130,0,0,0
+  64               		.stabs	"/usr/lib/gcc/avr/5.4.0/include/stdint.h",130,0,0,0
+  65               		.stabs	"/usr/lib/avr/include/stdint.h",130,0,0,0
+  66               		.stabs	"int8_t:t(5,1)=(0,12)",128,0,125,0
+  67               		.stabs	"uint8_t:t(5,2)=(0,13)",128,0,126,0
+  68               		.stabs	"int16_t:t(5,3)=(0,1)",128,0,127,0
+  69               		.stabs	"uint16_t:t(5,4)=(0,4)",128,0,128,0
+  70               		.stabs	"int32_t:t(5,5)=(0,3)",128,0,129,0
+  71               		.stabs	"uint32_t:t(5,6)=(0,5)",128,0,130,0
+  72               		.stabs	"int64_t:t(5,7)=(0,8)",128,0,132,0
+  73               		.stabs	"uint64_t:t(5,8)=(0,9)",128,0,133,0
+  74               		.stabs	"intptr_t:t(5,9)=(5,3)",128,0,146,0
+  75               		.stabs	"uintptr_t:t(5,10)=(5,4)",128,0,151,0
+  76               		.stabs	"int_least8_t:t(5,11)=(5,1)",128,0,163,0
+  77               		.stabs	"uint_least8_t:t(5,12)=(5,2)",128,0,168,0
+  78               		.stabs	"int_least16_t:t(5,13)=(5,3)",128,0,173,0
+  79               		.stabs	"uint_least16_t:t(5,14)=(5,4)",128,0,178,0
+  80               		.stabs	"int_least32_t:t(5,15)=(5,5)",128,0,183,0
+  81               		.stabs	"uint_least32_t:t(5,16)=(5,6)",128,0,188,0
+  82               		.stabs	"int_least64_t:t(5,17)=(5,7)",128,0,196,0
+  83               		.stabs	"uint_least64_t:t(5,18)=(5,8)",128,0,203,0
+  84               		.stabs	"int_fast8_t:t(5,19)=(5,1)",128,0,217,0
+  85               		.stabs	"uint_fast8_t:t(5,20)=(5,2)",128,0,222,0
+  86               		.stabs	"int_fast16_t:t(5,21)=(5,3)",128,0,227,0
+  87               		.stabs	"uint_fast16_t:t(5,22)=(5,4)",128,0,232,0
+  88               		.stabs	"int_fast32_t:t(5,23)=(5,5)",128,0,237,0
+  89               		.stabs	"uint_fast32_t:t(5,24)=(5,6)",128,0,242,0
+  90               		.stabs	"int_fast64_t:t(5,25)=(5,7)",128,0,250,0
+  91               		.stabs	"uint_fast64_t:t(5,26)=(5,8)",128,0,257,0
+  92               		.stabs	"intmax_t:t(5,27)=(5,7)",128,0,277,0
+  93               		.stabs	"uintmax_t:t(5,28)=(5,8)",128,0,282,0
+  94               		.stabn	162,0,0,0
+  95               		.stabn	162,0,0,0
+  96               		.stabs	"int_farptr_t:t(3,1)=(5,5)",128,0,77,0
+  97               		.stabs	"uint_farptr_t:t(3,2)=(5,6)",128,0,81,0
+  98               		.stabn	162,0,0,0
+  99               		.stabn	162,0,0,0
+ 100               		.stabs	"/usr/lib/avr/include/avr/fuse.h",130,0,0,0
+ 101               		.stabs	"__fuse_t:t(6,1)=(6,2)=s3low:(0,13),0,8;high:(0,13),8,8;extended:(0,13),16,8;;",128,0,244,0
+ 102               		.stabn	162,0,0,0
+ 103               		.stabn	162,0,0,0
+ 104               		.stabs	"Timer1_init:F(0,49)",36,0,104,Timer1_init
+ 105               	.global	Timer1_init
+ 106               		.type	Timer1_init, @function
+ 107               	Timer1_init:
+ 108               		.stabd	46,0,0
+   1:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #ifndef F_CPU
+   2:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define F_CPU 16000000UL // or whatever may be your frequency
+   3:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #endif
+   4:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+   5:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define Btn1 2
+   6:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define RED 0
+   7:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define BLUE 1
+   8:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define GREEN 2
+   9:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #include <avr/io.h>
+  10:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #include <util/delay.h>
+  11:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #include <avr/interrupt.h>
+  12:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+  13:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24CxxPORT PORTC
+  14:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24CxxDDR DDRC
+  15:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24CxxPIN PINC
+  16:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24Cxx_SCL 0b00100000
+  17:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24Cxx_SDA 0b00010000
+  18:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define E_BIT 0x04 //location of E BIT
+  19:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define B_BIT 0x08 //location of bright
+  20:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define I2CLCD_ADDR 0x27
+  21:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24Cxx_DELAY 1
+  22:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define ACK 0x00 // ACK LOW
+  23:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define NACK 0x01 // NACK HIGH
+  24:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define EEP_WRITE_WAIT 10 // write wait time
+  25:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24Cxx_SDA_HIGH() (AT24CxxPORT |= AT24Cxx_SDA)
+  26:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24Cxx_SDA_LOW() (AT24CxxPORT &= ~AT24Cxx_SDA)
+  27:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24Cxx_SCL_HIGH() (AT24CxxPORT |= AT24Cxx_SCL)
+  28:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24Cxx_SCL_LOW() (AT24CxxPORT &= ~(AT24Cxx_SCL))
+  29:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24Cxx_SDA_IN() (AT24CxxDDR &= ~AT24Cxx_SDA)
+  30:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define AT24Cxx_SDA_OUT() (AT24CxxDDR |= AT24Cxx_SDA)
+  31:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** #define wait_for_completion while(!(TWCR & (1 << TWINT)));
+  32:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+  33:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char job = 0;
+  34:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char addr = 0;
+  35:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char key_flag = 0;
+  36:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char new_key = 0;
+  37:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char key_data = 0;
+  38:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char pressing_flag = 0;
+  39:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char keyNum = 0;
+  40:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char current_key = 0;
+  41:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char old_key;
+  42:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char flag_time = 0;
+  43:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char Wait_time = 0;
+  44:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char digit[3];
+  45:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** volatile unsigned char ASCII_Table[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','
+  46:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+  47:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void Timer0_init();
+  48:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void Timer1_init();
+  49:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void Port_init();
+  50:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void USART_init();
+  51:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void setup_watchdog();
+  52:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+  53:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** unsigned char key_scan(void);
+  54:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** unsigned char key_analysis(unsigned char key, unsigned char Raw);
+  55:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** unsigned char read_AT24Cxx_i2c_byte(void);
+  56:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** unsigned char AT24Cxx_Read(unsigned char address, unsigned char sub_addr1, unsigned char sub_addr2)
+  57:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void Timer1_delay(unsigned char cnt);
+  58:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LED_ON(void);
+  59:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LED_OFF(void);
+  60:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LCD_CharWrite(uint16_t byte);
+  61:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void Tx_char(unsigned char data);
+  62:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void AT24Cxx_i2c_init(void);
+  63:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void AT24Cxx_i2c_start(void);
+  64:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void AT24Cxx_ACK_send(unsigned char ack_data);
+  65:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void AT24Cxx_i2c_stop(void);
+  66:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void write_AT24Cxx_i2c_byte(unsigned char byte);
+  67:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void write_AT24Cxx_i2cControl(unsigned char byte);
+  68:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LCD_Write(unsigned char byte);
+  69:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void send_EFalling_edge(unsigned char byte);
+  70:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void write_AT24Cxx_i2c_LCDPrint(unsigned char line, unsigned char location, unsigned char data);
+  71:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void write_AT24Cxx_i2c_LCDAddressing(unsigned char byte);
+  72:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LCD_NEBIT(unsigned char byte);
+  73:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void I2C_LCD_init(unsigned char data);
+  74:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** uint16_t num2lcdbyte(unsigned char num);
+  75:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+  76:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** int main(void){
+  77:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     //setup_watchdog();
+  78:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	sei(); //must be first position
+  79:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     Port_init();
+  80:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     //Timer1_init();
+  81:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     USART_init();
+  82:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     //I2C_LCD_init(0x27);
+  83:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	EICRA = 0x03;
+  84:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	EIMSK = 0x01;
+  85:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	I2C_LCD_init(0x27);
+  86:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		
+  87:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	//write_AT24Cxx_i2c_LCDAddressing((0x27 << 1)); 
+  88:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     
+  89:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	while(1){
+  90:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** I2C_LCD_init(0x27);
+  91:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     }
+  92:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+  93:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+  94:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+  95:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+  96:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+  97:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** /*void setup_watchdog() {
+  98:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****   // WDTCSR: Watchdog Timer Control Register
+  99:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****   // WDCE (Watchdog Change Enable)
+ 100:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****   // WDTO_1S: Watchdog Timeout 
+ 101:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****   WDTCSR |= (1<<WDE) | (1<<WDCE) | (1<<WDIE) | (1<<WDP3) | (1<<WDP2) | (1<<WDP1) | (0<<WDP0); 
+ 102:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }  */
+ 103:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //===================================================
+ 104:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void Timer1_init(){
+ 109               		.stabn	68,0,104,.LM0-.LFBB1
+ 110               	.LM0:
+ 111               	.LFBB1:
+ 112               	/* prologue: function */
+ 113               	/* frame size = 0 */
+ 114               	/* stack size = 0 */
+ 115               	.L__stack_usage = 0
+ 105:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 106:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     TCCR1B =  (1 << WGM12) | (0 << CS12) | (1 << CS11) | (0 << CS10);
+ 116               		.stabn	68,0,106,.LM1-.LFBB1
+ 117               	.LM1:
+ 118 0000 8AE0      		ldi r24,lo8(10)
+ 119 0002 8093 8100 		sts 129,r24
+ 107:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	TCNT1 = 0;
+ 120               		.stabn	68,0,107,.LM2-.LFBB1
+ 121               	.LM2:
+ 122 0006 1092 8500 		sts 132+1,__zero_reg__
+ 123 000a 1092 8400 		sts 132,__zero_reg__
+ 108:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     OCR1A = 0x09c4; 
+ 124               		.stabn	68,0,108,.LM3-.LFBB1
+ 125               	.LM3:
+ 126 000e 84EC      		ldi r24,lo8(-60)
+ 127 0010 99E0      		ldi r25,lo8(9)
+ 128 0012 9093 8900 		sts 136+1,r25
+ 129 0016 8093 8800 		sts 136,r24
+ 109:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     TIMSK1 |= (1 << TOIE1) | (1 << OCIE1A);
+ 130               		.stabn	68,0,109,.LM4-.LFBB1
+ 131               	.LM4:
+ 132 001a EFE6      		ldi r30,lo8(111)
+ 133 001c F0E0      		ldi r31,0
+ 134 001e 8081      		ld r24,Z
+ 135 0020 8360      		ori r24,lo8(3)
+ 136 0022 8083      		st Z,r24
+ 137 0024 0895      		ret
+ 138               		.size	Timer1_init, .-Timer1_init
+ 139               	.Lscope1:
+ 140               		.stabs	"",36,0,0,.Lscope1-.LFBB1
+ 141               		.stabd	78,0,0
+ 142               		.stabs	"Timer1_delay:F(0,49)",36,0,112,Timer1_delay
+ 143               		.stabs	"cnt:P(0,13)",64,0,112,24
+ 144               	.global	Timer1_delay
+ 145               		.type	Timer1_delay, @function
+ 146               	Timer1_delay:
+ 147               		.stabd	46,0,0
+ 110:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 111:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 112:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void Timer1_delay(unsigned char cnt){ //1 : 10ms
+ 148               		.stabn	68,0,112,.LM5-.LFBB2
+ 149               	.LM5:
+ 150               	.LFBB2:
+ 151               	/* prologue: function */
+ 152               	/* frame size = 0 */
+ 153               	/* stack size = 0 */
+ 154               	.L__stack_usage = 0
+ 155               	.L3:
+ 113:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     while(cnt){
+ 156               		.stabn	68,0,113,.LM6-.LFBB2
+ 157               	.LM6:
+ 158 0026 8823      		tst r24
+ 159 0028 01F0      		breq .L9
+ 114:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         Wait_time = 0;
+ 160               		.stabn	68,0,114,.LM7-.LFBB2
+ 161               	.LM7:
+ 162 002a 1092 0000 		sts Wait_time,__zero_reg__
+ 163               	.L4:
+ 115:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	    while(!Wait_time);
+ 164               		.stabn	68,0,115,.LM8-.LFBB2
+ 165               	.LM8:
+ 166 002e 9091 0000 		lds r25,Wait_time
+ 167 0032 9923      		tst r25
+ 168 0034 01F0      		breq .L4
+ 116:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         Wait_time = 0;
+ 169               		.stabn	68,0,116,.LM9-.LFBB2
+ 170               	.LM9:
+ 171 0036 1092 0000 		sts Wait_time,__zero_reg__
+ 117:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         cnt--;
+ 172               		.stabn	68,0,117,.LM10-.LFBB2
+ 173               	.LM10:
+ 174 003a 8150      		subi r24,lo8(-(-1))
+ 175 003c 00C0      		rjmp .L3
+ 176               	.L9:
+ 177               	/* epilogue start */
+ 118:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     }
+ 119:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 178               		.stabn	68,0,119,.LM11-.LFBB2
+ 179               	.LM11:
+ 180 003e 0895      		ret
+ 181               		.size	Timer1_delay, .-Timer1_delay
+ 182               	.Lscope2:
+ 183               		.stabs	"",36,0,0,.Lscope2-.LFBB2
+ 184               		.stabd	78,0,0
+ 185               		.stabs	"Port_init:F(0,49)",36,0,121,Port_init
+ 186               	.global	Port_init
+ 187               		.type	Port_init, @function
+ 188               	Port_init:
+ 189               		.stabd	46,0,0
+ 120:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 121:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void Port_init(){
+ 190               		.stabn	68,0,121,.LM12-.LFBB3
+ 191               	.LM12:
+ 192               	.LFBB3:
+ 193               	/* prologue: function */
+ 194               	/* frame size = 0 */
+ 195               	/* stack size = 0 */
+ 196               	.L__stack_usage = 0
+ 122:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 123:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     //set B0~D4 as input,  D5, D6, D7 pins are set high to find key vals 
+ 124:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     DDRD = 0b01110000;
+ 197               		.stabn	68,0,124,.LM13-.LFBB3
+ 198               	.LM13:
+ 199 0040 80E7      		ldi r24,lo8(112)
+ 200 0042 8AB9      		out 0xa,r24
+ 125:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     PORTD = 0b00000000;
+ 201               		.stabn	68,0,125,.LM14-.LFBB3
+ 202               	.LM14:
+ 203 0044 1BB8      		out 0xb,__zero_reg__
+ 126:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     DDRB = 0b00100000;
+ 204               		.stabn	68,0,126,.LM15-.LFBB3
+ 205               	.LM15:
+ 206 0046 80E2      		ldi r24,lo8(32)
+ 207 0048 84B9      		out 0x4,r24
+ 208 004a 0895      		ret
+ 209               		.size	Port_init, .-Port_init
+ 210               	.Lscope3:
+ 211               		.stabs	"",36,0,0,.Lscope3-.LFBB3
+ 212               		.stabd	78,0,0
+ 213               		.stabs	"LED_ON:F(0,49)",36,0,168,LED_ON
+ 214               	.global	LED_ON
+ 215               		.type	LED_ON, @function
+ 216               	LED_ON:
+ 217               		.stabd	46,0,0
+ 127:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 128:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 129:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void I2C_LCD_init(unsigned char address){
+ 130:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     _delay_ms(10);
+ 131:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24CxxPORT |= (AT24Cxx_SDA + AT24Cxx_SCL);
+ 132:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24CxxDDR |= (AT24Cxx_SDA + AT24Cxx_SCL);
+ 133:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     //Timer1_delay(2);
+ 134:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SCL_LOW();
+ 135:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	addr = address;
+ 136:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_i2c_start();
+ 137:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_LCDAddressing((addr << 1)); //write mode
+ 138:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_Write(0x20);
+ 139:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	_delay_us(20);
+ 140:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	//Timer1_delay(3);
+ 141:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_Write(0x20);
+ 142:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 143:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_Write(0x00);
+ 144:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 145:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	//Timer1_delay(3);
+ 146:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_Write(0x00);
+ 147:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 148:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	//Timer1_delay(3);
+ 149:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_Write(0xE0);
+ 150:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 151:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	//Timer1_delay(3);
+ 152:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_Write(0x00);
+ 153:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 154:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	//Timer1_delay(3);
+ 155:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_Write(0x60);
+ 156:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 157:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 158:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 159:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 160:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		write_AT24Cxx_i2c_byte(0x31); 
+ 161:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(0x31);
+ 162:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_byte(0x01); 
+ 163:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(0x01);
+ 164:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_i2c_stop();
+ 165:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 166:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 167:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+ 168:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LED_ON(){
+ 218               		.stabn	68,0,168,.LM16-.LFBB4
+ 219               	.LM16:
+ 220               	.LFBB4:
+ 221               	/* prologue: function */
+ 222               	/* frame size = 0 */
+ 223               	/* stack size = 0 */
+ 224               	.L__stack_usage = 0
+ 169:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     DDRC |= (1 << RED) | (1 << GREEN) | (1 << BLUE);
+ 225               		.stabn	68,0,169,.LM17-.LFBB4
+ 226               	.LM17:
+ 227 004c 87B1      		in r24,0x7
+ 228 004e 8760      		ori r24,lo8(7)
+ 229 0050 87B9      		out 0x7,r24
+ 170:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     PORTC |= (1 << RED) | (1 << GREEN) | (1 << BLUE);
+ 230               		.stabn	68,0,170,.LM18-.LFBB4
+ 231               	.LM18:
+ 232 0052 88B1      		in r24,0x8
+ 233 0054 8760      		ori r24,lo8(7)
+ 234 0056 88B9      		out 0x8,r24
+ 235 0058 0895      		ret
+ 236               		.size	LED_ON, .-LED_ON
+ 237               	.Lscope4:
+ 238               		.stabs	"",36,0,0,.Lscope4-.LFBB4
+ 239               		.stabd	78,0,0
+ 240               		.stabs	"LED_OFF:F(0,49)",36,0,173,LED_OFF
+ 241               	.global	LED_OFF
+ 242               		.type	LED_OFF, @function
+ 243               	LED_OFF:
+ 244               		.stabd	46,0,0
+ 171:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 172:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 173:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LED_OFF(){
+ 245               		.stabn	68,0,173,.LM19-.LFBB5
+ 246               	.LM19:
+ 247               	.LFBB5:
+ 248               	/* prologue: function */
+ 249               	/* frame size = 0 */
+ 250               	/* stack size = 0 */
+ 251               	.L__stack_usage = 0
+ 174:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     DDRC &= ~(1 << RED) & ~(1 << GREEN) & ~(1 << BLUE); //refresh
+ 252               		.stabn	68,0,174,.LM20-.LFBB5
+ 253               	.LM20:
+ 254 005a 87B1      		in r24,0x7
+ 255 005c 887F      		andi r24,lo8(-8)
+ 256 005e 87B9      		out 0x7,r24
+ 175:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     DDRC |= (1 << RED) | (1 << GREEN) | (1 << BLUE);
+ 257               		.stabn	68,0,175,.LM21-.LFBB5
+ 258               	.LM21:
+ 259 0060 87B1      		in r24,0x7
+ 260 0062 8760      		ori r24,lo8(7)
+ 261 0064 87B9      		out 0x7,r24
+ 176:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     PORTC &= ~(1 << RED) & ~(1 << GREEN) & ~(1 << BLUE);
+ 262               		.stabn	68,0,176,.LM22-.LFBB5
+ 263               	.LM22:
+ 264 0066 88B1      		in r24,0x8
+ 265 0068 887F      		andi r24,lo8(-8)
+ 266 006a 88B9      		out 0x8,r24
+ 267 006c 0895      		ret
+ 268               		.size	LED_OFF, .-LED_OFF
+ 269               	.Lscope5:
+ 270               		.stabs	"",36,0,0,.Lscope5-.LFBB5
+ 271               		.stabd	78,0,0
+ 272               		.stabs	"__vector_1:F(0,49)",36,0,213,__vector_1
+ 273               	.global	__vector_1
+ 274               		.type	__vector_1, @function
+ 275               	__vector_1:
+ 276               		.stabd	46,0,0
+ 177:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 178:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+ 179:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** ISR(TIMER1_COMPA_vect){
+ 180:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****    //**NOTE: Timer must perform only the role of timer otherwise, global variables will be reset **
+ 181:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	Wait_time = 1;
+ 182:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     key_data = key_scan();
+ 183:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     
+ 184:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     if(key_flag){
+ 185:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         key_flag = 0;
+ 186:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         if(key_data == 0xff){
+ 187:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             return ;
+ 188:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		}
+ 189:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		
+ 190:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         if(key_data == 10){
+ 191:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             //key_data += 32; // 42 -> *
+ 192:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         }
+ 193:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         if(key_data == 11){
+ 194:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             //key_data += 24; // 35 -> #
+ 195:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		}
+ 196:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		if(key_data == 1){
+ 197:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			PORTB |= 0x20;
+ 198:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			LCD_CharWrite(num2lcdbyte(1));	
+ 199:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			//key_data += '0';
+ 200:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		}
+ 201:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		 
+ 202:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         //Tx_char(key_data);
+ 203:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         //Tx_char(' ');
+ 204:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         LED_ON();
+ 205:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         }
+ 206:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         else{
+ 207:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             LED_OFF();
+ 208:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         }
+ 209:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	PORTB &= ~0x20;
+ 210:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	DDRB &= ~0x20;
+ 211:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	DDRB |= 0x20;
+ 212:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 213:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** ISR(INT0_vect){
+ 277               		.stabn	68,0,213,.LM23-.LFBB6
+ 278               	.LM23:
+ 279               	.LFBB6:
+ 280 006e 1F92      		push r1
+ 281 0070 0F92      		push r0
+ 282 0072 0FB6      		in r0,__SREG__
+ 283 0074 0F92      		push r0
+ 284 0076 1124      		clr __zero_reg__
+ 285               	/* prologue: Signal */
+ 286               	/* frame size = 0 */
+ 287               	/* stack size = 3 */
+ 288               	.L__stack_usage = 3
+ 289               	/* epilogue start */
+ 214:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	
+ 215:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****    //AT24Cxx_i2c_start();
+ 216:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****    
+ 217:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 218:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 219:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 290               		.stabn	68,0,219,.LM24-.LFBB6
+ 291               	.LM24:
+ 292 0078 0F90      		pop r0
+ 293 007a 0FBE      		out __SREG__,r0
+ 294 007c 0F90      		pop r0
+ 295 007e 1F90      		pop r1
+ 296 0080 1895      		reti
+ 297               		.size	__vector_1, .-__vector_1
+ 298               	.Lscope6:
+ 299               		.stabs	"",36,0,0,.Lscope6-.LFBB6
+ 300               		.stabd	78,0,0
+ 301               		.stabs	"USART_init:F(0,49)",36,0,221,USART_init
+ 302               	.global	USART_init
+ 303               		.type	USART_init, @function
+ 304               	USART_init:
+ 305               		.stabd	46,0,0
+ 220:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+ 221:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void USART_init(){
+ 306               		.stabn	68,0,221,.LM25-.LFBB7
+ 307               	.LM25:
+ 308               	.LFBB7:
+ 309               	/* prologue: function */
+ 310               	/* frame size = 0 */
+ 311               	/* stack size = 0 */
+ 312               	.L__stack_usage = 0
+ 222:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     UCSR0A = 0x20;
+ 313               		.stabn	68,0,222,.LM26-.LFBB7
+ 314               	.LM26:
+ 315 0082 80E2      		ldi r24,lo8(32)
+ 316 0084 8093 C000 		sts 192,r24
+ 223:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     UCSR0B = 0x18;
+ 317               		.stabn	68,0,223,.LM27-.LFBB7
+ 318               	.LM27:
+ 319 0088 88E1      		ldi r24,lo8(24)
+ 320 008a 8093 C100 		sts 193,r24
+ 224:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     UCSR0C = 0x06;
+ 321               		.stabn	68,0,224,.LM28-.LFBB7
+ 322               	.LM28:
+ 323 008e 86E0      		ldi r24,lo8(6)
+ 324 0090 8093 C200 		sts 194,r24
+ 225:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     UBRR0 = 8;
+ 325               		.stabn	68,0,225,.LM29-.LFBB7
+ 326               	.LM29:
+ 327 0094 88E0      		ldi r24,lo8(8)
+ 328 0096 90E0      		ldi r25,0
+ 329 0098 9093 C500 		sts 196+1,r25
+ 330 009c 8093 C400 		sts 196,r24
+ 331 00a0 0895      		ret
+ 332               		.size	USART_init, .-USART_init
+ 333               	.Lscope7:
+ 334               		.stabs	"",36,0,0,.Lscope7-.LFBB7
+ 335               		.stabd	78,0,0
+ 336               		.stabs	"Tx_char:F(0,49)",36,0,228,Tx_char
+ 337               		.stabs	"data:P(0,13)",64,0,228,24
+ 338               	.global	Tx_char
+ 339               		.type	Tx_char, @function
+ 340               	Tx_char:
+ 341               		.stabd	46,0,0
+ 226:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 227:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 228:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void Tx_char(unsigned char data){
+ 342               		.stabn	68,0,228,.LM30-.LFBB8
+ 343               	.LM30:
+ 344               	.LFBB8:
+ 345               	/* prologue: function */
+ 346               	/* frame size = 0 */
+ 347               	/* stack size = 0 */
+ 348               	.L__stack_usage = 0
+ 349               	.L16:
+ 229:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     while(!(UCSR0A & (1 << UDRE0)));
+ 350               		.stabn	68,0,229,.LM31-.LFBB8
+ 351               	.LM31:
+ 352 00a2 9091 C000 		lds r25,192
+ 353 00a6 95FF      		sbrs r25,5
+ 354 00a8 00C0      		rjmp .L16
+ 230:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     UDR0 = data;
+ 355               		.stabn	68,0,230,.LM32-.LFBB8
+ 356               	.LM32:
+ 357 00aa 8093 C600 		sts 198,r24
+ 358 00ae 0895      		ret
+ 359               		.size	Tx_char, .-Tx_char
+ 360               	.Lscope8:
+ 361               		.stabs	"",36,0,0,.Lscope8-.LFBB8
+ 362               		.stabd	78,0,0
+ 363               		.stabs	"key_analysis:F(0,13)",36,0,292,key_analysis
+ 364               		.stabs	"key:P(0,13)",64,0,292,24
+ 365               		.stabs	"Raw:P(0,13)",64,0,292,22
+ 366               	.global	key_analysis
+ 367               		.type	key_analysis, @function
+ 368               	key_analysis:
+ 369               		.stabd	46,0,0
+ 231:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 232:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+ 233:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** unsigned char key_scan(){
+ 234:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 235:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 236:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     unsigned char bit_shift = 0b00010000;
+ 237:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     if(key_flag) return -1;
+ 238:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     PORTD &= ~(0x70);
+ 239:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     new_key = (PINB) & 0x0f;
+ 240:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 241:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     /* procedure to prevent signals chattering */
+ 242:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     if(new_key != old_key){
+ 243:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         old_key = new_key;
+ 244:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         return -1;
+ 245:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     }
+ 246:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 247:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     if(pressing_flag){ //checking if btn released
+ 248:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         //pin 1 ,3, 5 => D4, D5, D6 / pin 2,7,6,4 => D0, D1, D2, D3
+ 249:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         if(new_key == 0x0f){ //compare with current key and the received new key
+ 250:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                              //because if one of btns is pressed, it can get signals 
+ 251:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             pressing_flag = 0;
+ 252:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             return -1;
+ 253:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         }
+ 254:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         else return -1;
+ 255:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     }
+ 256:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 257:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     else { //checking if key pressed has a diffrent value with the previous key 
+ 258:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         if (new_key == 0x0f){
+ 259:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             return -1;
+ 260:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         } 
+ 261:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         else { 
+ 262:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             for(int Raw = 0; Raw < 3; Raw++){
+ 263:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 PORTD |= 0x70; 
+ 264:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 PORTD &= ~(bit_shift); //to check specific raw, Ex) raw 1 -> D5, D6 must be HIGH st
+ 265:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 									   //in addition if pin of PORTD is on, PINB won't be low state
+ 266:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			    
+ 267:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 
+ 268:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 DDRD &= ~(bit_shift); //refresh
+ 269:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 				DDRD |= 0x70; 
+ 270:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 				
+ 271:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 new_key = (PINB) & 0x0f;
+ 272:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 if(new_key == 0x0f){ // + when raw is LOW
+ 273:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                   
+ 274:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                     bit_shift <<= 1;
+ 275:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                     continue;
+ 276:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 }
+ 277:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 else {
+ 278:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 					
+ 279:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                     pressing_flag = 1;
+ 280:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                     key_flag = 1;
+ 281:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                     return key_analysis(new_key, Raw);
+ 282:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 }
+ 283:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             }
+ 284:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         
+ 285:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         }
+ 286:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     }
+ 287:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 288:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     /* end checking */
+ 289:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 290:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 291:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 292:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** unsigned char key_analysis(unsigned char key, unsigned char Raw){
+ 370               		.stabn	68,0,292,.LM33-.LFBB9
+ 371               	.LM33:
+ 372               	.LFBB9:
+ 373               	/* prologue: function */
+ 374               	/* frame size = 0 */
+ 375               	/* stack size = 0 */
+ 376               	.L__stack_usage = 0
+ 293:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 294:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	key_flag = 1;
+ 377               		.stabn	68,0,294,.LM34-.LFBB9
+ 378               	.LM34:
+ 379 00b0 91E0      		ldi r25,lo8(1)
+ 380 00b2 9093 0000 		sts key_flag,r25
+ 295:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	switch(Raw){
+ 381               		.stabn	68,0,295,.LM35-.LFBB9
+ 382               	.LM35:
+ 383 00b6 6130      		cpi r22,lo8(1)
+ 384 00b8 01F0      		breq .L21
+ 385 00ba 00F0      		brlo .L22
+ 386 00bc 6230      		cpi r22,lo8(2)
+ 387 00be 01F0      		breq .L23
+ 388 00c0 00C0      		rjmp .L43
+ 389               	.L22:
+ 390               	.LBB44:
+ 391               	.LBB45:
+ 296:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		case 0:
+ 297:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		switch(key){
+ 392               		.stabn	68,0,297,.LM36-.LFBB9
+ 393               	.LM36:
+ 394 00c2 8B30      		cpi r24,lo8(11)
+ 395 00c4 01F0      		breq .L25
+ 396 00c6 00F4      		brsh .L26
+ 397 00c8 8730      		cpi r24,lo8(7)
+ 398 00ca 01F4      		brne .L43
+ 298:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001110:
+ 299:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 1;
+ 300:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001101:
+ 301:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 4;
+ 302:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001011:
+ 303:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 7;
+ 304:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00000111:
+ 305:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 10;
+ 399               		.stabn	68,0,305,.LM37-.LFBB9
+ 400               	.LM37:
+ 401 00cc 8AE0      		ldi r24,lo8(10)
+ 402 00ce 0895      		ret
+ 403               	.L26:
+ 297:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001110:
+ 404               		.stabn	68,0,297,.LM38-.LFBB9
+ 405               	.LM38:
+ 406 00d0 8D30      		cpi r24,lo8(13)
+ 407 00d2 01F0      		breq .L28
+ 408 00d4 8E30      		cpi r24,lo8(14)
+ 409 00d6 01F0      		breq .L40
+ 410 00d8 00C0      		rjmp .L43
+ 411               	.L28:
+ 301:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001011:
+ 412               		.stabn	68,0,301,.LM39-.LFBB9
+ 413               	.LM39:
+ 414 00da 84E0      		ldi r24,lo8(4)
+ 415 00dc 0895      		ret
+ 416               	.L25:
+ 303:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00000111:
+ 417               		.stabn	68,0,303,.LM40-.LFBB9
+ 418               	.LM40:
+ 419 00de 87E0      		ldi r24,lo8(7)
+ 420 00e0 0895      		ret
+ 421               	.L21:
+ 422               	.LBE45:
+ 423               	.LBE44:
+ 306:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			default:
+ 307:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			key_flag = 0;
+ 308:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return -1;
+ 309:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		}
+ 310:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 311:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		case 1:
+ 312:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		switch(key){
+ 424               		.stabn	68,0,312,.LM41-.LFBB9
+ 425               	.LM41:
+ 426 00e2 8B30      		cpi r24,lo8(11)
+ 427 00e4 01F0      		breq .L31
+ 428 00e6 00F4      		brsh .L32
+ 429 00e8 8730      		cpi r24,lo8(7)
+ 430 00ea 01F4      		brne .L43
+ 313:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001110:
+ 314:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 2;
+ 315:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001101:
+ 316:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 5;
+ 317:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001011:
+ 318:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 8;
+ 319:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00000111:
+ 320:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 0;
+ 431               		.stabn	68,0,320,.LM42-.LFBB9
+ 432               	.LM42:
+ 433 00ec 80E0      		ldi r24,0
+ 434 00ee 0895      		ret
+ 435               	.L32:
+ 312:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001110:
+ 436               		.stabn	68,0,312,.LM43-.LFBB9
+ 437               	.LM43:
+ 438 00f0 8D30      		cpi r24,lo8(13)
+ 439 00f2 01F0      		breq .L34
+ 440 00f4 8E30      		cpi r24,lo8(14)
+ 441 00f6 01F0      		breq .L41
+ 442 00f8 00C0      		rjmp .L43
+ 443               	.L34:
+ 316:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001011:
+ 444               		.stabn	68,0,316,.LM44-.LFBB9
+ 445               	.LM44:
+ 446 00fa 85E0      		ldi r24,lo8(5)
+ 447 00fc 0895      		ret
+ 448               	.L31:
+ 318:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00000111:
+ 449               		.stabn	68,0,318,.LM45-.LFBB9
+ 450               	.LM45:
+ 451 00fe 88E0      		ldi r24,lo8(8)
+ 452 0100 0895      		ret
+ 453               	.L23:
+ 321:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			default:
+ 322:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			key_flag = 0;
+ 323:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return -1;
+ 324:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		}
+ 325:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 326:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		case 2:
+ 327:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		switch(key){
+ 454               		.stabn	68,0,327,.LM46-.LFBB9
+ 455               	.LM46:
+ 456 0102 8B30      		cpi r24,lo8(11)
+ 457 0104 01F0      		breq .L36
+ 458 0106 00F4      		brsh .L37
+ 459 0108 8730      		cpi r24,lo8(7)
+ 460 010a 01F4      		brne .L43
+ 328:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001110:
+ 329:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 3;
+ 330:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b0001101:
+ 331:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 6;
+ 332:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001011:
+ 333:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 9;
+ 334:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00000111:
+ 335:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return 11;
+ 461               		.stabn	68,0,335,.LM47-.LFBB9
+ 462               	.LM47:
+ 463 010c 8BE0      		ldi r24,lo8(11)
+ 464 010e 0895      		ret
+ 465               	.L37:
+ 327:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001110:
+ 466               		.stabn	68,0,327,.LM48-.LFBB9
+ 467               	.LM48:
+ 468 0110 8D30      		cpi r24,lo8(13)
+ 469 0112 01F0      		breq .L39
+ 470 0114 8E30      		cpi r24,lo8(14)
+ 471 0116 01F0      		breq .L42
+ 472 0118 00C0      		rjmp .L43
+ 473               	.L39:
+ 331:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001011:
+ 474               		.stabn	68,0,331,.LM49-.LFBB9
+ 475               	.LM49:
+ 476 011a 86E0      		ldi r24,lo8(6)
+ 477 011c 0895      		ret
+ 478               	.L36:
+ 333:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00000111:
+ 479               		.stabn	68,0,333,.LM50-.LFBB9
+ 480               	.LM50:
+ 481 011e 89E0      		ldi r24,lo8(9)
+ 482 0120 0895      		ret
+ 483               	.L43:
+ 336:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			default:
+ 337:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			key_flag = 0;
+ 338:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			return -1;
+ 339:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		}
+ 340:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		default:
+ 341:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		key_flag = 0;
+ 484               		.stabn	68,0,341,.LM51-.LFBB9
+ 485               	.LM51:
+ 486 0122 1092 0000 		sts key_flag,__zero_reg__
+ 342:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		return -1;
+ 487               		.stabn	68,0,342,.LM52-.LFBB9
+ 488               	.LM52:
+ 489 0126 8FEF      		ldi r24,lo8(-1)
+ 490 0128 0895      		ret
+ 491               	.L40:
+ 492               	.LBB47:
+ 493               	.LBB46:
+ 299:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001101:
+ 494               		.stabn	68,0,299,.LM53-.LFBB9
+ 495               	.LM53:
+ 496 012a 81E0      		ldi r24,lo8(1)
+ 497 012c 0895      		ret
+ 498               	.L41:
+ 499               	.LBE46:
+ 500               	.LBE47:
+ 314:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b00001101:
+ 501               		.stabn	68,0,314,.LM54-.LFBB9
+ 502               	.LM54:
+ 503 012e 82E0      		ldi r24,lo8(2)
+ 504 0130 0895      		ret
+ 505               	.L42:
+ 329:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			case 0b0001101:
+ 506               		.stabn	68,0,329,.LM55-.LFBB9
+ 507               	.LM55:
+ 508 0132 83E0      		ldi r24,lo8(3)
+ 343:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	}
+ 344:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 509               		.stabn	68,0,344,.LM56-.LFBB9
+ 510               	.LM56:
+ 511 0134 0895      		ret
+ 512               		.size	key_analysis, .-key_analysis
+ 513               	.Lscope9:
+ 514               		.stabs	"",36,0,0,.Lscope9-.LFBB9
+ 515               		.stabd	78,0,0
+ 516               		.stabs	"key_scan:F(0,13)",36,0,233,key_scan
+ 517               	.global	key_scan
+ 518               		.type	key_scan, @function
+ 519               	key_scan:
+ 520               		.stabd	46,0,0
+ 233:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 521               		.stabn	68,0,233,.LM57-.LFBB10
+ 522               	.LM57:
+ 523               	.LFBB10:
+ 524               	/* prologue: function */
+ 525               	/* frame size = 0 */
+ 526               	/* stack size = 0 */
+ 527               	.L__stack_usage = 0
+ 237:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     PORTD &= ~(0x70);
+ 528               		.stabn	68,0,237,.LM58-.LFBB10
+ 529               	.LM58:
+ 530 0136 8091 0000 		lds r24,key_flag
+ 531 013a 8111      		cpse r24,__zero_reg__
+ 532 013c 00C0      		rjmp .L47
+ 238:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     new_key = (PINB) & 0x0f;
+ 533               		.stabn	68,0,238,.LM59-.LFBB10
+ 534               	.LM59:
+ 535 013e 8BB1      		in r24,0xb
+ 536 0140 8F78      		andi r24,lo8(-113)
+ 537 0142 8BB9      		out 0xb,r24
+ 239:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 538               		.stabn	68,0,239,.LM60-.LFBB10
+ 539               	.LM60:
+ 540 0144 83B1      		in r24,0x3
+ 541 0146 8F70      		andi r24,lo8(15)
+ 542 0148 8093 0000 		sts new_key,r24
+ 242:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         old_key = new_key;
+ 543               		.stabn	68,0,242,.LM61-.LFBB10
+ 544               	.LM61:
+ 545 014c 9091 0000 		lds r25,new_key
+ 546 0150 8091 0000 		lds r24,old_key
+ 547 0154 9817      		cp r25,r24
+ 548 0156 01F0      		breq .L46
+ 243:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         return -1;
+ 549               		.stabn	68,0,243,.LM62-.LFBB10
+ 550               	.LM62:
+ 551 0158 8091 0000 		lds r24,new_key
+ 552 015c 8093 0000 		sts old_key,r24
+ 244:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     }
+ 553               		.stabn	68,0,244,.LM63-.LFBB10
+ 554               	.LM63:
+ 555 0160 00C0      		rjmp .L47
+ 556               	.L46:
+ 247:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         //pin 1 ,3, 5 => D4, D5, D6 / pin 2,7,6,4 => D0, D1, D2, D3
+ 557               		.stabn	68,0,247,.LM64-.LFBB10
+ 558               	.LM64:
+ 559 0162 8091 0000 		lds r24,pressing_flag
+ 560 0166 8823      		tst r24
+ 561 0168 01F0      		breq .L48
+ 249:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                              //because if one of btns is pressed, it can get signals 
+ 562               		.stabn	68,0,249,.LM65-.LFBB10
+ 563               	.LM65:
+ 564 016a 8091 0000 		lds r24,new_key
+ 565 016e 8F30      		cpi r24,lo8(15)
+ 566 0170 01F4      		brne .L47
+ 251:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             return -1;
+ 567               		.stabn	68,0,251,.LM66-.LFBB10
+ 568               	.LM66:
+ 569 0172 1092 0000 		sts pressing_flag,__zero_reg__
+ 252:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         }
+ 570               		.stabn	68,0,252,.LM67-.LFBB10
+ 571               	.LM67:
+ 572 0176 00C0      		rjmp .L47
+ 573               	.L48:
+ 258:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             return -1;
+ 574               		.stabn	68,0,258,.LM68-.LFBB10
+ 575               	.LM68:
+ 576 0178 8091 0000 		lds r24,new_key
+ 577 017c 8F30      		cpi r24,lo8(15)
+ 578 017e 01F0      		breq .L47
+ 579 0180 60E0      		ldi r22,0
+ 580 0182 70E0      		ldi r23,0
+ 581 0184 90E1      		ldi r25,lo8(16)
+ 582               	.L50:
+ 583               	.LBB48:
+ 263:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 PORTD &= ~(bit_shift); //to check specific raw, Ex) raw 1 -> D5, D6 must be HIGH st
+ 584               		.stabn	68,0,263,.LM69-.LFBB10
+ 585               	.LM69:
+ 586 0186 8BB1      		in r24,0xb
+ 587 0188 8067      		ori r24,lo8(112)
+ 588 018a 8BB9      		out 0xb,r24
+ 264:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 									   //in addition if pin of PORTD is on, PINB won't be low state
+ 589               		.stabn	68,0,264,.LM70-.LFBB10
+ 590               	.LM70:
+ 591 018c 2BB1      		in r18,0xb
+ 592 018e 892F      		mov r24,r25
+ 593 0190 8095      		com r24
+ 594 0192 2823      		and r18,r24
+ 595 0194 2BB9      		out 0xb,r18
+ 268:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 				DDRD |= 0x70; 
+ 596               		.stabn	68,0,268,.LM71-.LFBB10
+ 597               	.LM71:
+ 598 0196 2AB1      		in r18,0xa
+ 599 0198 8223      		and r24,r18
+ 600 019a 8AB9      		out 0xa,r24
+ 269:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 				
+ 601               		.stabn	68,0,269,.LM72-.LFBB10
+ 602               	.LM72:
+ 603 019c 8AB1      		in r24,0xa
+ 604 019e 8067      		ori r24,lo8(112)
+ 605 01a0 8AB9      		out 0xa,r24
+ 271:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 if(new_key == 0x0f){ // + when raw is LOW
+ 606               		.stabn	68,0,271,.LM73-.LFBB10
+ 607               	.LM73:
+ 608 01a2 83B1      		in r24,0x3
+ 609 01a4 8F70      		andi r24,lo8(15)
+ 610 01a6 8093 0000 		sts new_key,r24
+ 272:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                   
+ 611               		.stabn	68,0,272,.LM74-.LFBB10
+ 612               	.LM74:
+ 613 01aa 8091 0000 		lds r24,new_key
+ 614 01ae 8F30      		cpi r24,lo8(15)
+ 615 01b0 01F4      		brne .L49
+ 274:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                     continue;
+ 616               		.stabn	68,0,274,.LM75-.LFBB10
+ 617               	.LM75:
+ 618 01b2 990F      		lsl r25
+ 262:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 PORTD |= 0x70; 
+ 619               		.stabn	68,0,262,.LM76-.LFBB10
+ 620               	.LM76:
+ 621 01b4 6F5F      		subi r22,-1
+ 622 01b6 7F4F      		sbci r23,-1
+ 623 01b8 6330      		cpi r22,3
+ 624 01ba 7105      		cpc r23,__zero_reg__
+ 625 01bc 01F4      		brne .L50
+ 626               	.LBE48:
+ 289:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 627               		.stabn	68,0,289,.LM77-.LFBB10
+ 628               	.LM77:
+ 629 01be 0895      		ret
+ 630               	.L49:
+ 631               	.LBB49:
+ 279:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                     key_flag = 1;
+ 632               		.stabn	68,0,279,.LM78-.LFBB10
+ 633               	.LM78:
+ 634 01c0 81E0      		ldi r24,lo8(1)
+ 635 01c2 8093 0000 		sts pressing_flag,r24
+ 280:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                     return key_analysis(new_key, Raw);
+ 636               		.stabn	68,0,280,.LM79-.LFBB10
+ 637               	.LM79:
+ 638 01c6 8093 0000 		sts key_flag,r24
+ 281:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****                 }
+ 639               		.stabn	68,0,281,.LM80-.LFBB10
+ 640               	.LM80:
+ 641 01ca 8091 0000 		lds r24,new_key
+ 642 01ce 0C94 0000 		jmp key_analysis
+ 643               	.L47:
+ 644 01d2 8FEF      		ldi r24,lo8(-1)
+ 645               	.LBE49:
+ 289:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 646               		.stabn	68,0,289,.LM81-.LFBB10
+ 647               	.LM81:
+ 648 01d4 0895      		ret
+ 649               		.size	key_scan, .-key_scan
+ 650               		.stabs	"bit_shift:r(0,13)",64,0,236,25
+ 651               		.stabn	192,0,0,.LFBB10-.LFBB10
+ 652               		.stabs	"Raw:r(0,1)",64,0,262,22
+ 653               		.stabn	192,0,0,.LBB48-.LFBB10
+ 654               		.stabn	224,0,0,.LBE48-.LFBB10
+ 655               		.stabs	"Raw:r(0,1)",64,0,262,22
+ 656               		.stabn	192,0,0,.LBB49-.LFBB10
+ 657               		.stabn	224,0,0,.LBE49-.LFBB10
+ 658               		.stabn	224,0,0,.Lscope10-.LFBB10
+ 659               	.Lscope10:
+ 660               		.stabs	"",36,0,0,.Lscope10-.LFBB10
+ 661               		.stabd	78,0,0
+ 662               		.stabs	"num2lcdbyte:F(5,4)",36,0,374,num2lcdbyte
+ 663               		.stabs	"num:P(0,13)",64,0,374,24
+ 664               	.global	num2lcdbyte
+ 665               		.type	num2lcdbyte, @function
+ 666               	num2lcdbyte:
+ 667               		.stabd	46,0,0
+ 345:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+ 346:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 347:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LCD_Write(unsigned char data){
+ 348:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	
+ 349:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	// D7 D6 D5 D4   X  E  RW RS
+ 350:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	// P7 P6 P5 P4   P3 P2 P1 P0
+ 351:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 352:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 353:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_byte(data); 
+ 354:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(data);
+ 355:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 356:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 357:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LCD_CharWrite(uint16_t byte){
+ 358:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_i2c_start();
+ 359:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_LCDAddressing((addr << 1)); 
+ 360:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 361:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	unsigned char upperbits = byte>>8 & 0xFF;
+ 362:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	//Tx_char('0'+upperbits);
+ 363:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	unsigned char lowerbits = byte & 0xFF;
+ 364:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	//PORTC = lowerbits;
+ 365:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 366:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_byte(upperbits); 
+ 367:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(upperbits);
+ 368:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_byte(lowerbits); 
+ 369:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(lowerbits);
+ 370:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 371:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_i2c_stop();
+ 372:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 373:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 374:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** uint16_t num2lcdbyte(unsigned char num){
+ 668               		.stabn	68,0,374,.LM82-.LFBB11
+ 669               	.LM82:
+ 670               	.LFBB11:
+ 671               	/* prologue: function */
+ 672               	/* frame size = 0 */
+ 673               	/* stack size = 0 */
+ 674               	.L__stack_usage = 0
+ 375:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	// D7 D6 D5 D4   X  E  RW RS
+ 376:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	// P7 P6 P5 P4   P3 P2 P1 P0
+ 377:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 378:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 0) return 0x3101;
+ 675               		.stabn	68,0,378,.LM83-.LFBB11
+ 676               	.LM83:
+ 677 01d6 8823      		tst r24
+ 678 01d8 01F0      		breq .L59
+ 379:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 1) return 0x3111;
+ 679               		.stabn	68,0,379,.LM84-.LFBB11
+ 680               	.LM84:
+ 681 01da 8130      		cpi r24,lo8(1)
+ 682 01dc 01F0      		breq .L60
+ 380:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 2) return 0x3121;
+ 683               		.stabn	68,0,380,.LM85-.LFBB11
+ 684               	.LM85:
+ 685 01de 8230      		cpi r24,lo8(2)
+ 686 01e0 01F0      		breq .L61
+ 381:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 3) return 0x3131;
+ 687               		.stabn	68,0,381,.LM86-.LFBB11
+ 688               	.LM86:
+ 689 01e2 8330      		cpi r24,lo8(3)
+ 690 01e4 01F0      		breq .L62
+ 382:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 4) return 0x3141;
+ 691               		.stabn	68,0,382,.LM87-.LFBB11
+ 692               	.LM87:
+ 693 01e6 8430      		cpi r24,lo8(4)
+ 694 01e8 01F0      		breq .L63
+ 383:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 5) return 0x3151;
+ 695               		.stabn	68,0,383,.LM88-.LFBB11
+ 696               	.LM88:
+ 697 01ea 8530      		cpi r24,lo8(5)
+ 698 01ec 01F0      		breq .L64
+ 384:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 6) return 0x3161;
+ 699               		.stabn	68,0,384,.LM89-.LFBB11
+ 700               	.LM89:
+ 701 01ee 8630      		cpi r24,lo8(6)
+ 702 01f0 01F0      		breq .L65
+ 385:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 7) return 0x3171;
+ 703               		.stabn	68,0,385,.LM90-.LFBB11
+ 704               	.LM90:
+ 705 01f2 8730      		cpi r24,lo8(7)
+ 706 01f4 01F0      		breq .L66
+ 707               	.LBB52:
+ 708               	.LBB53:
+ 386:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 8) return 0x3181;
+ 709               		.stabn	68,0,386,.LM91-.LFBB11
+ 710               	.LM91:
+ 711 01f6 8830      		cpi r24,lo8(8)
+ 712 01f8 01F0      		breq .L67
+ 387:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 9) return 0x3191;
+ 713               		.stabn	68,0,387,.LM92-.LFBB11
+ 714               	.LM92:
+ 715 01fa 8930      		cpi r24,lo8(9)
+ 716 01fc 01F0      		breq .L68
+ 388:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 389:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	return -1;
+ 717               		.stabn	68,0,389,.LM93-.LFBB11
+ 718               	.LM93:
+ 719 01fe 8FEF      		ldi r24,lo8(-1)
+ 720 0200 9FEF      		ldi r25,lo8(-1)
+ 721 0202 0895      		ret
+ 722               	.L59:
+ 723               	.LBE53:
+ 724               	.LBE52:
+ 378:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 1) return 0x3111;
+ 725               		.stabn	68,0,378,.LM94-.LFBB11
+ 726               	.LM94:
+ 727 0204 81E0      		ldi r24,lo8(1)
+ 728 0206 91E3      		ldi r25,lo8(49)
+ 729 0208 0895      		ret
+ 730               	.L60:
+ 379:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 2) return 0x3121;
+ 731               		.stabn	68,0,379,.LM95-.LFBB11
+ 732               	.LM95:
+ 733 020a 81E1      		ldi r24,lo8(17)
+ 734 020c 91E3      		ldi r25,lo8(49)
+ 735 020e 0895      		ret
+ 736               	.L61:
+ 380:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 3) return 0x3131;
+ 737               		.stabn	68,0,380,.LM96-.LFBB11
+ 738               	.LM96:
+ 739 0210 81E2      		ldi r24,lo8(33)
+ 740 0212 91E3      		ldi r25,lo8(49)
+ 741 0214 0895      		ret
+ 742               	.L62:
+ 381:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 4) return 0x3141;
+ 743               		.stabn	68,0,381,.LM97-.LFBB11
+ 744               	.LM97:
+ 745 0216 81E3      		ldi r24,lo8(49)
+ 746 0218 91E3      		ldi r25,lo8(49)
+ 747 021a 0895      		ret
+ 748               	.L63:
+ 382:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 5) return 0x3151;
+ 749               		.stabn	68,0,382,.LM98-.LFBB11
+ 750               	.LM98:
+ 751 021c 81E4      		ldi r24,lo8(65)
+ 752 021e 91E3      		ldi r25,lo8(49)
+ 753 0220 0895      		ret
+ 754               	.L64:
+ 383:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 6) return 0x3161;
+ 755               		.stabn	68,0,383,.LM99-.LFBB11
+ 756               	.LM99:
+ 757 0222 81E5      		ldi r24,lo8(81)
+ 758 0224 91E3      		ldi r25,lo8(49)
+ 759 0226 0895      		ret
+ 760               	.L65:
+ 384:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 7) return 0x3171;
+ 761               		.stabn	68,0,384,.LM100-.LFBB11
+ 762               	.LM100:
+ 763 0228 81E6      		ldi r24,lo8(97)
+ 764 022a 91E3      		ldi r25,lo8(49)
+ 765 022c 0895      		ret
+ 766               	.L66:
+ 385:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 8) return 0x3181;
+ 767               		.stabn	68,0,385,.LM101-.LFBB11
+ 768               	.LM101:
+ 769 022e 81E7      		ldi r24,lo8(113)
+ 770 0230 91E3      		ldi r25,lo8(49)
+ 771 0232 0895      		ret
+ 772               	.L67:
+ 773               	.LBB55:
+ 774               	.LBB54:
+ 386:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(num == 9) return 0x3191;
+ 775               		.stabn	68,0,386,.LM102-.LFBB11
+ 776               	.LM102:
+ 777 0234 81E8      		ldi r24,lo8(-127)
+ 778 0236 91E3      		ldi r25,lo8(49)
+ 779 0238 0895      		ret
+ 780               	.L68:
+ 387:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 781               		.stabn	68,0,387,.LM103-.LFBB11
+ 782               	.LM103:
+ 783 023a 81E9      		ldi r24,lo8(-111)
+ 784 023c 91E3      		ldi r25,lo8(49)
+ 785               	.LBE54:
+ 786               	.LBE55:
+ 390:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 391:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 787               		.stabn	68,0,391,.LM104-.LFBB11
+ 788               	.LM104:
+ 789 023e 0895      		ret
+ 790               		.size	num2lcdbyte, .-num2lcdbyte
+ 791               	.Lscope11:
+ 792               		.stabs	"",36,0,0,.Lscope11-.LFBB11
+ 793               		.stabd	78,0,0
+ 794               		.stabs	"write_AT24Cxx_i2c_LCDAddressing:F(0,49)",36,0,393,write_AT24Cxx_i2c_LCDAddressing
+ 795               		.stabs	"byte:P(0,13)",64,0,393,24
+ 796               	.global	write_AT24Cxx_i2c_LCDAddressing
+ 797               		.type	write_AT24Cxx_i2c_LCDAddressing, @function
+ 798               	write_AT24Cxx_i2c_LCDAddressing:
+ 799               		.stabd	46,0,0
+ 392:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** //====================================================
+ 393:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void write_AT24Cxx_i2c_LCDAddressing(unsigned char byte){
+ 800               		.stabn	68,0,393,.LM105-.LFBB12
+ 801               	.LM105:
+ 802               	.LFBB12:
+ 803               	/* prologue: function */
+ 804               	/* frame size = 0 */
+ 805               	/* stack size = 0 */
+ 806               	.L__stack_usage = 0
+ 807               		.stabn	68,0,393,.LM106-.LFBB12
+ 808               	.LM106:
+ 809 0240 28E0      		ldi r18,lo8(8)
+ 810 0242 30E0      		ldi r19,0
+ 811               	.L72:
+ 812               	.LBB56:
+ 394:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 395:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	
+ 396:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	for(int i = 0; i <8; i++){
+ 397:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		
+ 398:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		if(byte & 0x80) AT24Cxx_SDA_HIGH(); //MSB
+ 813               		.stabn	68,0,398,.LM107-.LFBB12
+ 814               	.LM107:
+ 815 0244 87FF      		sbrs r24,7
+ 816 0246 00C0      		rjmp .L70
+ 817               		.stabn	68,0,398,.LM108-.LFBB12
+ 818               	.LM108:
+ 819 0248 449A      		sbi 0x8,4
+ 820 024a 00C0      		rjmp .L71
+ 821               	.L70:
+ 399:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		else AT24Cxx_SDA_LOW(); //Clear
+ 822               		.stabn	68,0,399,.LM109-.LFBB12
+ 823               	.LM109:
+ 824 024c 4498      		cbi 0x8,4
+ 825               	.L71:
+ 400:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		
+ 401:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		AT24Cxx_SCL_HIGH(); //clock data
+ 826               		.stabn	68,0,401,.LM110-.LFBB12
+ 827               	.LM110:
+ 828 024e 459A      		sbi 0x8,5
+ 402:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		byte = byte << 1;
+ 829               		.stabn	68,0,402,.LM111-.LFBB12
+ 830               	.LM111:
+ 831 0250 880F      		lsl r24
+ 403:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		AT24Cxx_SCL_LOW();
+ 832               		.stabn	68,0,403,.LM112-.LFBB12
+ 833               	.LM112:
+ 834 0252 4598      		cbi 0x8,5
+ 835 0254 2150      		subi r18,1
+ 836 0256 3109      		sbc r19,__zero_reg__
+ 396:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		
+ 837               		.stabn	68,0,396,.LM113-.LFBB12
+ 838               	.LM113:
+ 839 0258 01F4      		brne .L72
+ 840               	.LBE56:
+ 404:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		
+ 405:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	}
+ 406:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SDA_LOW();
+ 841               		.stabn	68,0,406,.LM114-.LFBB12
+ 842               	.LM114:
+ 843 025a 4498      		cbi 0x8,4
+ 407:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SCL_HIGH();
+ 844               		.stabn	68,0,407,.LM115-.LFBB12
+ 845               	.LM115:
+ 846 025c 459A      		sbi 0x8,5
+ 408:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SCL_LOW();
+ 847               		.stabn	68,0,408,.LM116-.LFBB12
+ 848               	.LM116:
+ 849 025e 4598      		cbi 0x8,5
+ 850 0260 0895      		ret
+ 851               		.size	write_AT24Cxx_i2c_LCDAddressing, .-write_AT24Cxx_i2c_LCDAddressing
+ 852               	.Lscope12:
+ 853               		.stabs	"",36,0,0,.Lscope12-.LFBB12
+ 854               		.stabd	78,0,0
+ 855               		.stabs	"AT24Cxx_i2c_start:F(0,49)",36,0,410,AT24Cxx_i2c_start
+ 856               	.global	AT24Cxx_i2c_start
+ 857               		.type	AT24Cxx_i2c_start, @function
+ 858               	AT24Cxx_i2c_start:
+ 859               		.stabd	46,0,0
+ 409:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 410:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void AT24Cxx_i2c_start(void) { //start condition
+ 860               		.stabn	68,0,410,.LM117-.LFBB13
+ 861               	.LM117:
+ 862               	.LFBB13:
+ 863               	/* prologue: function */
+ 864               	/* frame size = 0 */
+ 865               	/* stack size = 0 */
+ 866               	.L__stack_usage = 0
+ 411:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	
+ 412:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SDA_LOW(); //clear SDA
+ 867               		.stabn	68,0,412,.LM118-.LFBB13
+ 868               	.LM118:
+ 869 0262 4498      		cbi 0x8,4
+ 413:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SCL_LOW();
+ 870               		.stabn	68,0,413,.LM119-.LFBB13
+ 871               	.LM119:
+ 872 0264 4598      		cbi 0x8,5
+ 873 0266 0895      		ret
+ 874               		.size	AT24Cxx_i2c_start, .-AT24Cxx_i2c_start
+ 875               	.Lscope13:
+ 876               		.stabs	"",36,0,0,.Lscope13-.LFBB13
+ 877               		.stabd	78,0,0
+ 878               		.stabs	"AT24Cxx_ACK_send:F(0,49)",36,0,417,AT24Cxx_ACK_send
+ 879               		.stabs	"ack_data:P(0,13)",64,0,417,24
+ 880               	.global	AT24Cxx_ACK_send
+ 881               		.type	AT24Cxx_ACK_send, @function
+ 882               	AT24Cxx_ACK_send:
+ 883               		.stabd	46,0,0
+ 414:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 415:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 416:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 417:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void AT24Cxx_ACK_send(unsigned char ack_data){
+ 884               		.stabn	68,0,417,.LM120-.LFBB14
+ 885               	.LM120:
+ 886               	.LFBB14:
+ 887               	/* prologue: function */
+ 888               	/* frame size = 0 */
+ 889               	/* stack size = 0 */
+ 890               	.L__stack_usage = 0
+ 418:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(ack_data) AT24Cxx_SDA_HIGH(); //NACK
+ 891               		.stabn	68,0,418,.LM121-.LFBB14
+ 892               	.LM121:
+ 893 0268 8823      		tst r24
+ 894 026a 01F0      		breq .L76
+ 895               		.stabn	68,0,418,.LM122-.LFBB14
+ 896               	.LM122:
+ 897 026c 449A      		sbi 0x8,4
+ 898 026e 00C0      		rjmp .L77
+ 899               	.L76:
+ 419:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	else AT24Cxx_SDA_LOW(); //ACK
+ 900               		.stabn	68,0,419,.LM123-.LFBB14
+ 901               	.LM123:
+ 902 0270 4498      		cbi 0x8,4
+ 903               	.L77:
+ 420:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SDA_OUT(); //set SDA to Output
+ 904               		.stabn	68,0,420,.LM124-.LFBB14
+ 905               	.LM124:
+ 906 0272 3C9A      		sbi 0x7,4
+ 421:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SCL_HIGH(); //9th clk rising edge
+ 907               		.stabn	68,0,421,.LM125-.LFBB14
+ 908               	.LM125:
+ 909 0274 459A      		sbi 0x8,5
+ 422:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SCL_LOW();
+ 910               		.stabn	68,0,422,.LM126-.LFBB14
+ 911               	.LM126:
+ 912 0276 4598      		cbi 0x8,5
+ 913 0278 0895      		ret
+ 914               		.size	AT24Cxx_ACK_send, .-AT24Cxx_ACK_send
+ 915               	.Lscope14:
+ 916               		.stabs	"",36,0,0,.Lscope14-.LFBB14
+ 917               		.stabd	78,0,0
+ 918               		.stabs	"AT24Cxx_i2c_stop:F(0,49)",36,0,425,AT24Cxx_i2c_stop
+ 919               	.global	AT24Cxx_i2c_stop
+ 920               		.type	AT24Cxx_i2c_stop, @function
+ 921               	AT24Cxx_i2c_stop:
+ 922               		.stabd	46,0,0
+ 423:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 424:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 425:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void AT24Cxx_i2c_stop(void){
+ 923               		.stabn	68,0,425,.LM127-.LFBB15
+ 924               	.LM127:
+ 925               	.LFBB15:
+ 926               	/* prologue: function */
+ 927               	/* frame size = 0 */
+ 928               	/* stack size = 0 */
+ 929               	.L__stack_usage = 0
+ 426:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	//AT24Cxx_SDA_OUT(); //set SDA to output
+ 427:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SDA_LOW(); //clear SDA
+ 930               		.stabn	68,0,427,.LM128-.LFBB15
+ 931               	.LM128:
+ 932 027a 4498      		cbi 0x8,4
+ 428:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	
+ 429:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	
+ 430:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SCL_HIGH(); // set SCL High
+ 933               		.stabn	68,0,430,.LM129-.LFBB15
+ 934               	.LM129:
+ 935 027c 459A      		sbi 0x8,5
+ 431:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_SDA_HIGH(); // set SDA High
+ 936               		.stabn	68,0,431,.LM130-.LFBB15
+ 937               	.LM130:
+ 938 027e 449A      		sbi 0x8,4
+ 939 0280 0895      		ret
+ 940               		.size	AT24Cxx_i2c_stop, .-AT24Cxx_i2c_stop
+ 941               	.Lscope15:
+ 942               		.stabs	"",36,0,0,.Lscope15-.LFBB15
+ 943               		.stabd	78,0,0
+ 944               		.stabs	"write_AT24Cxx_i2c_byte:F(0,49)",36,0,435,write_AT24Cxx_i2c_byte
+ 945               		.stabs	"byte:P(0,13)",64,0,435,24
+ 946               	.global	write_AT24Cxx_i2c_byte
+ 947               		.type	write_AT24Cxx_i2c_byte, @function
+ 948               	write_AT24Cxx_i2c_byte:
+ 949               		.stabd	46,0,0
+ 432:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 433:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 434:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 435:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void write_AT24Cxx_i2c_byte(unsigned char byte){
+ 950               		.stabn	68,0,435,.LM131-.LFBB16
+ 951               	.LM131:
+ 952               	.LFBB16:
+ 953               	/* prologue: function */
+ 954               	/* frame size = 0 */
+ 955               	/* stack size = 0 */
+ 956               	.L__stack_usage = 0
+ 436:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(!(byte & E_BIT)) byte |= E_BIT;
+ 957               		.stabn	68,0,436,.LM132-.LFBB16
+ 958               	.LM132:
+ 959 0282 8460      		ori r24,lo8(4)
+ 437:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	if(!(byte & B_BIT)) byte |= B_BIT;
+ 960               		.stabn	68,0,437,.LM133-.LFBB16
+ 961               	.LM133:
+ 962 0284 8860      		ori r24,lo8(8)
+ 438:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_LCDAddressing(byte);
+ 963               		.stabn	68,0,438,.LM134-.LFBB16
+ 964               	.LM134:
+ 965 0286 0C94 0000 		jmp write_AT24Cxx_i2c_LCDAddressing
+ 966               		.size	write_AT24Cxx_i2c_byte, .-write_AT24Cxx_i2c_byte
+ 967               	.Lscope16:
+ 968               		.stabs	"",36,0,0,.Lscope16-.LFBB16
+ 969               		.stabd	78,0,0
+ 970               		.stabs	"LCD_Write:F(0,49)",36,0,347,LCD_Write
+ 971               		.stabs	"data:P(0,13)",64,0,347,28
+ 972               	.global	LCD_Write
+ 973               		.type	LCD_Write, @function
+ 974               	LCD_Write:
+ 975               		.stabd	46,0,0
+ 347:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	
+ 976               		.stabn	68,0,347,.LM135-.LFBB17
+ 977               	.LM135:
+ 978               	.LFBB17:
+ 979 028a CF93      		push r28
+ 980               	/* prologue: function */
+ 981               	/* frame size = 0 */
+ 982               	/* stack size = 1 */
+ 983               	.L__stack_usage = 1
+ 984 028c C82F      		mov r28,r24
+ 353:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(data);
+ 985               		.stabn	68,0,353,.LM136-.LFBB17
+ 986               	.LM136:
+ 987 028e 0E94 0000 		call write_AT24Cxx_i2c_byte
+ 988               	.LBB57:
+ 989               	.LBB58:
+ 439:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 440:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 441:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** void LCD_NEBIT(unsigned char byte){
+ 442:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_LCDAddressing(byte);
+ 990               		.stabn	68,0,442,.LM137-.LFBB17
+ 991               	.LM137:
+ 992 0292 8C2F      		mov r24,r28
+ 993               	/* epilogue start */
+ 994               	.LBE58:
+ 995               	.LBE57:
+ 355:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 996               		.stabn	68,0,355,.LM138-.LFBB17
+ 997               	.LM138:
+ 998 0294 CF91      		pop r28
+ 999               	.LBB60:
+ 1000               	.LBB59:
+ 1001               		.stabn	68,0,442,.LM139-.LFBB17
+ 1002               	.LM139:
+ 1003 0296 0C94 0000 		jmp write_AT24Cxx_i2c_LCDAddressing
+ 1004               	.LBE59:
+ 1005               	.LBE60:
+ 1006               		.size	LCD_Write, .-LCD_Write
+ 1007               	.Lscope17:
+ 1008               		.stabs	"",36,0,0,.Lscope17-.LFBB17
+ 1009               		.stabd	78,0,0
+ 1010               		.stabs	"I2C_LCD_init:F(0,49)",36,0,129,I2C_LCD_init
+ 1011               		.stabs	"address:P(0,13)",64,0,129,24
+ 1012               	.global	I2C_LCD_init
+ 1013               		.type	I2C_LCD_init, @function
+ 1014               	I2C_LCD_init:
+ 1015               		.stabd	46,0,0
+ 129:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     _delay_ms(10);
+ 1016               		.stabn	68,0,129,.LM140-.LFBB18
+ 1017               	.LM140:
+ 1018               	.LFBB18:
+ 1019               	/* prologue: function */
+ 1020               	/* frame size = 0 */
+ 1021               	/* stack size = 0 */
+ 1022               	.L__stack_usage = 0
+ 1023               	.LBB61:
+ 1024               	.LBB62:
+ 1025               		.stabs	"/usr/lib/avr/include/util/delay.h",132,0,0,.Ltext1
+ 1026               	.Ltext1:
+   1:/usr/lib/avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
+   2:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
+   3:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
+   4:/usr/lib/avr/include/util/delay.h ****    All rights reserved.
+   5:/usr/lib/avr/include/util/delay.h **** 
+   6:/usr/lib/avr/include/util/delay.h ****    Redistribution and use in source and binary forms, with or without
+   7:/usr/lib/avr/include/util/delay.h ****    modification, are permitted provided that the following conditions are met:
+   8:/usr/lib/avr/include/util/delay.h **** 
+   9:/usr/lib/avr/include/util/delay.h ****    * Redistributions of source code must retain the above copyright
+  10:/usr/lib/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer.
+  11:/usr/lib/avr/include/util/delay.h **** 
+  12:/usr/lib/avr/include/util/delay.h ****    * Redistributions in binary form must reproduce the above copyright
+  13:/usr/lib/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer in
+  14:/usr/lib/avr/include/util/delay.h ****      the documentation and/or other materials provided with the
+  15:/usr/lib/avr/include/util/delay.h ****      distribution.
+  16:/usr/lib/avr/include/util/delay.h **** 
+  17:/usr/lib/avr/include/util/delay.h ****    * Neither the name of the copyright holders nor the names of
+  18:/usr/lib/avr/include/util/delay.h ****      contributors may be used to endorse or promote products derived
+  19:/usr/lib/avr/include/util/delay.h ****      from this software without specific prior written permission.
+  20:/usr/lib/avr/include/util/delay.h **** 
+  21:/usr/lib/avr/include/util/delay.h ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:/usr/lib/avr/include/util/delay.h ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:/usr/lib/avr/include/util/delay.h ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:/usr/lib/avr/include/util/delay.h ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  25:/usr/lib/avr/include/util/delay.h ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:/usr/lib/avr/include/util/delay.h ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:/usr/lib/avr/include/util/delay.h ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:/usr/lib/avr/include/util/delay.h ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:/usr/lib/avr/include/util/delay.h ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:/usr/lib/avr/include/util/delay.h ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:/usr/lib/avr/include/util/delay.h ****   POSSIBILITY OF SUCH DAMAGE. */
+  32:/usr/lib/avr/include/util/delay.h **** 
+  33:/usr/lib/avr/include/util/delay.h **** /* $Id$ */
+  34:/usr/lib/avr/include/util/delay.h **** 
+  35:/usr/lib/avr/include/util/delay.h **** #ifndef _UTIL_DELAY_H_
+  36:/usr/lib/avr/include/util/delay.h **** #define _UTIL_DELAY_H_ 1
+  37:/usr/lib/avr/include/util/delay.h **** 
+  38:/usr/lib/avr/include/util/delay.h **** #ifndef __DOXYGEN__
+  39:/usr/lib/avr/include/util/delay.h **** #  ifndef __HAS_DELAY_CYCLES
+  40:/usr/lib/avr/include/util/delay.h **** #    define __HAS_DELAY_CYCLES 1
+  41:/usr/lib/avr/include/util/delay.h **** #  endif
+  42:/usr/lib/avr/include/util/delay.h **** #endif  /* __DOXYGEN__ */
+  43:/usr/lib/avr/include/util/delay.h **** 
+  44:/usr/lib/avr/include/util/delay.h **** #include <inttypes.h>
+  45:/usr/lib/avr/include/util/delay.h **** #include <util/delay_basic.h>
+  46:/usr/lib/avr/include/util/delay.h **** #include <math.h>
+  47:/usr/lib/avr/include/util/delay.h **** 
+  48:/usr/lib/avr/include/util/delay.h **** /** \file */
+  49:/usr/lib/avr/include/util/delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
+  50:/usr/lib/avr/include/util/delay.h ****     \code
+  51:/usr/lib/avr/include/util/delay.h ****     #define F_CPU 1000000UL  // 1 MHz
+  52:/usr/lib/avr/include/util/delay.h ****     //#define F_CPU 14.7456E6
+  53:/usr/lib/avr/include/util/delay.h ****     #include <util/delay.h>
+  54:/usr/lib/avr/include/util/delay.h ****     \endcode
+  55:/usr/lib/avr/include/util/delay.h **** 
+  56:/usr/lib/avr/include/util/delay.h ****     \note As an alternative method, it is possible to pass the
+  57:/usr/lib/avr/include/util/delay.h ****     F_CPU macro down to the compiler from the Makefile.
+  58:/usr/lib/avr/include/util/delay.h ****     Obviously, in that case, no \c \#define statement should be
+  59:/usr/lib/avr/include/util/delay.h ****     used.
+  60:/usr/lib/avr/include/util/delay.h **** 
+  61:/usr/lib/avr/include/util/delay.h ****     The functions in this header file are wrappers around the basic
+  62:/usr/lib/avr/include/util/delay.h ****     busy-wait functions from <util/delay_basic.h>.  They are meant as
+  63:/usr/lib/avr/include/util/delay.h ****     convenience functions where actual time values can be specified
+  64:/usr/lib/avr/include/util/delay.h ****     rather than a number of cycles to wait for.  The idea behind is
+  65:/usr/lib/avr/include/util/delay.h ****     that compile-time constant expressions will be eliminated by
+  66:/usr/lib/avr/include/util/delay.h ****     compiler optimization so floating-point expressions can be used
+  67:/usr/lib/avr/include/util/delay.h ****     to calculate the number of delay cycles needed based on the CPU
+  68:/usr/lib/avr/include/util/delay.h ****     frequency passed by the macro F_CPU.
+  69:/usr/lib/avr/include/util/delay.h **** 
+  70:/usr/lib/avr/include/util/delay.h ****     \note In order for these functions to work as intended, compiler
+  71:/usr/lib/avr/include/util/delay.h ****     optimizations <em>must</em> be enabled, and the delay time
+  72:/usr/lib/avr/include/util/delay.h ****     <em>must</em> be an expression that is a known constant at
+  73:/usr/lib/avr/include/util/delay.h ****     compile-time.  If these requirements are not met, the resulting
+  74:/usr/lib/avr/include/util/delay.h ****     delay will be much longer (and basically unpredictable), and
+  75:/usr/lib/avr/include/util/delay.h ****     applications that otherwise do not use floating-point calculations
+  76:/usr/lib/avr/include/util/delay.h ****     will experience severe code bloat by the floating-point library
+  77:/usr/lib/avr/include/util/delay.h ****     routines linked into the application.
+  78:/usr/lib/avr/include/util/delay.h **** 
+  79:/usr/lib/avr/include/util/delay.h ****     The functions available allow the specification of microsecond, and
+  80:/usr/lib/avr/include/util/delay.h ****     millisecond delays directly, using the application-supplied macro
+  81:/usr/lib/avr/include/util/delay.h ****     F_CPU as the CPU clock frequency (in Hertz).
+  82:/usr/lib/avr/include/util/delay.h **** 
+  83:/usr/lib/avr/include/util/delay.h **** */
+  84:/usr/lib/avr/include/util/delay.h **** 
+  85:/usr/lib/avr/include/util/delay.h **** #if !defined(__DOXYGEN__)
+  86:/usr/lib/avr/include/util/delay.h **** static __inline__ void _delay_us(double __us) __attribute__((__always_inline__));
+  87:/usr/lib/avr/include/util/delay.h **** static __inline__ void _delay_ms(double __ms) __attribute__((__always_inline__));
+  88:/usr/lib/avr/include/util/delay.h **** #endif
+  89:/usr/lib/avr/include/util/delay.h **** 
+  90:/usr/lib/avr/include/util/delay.h **** #ifndef F_CPU
+  91:/usr/lib/avr/include/util/delay.h **** /* prevent compiler error by supplying a default */
+  92:/usr/lib/avr/include/util/delay.h **** # warning "F_CPU not defined for <util/delay.h>"
+  93:/usr/lib/avr/include/util/delay.h **** /** \ingroup util_delay
+  94:/usr/lib/avr/include/util/delay.h ****     \def F_CPU
+  95:/usr/lib/avr/include/util/delay.h ****     \brief CPU frequency in Hz
+  96:/usr/lib/avr/include/util/delay.h **** 
+  97:/usr/lib/avr/include/util/delay.h ****     The macro F_CPU specifies the CPU frequency to be considered by
+  98:/usr/lib/avr/include/util/delay.h ****     the delay macros.  This macro is normally supplied by the
+  99:/usr/lib/avr/include/util/delay.h ****     environment (e.g. from within a project header, or the project's
+ 100:/usr/lib/avr/include/util/delay.h ****     Makefile).  The value 1 MHz here is only provided as a "vanilla"
+ 101:/usr/lib/avr/include/util/delay.h ****     fallback if no such user-provided definition could be found.
+ 102:/usr/lib/avr/include/util/delay.h **** 
+ 103:/usr/lib/avr/include/util/delay.h ****     In terms of the delay functions, the CPU frequency can be given as
+ 104:/usr/lib/avr/include/util/delay.h ****     a floating-point constant (e.g. 3.6864E6 for 3.6864 MHz).
+ 105:/usr/lib/avr/include/util/delay.h ****     However, the macros in <util/setbaud.h> require it to be an
+ 106:/usr/lib/avr/include/util/delay.h ****     integer value.
+ 107:/usr/lib/avr/include/util/delay.h ****  */
+ 108:/usr/lib/avr/include/util/delay.h **** # define F_CPU 1000000UL
+ 109:/usr/lib/avr/include/util/delay.h **** #endif
+ 110:/usr/lib/avr/include/util/delay.h **** 
+ 111:/usr/lib/avr/include/util/delay.h **** #ifndef __OPTIMIZE__
+ 112:/usr/lib/avr/include/util/delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+ 113:/usr/lib/avr/include/util/delay.h **** #endif
+ 114:/usr/lib/avr/include/util/delay.h **** 
+ 115:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 116:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 117:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 118:/usr/lib/avr/include/util/delay.h **** #  include <math.h>
+ 119:/usr/lib/avr/include/util/delay.h **** #endif
+ 120:/usr/lib/avr/include/util/delay.h **** 
+ 121:/usr/lib/avr/include/util/delay.h **** /**
+ 122:/usr/lib/avr/include/util/delay.h ****    \ingroup util_delay
+ 123:/usr/lib/avr/include/util/delay.h **** 
+ 124:/usr/lib/avr/include/util/delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
+ 125:/usr/lib/avr/include/util/delay.h **** 
+ 126:/usr/lib/avr/include/util/delay.h ****    The macro F_CPU is supposed to be defined to a
+ 127:/usr/lib/avr/include/util/delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 128:/usr/lib/avr/include/util/delay.h **** 
+ 129:/usr/lib/avr/include/util/delay.h ****    The maximal possible delay is 262.14 ms / F_CPU in MHz.
+ 130:/usr/lib/avr/include/util/delay.h **** 
+ 131:/usr/lib/avr/include/util/delay.h ****    When the user request delay which exceed the maximum possible one,
+ 132:/usr/lib/avr/include/util/delay.h ****    _delay_ms() provides a decreased resolution functionality. In this
+ 133:/usr/lib/avr/include/util/delay.h ****    mode _delay_ms() will work with a resolution of 1/10 ms, providing
+ 134:/usr/lib/avr/include/util/delay.h ****    delays up to 6.5535 seconds (independent from CPU frequency).  The
+ 135:/usr/lib/avr/include/util/delay.h ****    user will not be informed about decreased resolution.
+ 136:/usr/lib/avr/include/util/delay.h **** 
+ 137:/usr/lib/avr/include/util/delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 138:/usr/lib/avr/include/util/delay.h ****    support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+ 139:/usr/lib/avr/include/util/delay.h ****    values greater than the maximal possible delay, overflows results in
+ 140:/usr/lib/avr/include/util/delay.h ****    no delay i.e., 0ms.
+ 141:/usr/lib/avr/include/util/delay.h **** 
+ 142:/usr/lib/avr/include/util/delay.h ****    Conversion of \c __ms into clock cycles may not always result in
+ 143:/usr/lib/avr/include/util/delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 144:/usr/lib/avr/include/util/delay.h ****    integer. This ensures that the user gets at least \c __ms
+ 145:/usr/lib/avr/include/util/delay.h ****    microseconds of delay.
+ 146:/usr/lib/avr/include/util/delay.h **** 
+ 147:/usr/lib/avr/include/util/delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 148:/usr/lib/avr/include/util/delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 149:/usr/lib/avr/include/util/delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 150:/usr/lib/avr/include/util/delay.h ****    respectively.
+ 151:/usr/lib/avr/include/util/delay.h **** 
+ 152:/usr/lib/avr/include/util/delay.h ****    \note
+ 153:/usr/lib/avr/include/util/delay.h **** 
+ 154:/usr/lib/avr/include/util/delay.h ****    The implementation of _delay_ms() based on
+ 155:/usr/lib/avr/include/util/delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 156:/usr/lib/avr/include/util/delay.h ****    implementations.  In order to get functionality backward compatible
+ 157:/usr/lib/avr/include/util/delay.h ****    with previous versions, the macro \c "__DELAY_BACKWARD_COMPATIBLE__"
+ 158:/usr/lib/avr/include/util/delay.h ****    must be defined before including this header file. Also, the
+ 159:/usr/lib/avr/include/util/delay.h ****    backward compatible algorithm will be chosen if the code is
+ 160:/usr/lib/avr/include/util/delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 161:/usr/lib/avr/include/util/delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 162:/usr/lib/avr/include/util/delay.h ****    not available to the compiler then.
+ 163:/usr/lib/avr/include/util/delay.h **** 
+ 164:/usr/lib/avr/include/util/delay.h ****  */
+ 165:/usr/lib/avr/include/util/delay.h **** void
+ 166:/usr/lib/avr/include/util/delay.h **** _delay_ms(double __ms)
+ 167:/usr/lib/avr/include/util/delay.h **** {
+ 168:/usr/lib/avr/include/util/delay.h **** 	double __tmp ;
+ 169:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 170:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 171:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 172:/usr/lib/avr/include/util/delay.h **** 	uint32_t __ticks_dc;
+ 173:/usr/lib/avr/include/util/delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 174:/usr/lib/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+ 175:/usr/lib/avr/include/util/delay.h **** 
+ 176:/usr/lib/avr/include/util/delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 177:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 178:/usr/lib/avr/include/util/delay.h **** 
+ 179:/usr/lib/avr/include/util/delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 180:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 181:/usr/lib/avr/include/util/delay.h **** 
+ 182:/usr/lib/avr/include/util/delay.h **** 	#else
+ 183:/usr/lib/avr/include/util/delay.h **** 		//round up by default
+ 184:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 185:/usr/lib/avr/include/util/delay.h **** 	#endif
+ 186:/usr/lib/avr/include/util/delay.h **** 
+ 187:/usr/lib/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 1027               		.stabn	68,0,187,.LM141-.LFBB18
+ 1028               	.LM141:
+ 1029 029a EFE8      		ldi r30,lo8(399)
+ 1030 029c F1E0      		ldi r31,hi8(399)
+ 1031 029e 3197      	1:	sbiw r30,1
+ 1032 02a0 01F4      		brne 1b
+ 1033 02a2 00C0      		rjmp .
+ 1034 02a4 0000      		nop
+ 1035               	.LBE62:
+ 1036               	.LBE61:
+ 1037               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c",132,0,0,.Ltext2
+ 1038               	.Ltext2:
+ 131:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24CxxDDR |= (AT24Cxx_SDA + AT24Cxx_SCL);
+ 1039               		.stabn	68,0,131,.LM142-.LFBB18
+ 1040               	.LM142:
+ 1041 02a6 98B1      		in r25,0x8
+ 1042 02a8 9063      		ori r25,lo8(48)
+ 1043 02aa 98B9      		out 0x8,r25
+ 132:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     //Timer1_delay(2);
+ 1044               		.stabn	68,0,132,.LM143-.LFBB18
+ 1045               	.LM143:
+ 1046 02ac 97B1      		in r25,0x7
+ 1047 02ae 9063      		ori r25,lo8(48)
+ 1048 02b0 97B9      		out 0x7,r25
+ 134:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	addr = address;
+ 1049               		.stabn	68,0,134,.LM144-.LFBB18
+ 1050               	.LM144:
+ 1051 02b2 4598      		cbi 0x8,5
+ 135:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_i2c_start();
+ 1052               		.stabn	68,0,135,.LM145-.LFBB18
+ 1053               	.LM145:
+ 1054 02b4 8093 0000 		sts addr,r24
+ 136:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_LCDAddressing((addr << 1)); //write mode
+ 1055               		.stabn	68,0,136,.LM146-.LFBB18
+ 1056               	.LM146:
+ 1057 02b8 0E94 0000 		call AT24Cxx_i2c_start
+ 137:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_Write(0x20);
+ 1058               		.stabn	68,0,137,.LM147-.LFBB18
+ 1059               	.LM147:
+ 1060 02bc 8091 0000 		lds r24,addr
+ 1061 02c0 880F      		lsl r24
+ 1062 02c2 0E94 0000 		call write_AT24Cxx_i2c_LCDAddressing
+ 138:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	_delay_us(20);
+ 1063               		.stabn	68,0,138,.LM148-.LFBB18
+ 1064               	.LM148:
+ 1065 02c6 80E2      		ldi r24,lo8(32)
+ 1066 02c8 0E94 0000 		call LCD_Write
+ 1067               	.LBB63:
+ 1068               	.LBB64:
+ 1069               		.stabs	"/usr/lib/avr/include/util/delay.h",132,0,0,.Ltext3
+ 1070               	.Ltext3:
+ 188:/usr/lib/avr/include/util/delay.h **** 
+ 189:/usr/lib/avr/include/util/delay.h **** #else
+ 190:/usr/lib/avr/include/util/delay.h **** 	uint16_t __ticks;
+ 191:/usr/lib/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 4e3) * __ms;
+ 192:/usr/lib/avr/include/util/delay.h **** 	if (__tmp < 1.0)
+ 193:/usr/lib/avr/include/util/delay.h **** 		__ticks = 1;
+ 194:/usr/lib/avr/include/util/delay.h **** 	else if (__tmp > 65535)
+ 195:/usr/lib/avr/include/util/delay.h **** 	{
+ 196:/usr/lib/avr/include/util/delay.h **** 		//	__ticks = requested delay in 1/10 ms
+ 197:/usr/lib/avr/include/util/delay.h **** 		__ticks = (uint16_t) (__ms * 10.0);
+ 198:/usr/lib/avr/include/util/delay.h **** 		while(__ticks)
+ 199:/usr/lib/avr/include/util/delay.h **** 		{
+ 200:/usr/lib/avr/include/util/delay.h **** 			// wait 1/10 ms
+ 201:/usr/lib/avr/include/util/delay.h **** 			_delay_loop_2(((F_CPU) / 4e3) / 10);
+ 202:/usr/lib/avr/include/util/delay.h **** 			__ticks --;
+ 203:/usr/lib/avr/include/util/delay.h **** 		}
+ 204:/usr/lib/avr/include/util/delay.h **** 		return;
+ 205:/usr/lib/avr/include/util/delay.h **** 	}
+ 206:/usr/lib/avr/include/util/delay.h **** 	else
+ 207:/usr/lib/avr/include/util/delay.h **** 		__ticks = (uint16_t)__tmp;
+ 208:/usr/lib/avr/include/util/delay.h **** 	_delay_loop_2(__ticks);
+ 209:/usr/lib/avr/include/util/delay.h **** #endif
+ 210:/usr/lib/avr/include/util/delay.h **** }
+ 211:/usr/lib/avr/include/util/delay.h **** 
+ 212:/usr/lib/avr/include/util/delay.h **** /**
+ 213:/usr/lib/avr/include/util/delay.h ****    \ingroup util_delay
+ 214:/usr/lib/avr/include/util/delay.h **** 
+ 215:/usr/lib/avr/include/util/delay.h ****    Perform a delay of \c __us microseconds, using _delay_loop_1().
+ 216:/usr/lib/avr/include/util/delay.h **** 
+ 217:/usr/lib/avr/include/util/delay.h ****    The macro F_CPU is supposed to be defined to a
+ 218:/usr/lib/avr/include/util/delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 219:/usr/lib/avr/include/util/delay.h **** 
+ 220:/usr/lib/avr/include/util/delay.h ****    The maximal possible delay is 768 us / F_CPU in MHz.
+ 221:/usr/lib/avr/include/util/delay.h **** 
+ 222:/usr/lib/avr/include/util/delay.h ****    If the user requests a delay greater than the maximal possible one,
+ 223:/usr/lib/avr/include/util/delay.h ****    _delay_us() will automatically call _delay_ms() instead.  The user
+ 224:/usr/lib/avr/include/util/delay.h ****    will not be informed about this case.
+ 225:/usr/lib/avr/include/util/delay.h **** 
+ 226:/usr/lib/avr/include/util/delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 227:/usr/lib/avr/include/util/delay.h ****    support, maximal possible delay is 4294967.295 us/ F_CPU in MHz. For
+ 228:/usr/lib/avr/include/util/delay.h ****    values greater than the maximal possible delay, overflow results in
+ 229:/usr/lib/avr/include/util/delay.h ****    no delay i.e., 0us.
+ 230:/usr/lib/avr/include/util/delay.h **** 
+ 231:/usr/lib/avr/include/util/delay.h ****    Conversion of \c __us into clock cycles may not always result in
+ 232:/usr/lib/avr/include/util/delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 233:/usr/lib/avr/include/util/delay.h ****    integer. This ensures that the user gets at least \c __us
+ 234:/usr/lib/avr/include/util/delay.h ****    microseconds of delay.
+ 235:/usr/lib/avr/include/util/delay.h **** 
+ 236:/usr/lib/avr/include/util/delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 237:/usr/lib/avr/include/util/delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 238:/usr/lib/avr/include/util/delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 239:/usr/lib/avr/include/util/delay.h ****    respectively.
+ 240:/usr/lib/avr/include/util/delay.h **** 
+ 241:/usr/lib/avr/include/util/delay.h ****    \note
+ 242:/usr/lib/avr/include/util/delay.h **** 
+ 243:/usr/lib/avr/include/util/delay.h ****    The implementation of _delay_ms() based on
+ 244:/usr/lib/avr/include/util/delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 245:/usr/lib/avr/include/util/delay.h ****    implementations.  In order to get functionality backward compatible
+ 246:/usr/lib/avr/include/util/delay.h ****    with previous versions, the macro \c __DELAY_BACKWARD_COMPATIBLE__
+ 247:/usr/lib/avr/include/util/delay.h ****    must be defined before including this header file. Also, the
+ 248:/usr/lib/avr/include/util/delay.h ****    backward compatible algorithm will be chosen if the code is
+ 249:/usr/lib/avr/include/util/delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 250:/usr/lib/avr/include/util/delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 251:/usr/lib/avr/include/util/delay.h ****    not available to the compiler then.
+ 252:/usr/lib/avr/include/util/delay.h **** 
+ 253:/usr/lib/avr/include/util/delay.h ****  */
+ 254:/usr/lib/avr/include/util/delay.h **** void
+ 255:/usr/lib/avr/include/util/delay.h **** _delay_us(double __us)
+ 256:/usr/lib/avr/include/util/delay.h **** {
+ 257:/usr/lib/avr/include/util/delay.h **** 	double __tmp ;
+ 258:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 259:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 260:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 261:/usr/lib/avr/include/util/delay.h **** 	uint32_t __ticks_dc;
+ 262:/usr/lib/avr/include/util/delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 263:/usr/lib/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 264:/usr/lib/avr/include/util/delay.h **** 
+ 265:/usr/lib/avr/include/util/delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 266:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 267:/usr/lib/avr/include/util/delay.h **** 
+ 268:/usr/lib/avr/include/util/delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 269:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 270:/usr/lib/avr/include/util/delay.h **** 
+ 271:/usr/lib/avr/include/util/delay.h **** 	#else
+ 272:/usr/lib/avr/include/util/delay.h **** 		//round up by default
+ 273:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 274:/usr/lib/avr/include/util/delay.h **** 	#endif
+ 275:/usr/lib/avr/include/util/delay.h **** 
+ 276:/usr/lib/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 1071               		.stabn	68,0,276,.LM149-.LFBB18
+ 1072               	.LM149:
+ 1073 02cc 00C0      		rjmp .
+ 1074 02ce 00C0      		rjmp .
+ 1075               	.LBE64:
+ 1076               	.LBE63:
+ 1077               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c",132,0,0,.Ltext4
+ 1078               	.Ltext4:
+ 141:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 1079               		.stabn	68,0,141,.LM150-.LFBB18
+ 1080               	.LM150:
+ 1081 02d0 80E2      		ldi r24,lo8(32)
+ 1082 02d2 0E94 0000 		call LCD_Write
+ 1083               	.LBB65:
+ 1084               	.LBB66:
+ 1085               		.stabs	"/usr/lib/avr/include/util/delay.h",132,0,0,.Ltext5
+ 1086               	.Ltext5:
+ 1087               		.stabn	68,0,276,.LM151-.LFBB18
+ 1088               	.LM151:
+ 1089 02d6 00C0      		rjmp .
+ 1090 02d8 00C0      		rjmp .
+ 1091               	.LBE66:
+ 1092               	.LBE65:
+ 1093               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c",132,0,0,.Ltext6
+ 1094               	.Ltext6:
+ 143:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 1095               		.stabn	68,0,143,.LM152-.LFBB18
+ 1096               	.LM152:
+ 1097 02da 80E0      		ldi r24,0
+ 1098 02dc 0E94 0000 		call LCD_Write
+ 1099               	.LBB67:
+ 1100               	.LBB68:
+ 1101               		.stabs	"/usr/lib/avr/include/util/delay.h",132,0,0,.Ltext7
+ 1102               	.Ltext7:
+ 1103               		.stabn	68,0,276,.LM153-.LFBB18
+ 1104               	.LM153:
+ 1105 02e0 00C0      		rjmp .
+ 1106 02e2 00C0      		rjmp .
+ 1107               	.LBE68:
+ 1108               	.LBE67:
+ 1109               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c",132,0,0,.Ltext8
+ 1110               	.Ltext8:
+ 146:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 1111               		.stabn	68,0,146,.LM154-.LFBB18
+ 1112               	.LM154:
+ 1113 02e4 80E0      		ldi r24,0
+ 1114 02e6 0E94 0000 		call LCD_Write
+ 1115               	.LBB69:
+ 1116               	.LBB70:
+ 1117               		.stabs	"/usr/lib/avr/include/util/delay.h",132,0,0,.Ltext9
+ 1118               	.Ltext9:
+ 1119               		.stabn	68,0,276,.LM155-.LFBB18
+ 1120               	.LM155:
+ 1121 02ea 00C0      		rjmp .
+ 1122 02ec 00C0      		rjmp .
+ 1123               	.LBE70:
+ 1124               	.LBE69:
+ 1125               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c",132,0,0,.Ltext10
+ 1126               	.Ltext10:
+ 149:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 1127               		.stabn	68,0,149,.LM156-.LFBB18
+ 1128               	.LM156:
+ 1129 02ee 80EE      		ldi r24,lo8(-32)
+ 1130 02f0 0E94 0000 		call LCD_Write
+ 1131               	.LBB71:
+ 1132               	.LBB72:
+ 1133               		.stabs	"/usr/lib/avr/include/util/delay.h",132,0,0,.Ltext11
+ 1134               	.Ltext11:
+ 1135               		.stabn	68,0,276,.LM157-.LFBB18
+ 1136               	.LM157:
+ 1137 02f4 00C0      		rjmp .
+ 1138 02f6 00C0      		rjmp .
+ 1139               	.LBE72:
+ 1140               	.LBE71:
+ 1141               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c",132,0,0,.Ltext12
+ 1142               	.Ltext12:
+ 152:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		_delay_us(20);
+ 1143               		.stabn	68,0,152,.LM158-.LFBB18
+ 1144               	.LM158:
+ 1145 02f8 80E0      		ldi r24,0
+ 1146 02fa 0E94 0000 		call LCD_Write
+ 1147               	.LBB73:
+ 1148               	.LBB74:
+ 1149               		.stabs	"/usr/lib/avr/include/util/delay.h",132,0,0,.Ltext13
+ 1150               	.Ltext13:
+ 1151               		.stabn	68,0,276,.LM159-.LFBB18
+ 1152               	.LM159:
+ 1153 02fe 00C0      		rjmp .
+ 1154 0300 00C0      		rjmp .
+ 1155               	.LBE74:
+ 1156               	.LBE73:
+ 1157               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c",132,0,0,.Ltext14
+ 1158               	.Ltext14:
+ 155:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 1159               		.stabn	68,0,155,.LM160-.LFBB18
+ 1160               	.LM160:
+ 1161 0302 80E6      		ldi r24,lo8(96)
+ 1162 0304 0E94 0000 		call LCD_Write
+ 160:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(0x31);
+ 1163               		.stabn	68,0,160,.LM161-.LFBB18
+ 1164               	.LM161:
+ 1165 0308 81E3      		ldi r24,lo8(49)
+ 1166 030a 0E94 0000 		call write_AT24Cxx_i2c_byte
+ 1167               	.LBB75:
+ 1168               	.LBB76:
+ 1169               		.stabn	68,0,442,.LM162-.LFBB18
+ 1170               	.LM162:
+ 1171 030e 81E3      		ldi r24,lo8(49)
+ 1172 0310 0E94 0000 		call write_AT24Cxx_i2c_LCDAddressing
+ 1173               	.LBE76:
+ 1174               	.LBE75:
+ 162:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(0x01);
+ 1175               		.stabn	68,0,162,.LM163-.LFBB18
+ 1176               	.LM163:
+ 1177 0314 81E0      		ldi r24,lo8(1)
+ 1178 0316 0E94 0000 		call write_AT24Cxx_i2c_byte
+ 1179               	.LBB77:
+ 1180               	.LBB78:
+ 1181               		.stabn	68,0,442,.LM164-.LFBB18
+ 1182               	.LM164:
+ 1183 031a 81E0      		ldi r24,lo8(1)
+ 1184 031c 0E94 0000 		call write_AT24Cxx_i2c_LCDAddressing
+ 1185               	.LBE78:
+ 1186               	.LBE77:
+ 164:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 1187               		.stabn	68,0,164,.LM165-.LFBB18
+ 1188               	.LM165:
+ 1189 0320 0C94 0000 		jmp AT24Cxx_i2c_stop
+ 1190               		.size	I2C_LCD_init, .-I2C_LCD_init
+ 1191               	.Lscope18:
+ 1192               		.stabs	"",36,0,0,.Lscope18-.LFBB18
+ 1193               		.stabd	78,0,0
+ 1194               		.section	.text.startup,"ax",@progbits
+ 1195               		.stabs	"main:F(0,1)",36,0,76,main
+ 1196               	.global	main
+ 1197               		.type	main, @function
+ 1198               	main:
+ 1199               		.stabd	46,0,0
+  76:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     //setup_watchdog();
+ 1200               		.stabn	68,0,76,.LM166-.LFBB19
+ 1201               	.LM166:
+ 1202               	.LFBB19:
+ 1203               	/* prologue: function */
+ 1204               	/* frame size = 0 */
+ 1205               	/* stack size = 0 */
+ 1206               	.L__stack_usage = 0
+  78:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     Port_init();
+ 1207               		.stabn	68,0,78,.LM167-.LFBB19
+ 1208               	.LM167:
+ 1209               	/* #APP */
+ 1210               	 ;  78 "/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c" 1
+ 1211 0000 7894      		sei
+ 1212               	 ;  0 "" 2
+  79:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     //Timer1_init();
+ 1213               		.stabn	68,0,79,.LM168-.LFBB19
+ 1214               	.LM168:
+ 1215               	/* #NOAPP */
+ 1216 0002 0E94 0000 		call Port_init
+  81:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     //I2C_LCD_init(0x27);
+ 1217               		.stabn	68,0,81,.LM169-.LFBB19
+ 1218               	.LM169:
+ 1219 0006 0E94 0000 		call USART_init
+  83:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	EIMSK = 0x01;
+ 1220               		.stabn	68,0,83,.LM170-.LFBB19
+ 1221               	.LM170:
+ 1222 000a 83E0      		ldi r24,lo8(3)
+ 1223 000c 8093 6900 		sts 105,r24
+  84:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	I2C_LCD_init(0x27);
+ 1224               		.stabn	68,0,84,.LM171-.LFBB19
+ 1225               	.LM171:
+ 1226 0010 81E0      		ldi r24,lo8(1)
+ 1227 0012 8DBB      		out 0x1d,r24
+ 1228               	.L86:
+  85:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 		
+ 1229               		.stabn	68,0,85,.LM172-.LFBB19
+ 1230               	.LM172:
+ 1231 0014 87E2      		ldi r24,lo8(39)
+ 1232 0016 0E94 0000 		call I2C_LCD_init
+ 1233 001a 00C0      		rjmp .L86
+ 1234               		.size	main, .-main
+ 1235               	.Lscope19:
+ 1236               		.stabs	"",36,0,0,.Lscope19-.LFBB19
+ 1237               		.stabd	78,0,0
+ 1238               		.text
+ 1239               		.stabs	"LCD_CharWrite:F(0,49)",36,0,357,LCD_CharWrite
+ 1240               	.global	LCD_CharWrite
+ 1241               		.type	LCD_CharWrite, @function
+ 1242               	LCD_CharWrite:
+ 1243               		.stabd	46,0,0
+ 357:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	AT24Cxx_i2c_start();
+ 1244               		.stabn	68,0,357,.LM173-.LFBB20
+ 1245               	.LM173:
+ 1246               	.LFBB20:
+ 1247 0324 CF93      		push r28
+ 1248 0326 DF93      		push r29
+ 1249               	/* prologue: function */
+ 1250               	/* frame size = 0 */
+ 1251               	/* stack size = 2 */
+ 1252               	.L__stack_usage = 2
+ 1253 0328 EC01      		movw r28,r24
+ 358:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_LCDAddressing((addr << 1)); 
+ 1254               		.stabn	68,0,358,.LM174-.LFBB20
+ 1255               	.LM174:
+ 1256 032a 0E94 0000 		call AT24Cxx_i2c_start
+ 359:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 1257               		.stabn	68,0,359,.LM175-.LFBB20
+ 1258               	.LM175:
+ 1259 032e 8091 0000 		lds r24,addr
+ 1260 0332 880F      		lsl r24
+ 1261 0334 0E94 0000 		call write_AT24Cxx_i2c_LCDAddressing
+ 366:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(upperbits);
+ 1262               		.stabn	68,0,366,.LM176-.LFBB20
+ 1263               	.LM176:
+ 1264 0338 8D2F      		mov r24,r29
+ 1265 033a 0E94 0000 		call write_AT24Cxx_i2c_byte
+ 1266               	.LBB79:
+ 1267               	.LBB80:
+ 1268               		.stabn	68,0,442,.LM177-.LFBB20
+ 1269               	.LM177:
+ 1270 033e 8D2F      		mov r24,r29
+ 1271 0340 0E94 0000 		call write_AT24Cxx_i2c_LCDAddressing
+ 1272               	.LBE80:
+ 1273               	.LBE79:
+ 368:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	LCD_NEBIT(lowerbits);
+ 1274               		.stabn	68,0,368,.LM178-.LFBB20
+ 1275               	.LM178:
+ 1276 0344 8C2F      		mov r24,r28
+ 1277 0346 0E94 0000 		call write_AT24Cxx_i2c_byte
+ 1278               	.LBB81:
+ 1279               	.LBB82:
+ 1280               		.stabn	68,0,442,.LM179-.LFBB20
+ 1281               	.LM179:
+ 1282 034a 8C2F      		mov r24,r28
+ 1283 034c 0E94 0000 		call write_AT24Cxx_i2c_LCDAddressing
+ 1284               	/* epilogue start */
+ 1285               	.LBE82:
+ 1286               	.LBE81:
+ 372:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 
+ 1287               		.stabn	68,0,372,.LM180-.LFBB20
+ 1288               	.LM180:
+ 1289 0350 DF91      		pop r29
+ 1290 0352 CF91      		pop r28
+ 371:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 1291               		.stabn	68,0,371,.LM181-.LFBB20
+ 1292               	.LM181:
+ 1293 0354 0C94 0000 		jmp AT24Cxx_i2c_stop
+ 1294               		.size	LCD_CharWrite, .-LCD_CharWrite
+ 1295               	.Lscope20:
+ 1296               		.stabs	"",36,0,0,.Lscope20-.LFBB20
+ 1297               		.stabd	78,0,0
+ 1298               		.stabs	"__vector_11:F(0,49)",36,0,179,__vector_11
+ 1299               	.global	__vector_11
+ 1300               		.type	__vector_11, @function
+ 1301               	__vector_11:
+ 1302               		.stabd	46,0,0
+ 179:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****    //**NOTE: Timer must perform only the role of timer otherwise, global variables will be reset **
+ 1303               		.stabn	68,0,179,.LM182-.LFBB21
+ 1304               	.LM182:
+ 1305               	.LFBB21:
+ 1306 0358 1F92      		push r1
+ 1307 035a 0F92      		push r0
+ 1308 035c 0FB6      		in r0,__SREG__
+ 1309 035e 0F92      		push r0
+ 1310 0360 1124      		clr __zero_reg__
+ 1311 0362 2F93      		push r18
+ 1312 0364 3F93      		push r19
+ 1313 0366 4F93      		push r20
+ 1314 0368 5F93      		push r21
+ 1315 036a 6F93      		push r22
+ 1316 036c 7F93      		push r23
+ 1317 036e 8F93      		push r24
+ 1318 0370 9F93      		push r25
+ 1319 0372 AF93      		push r26
+ 1320 0374 BF93      		push r27
+ 1321 0376 EF93      		push r30
+ 1322 0378 FF93      		push r31
+ 1323               	/* prologue: Signal */
+ 1324               	/* frame size = 0 */
+ 1325               	/* stack size = 15 */
+ 1326               	.L__stack_usage = 15
+ 181:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     key_data = key_scan();
+ 1327               		.stabn	68,0,181,.LM183-.LFBB21
+ 1328               	.LM183:
+ 1329 037a 81E0      		ldi r24,lo8(1)
+ 1330 037c 8093 0000 		sts Wait_time,r24
+ 182:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****     
+ 1331               		.stabn	68,0,182,.LM184-.LFBB21
+ 1332               	.LM184:
+ 1333 0380 0E94 0000 		call key_scan
+ 1334 0384 8093 0000 		sts key_data,r24
+ 184:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         key_flag = 0;
+ 1335               		.stabn	68,0,184,.LM185-.LFBB21
+ 1336               	.LM185:
+ 1337 0388 8091 0000 		lds r24,key_flag
+ 1338 038c 8823      		tst r24
+ 1339 038e 01F0      		breq .L89
+ 185:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         if(key_data == 0xff){
+ 1340               		.stabn	68,0,185,.LM186-.LFBB21
+ 1341               	.LM186:
+ 1342 0390 1092 0000 		sts key_flag,__zero_reg__
+ 186:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             return ;
+ 1343               		.stabn	68,0,186,.LM187-.LFBB21
+ 1344               	.LM187:
+ 1345 0394 8091 0000 		lds r24,key_data
+ 1346 0398 8F3F      		cpi r24,lo8(-1)
+ 1347 039a 01F0      		breq .L88
+ 190:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             //key_data += 32; // 42 -> *
+ 1348               		.stabn	68,0,190,.LM188-.LFBB21
+ 1349               	.LM188:
+ 1350 039c 8091 0000 		lds r24,key_data
+ 193:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****             //key_data += 24; // 35 -> #
+ 1351               		.stabn	68,0,193,.LM189-.LFBB21
+ 1352               	.LM189:
+ 1353 03a0 8091 0000 		lds r24,key_data
+ 196:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			PORTB |= 0x20;
+ 1354               		.stabn	68,0,196,.LM190-.LFBB21
+ 1355               	.LM190:
+ 1356 03a4 8091 0000 		lds r24,key_data
+ 1357 03a8 8130      		cpi r24,lo8(1)
+ 1358 03aa 01F4      		brne .L91
+ 197:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			LCD_CharWrite(num2lcdbyte(1));	
+ 1359               		.stabn	68,0,197,.LM191-.LFBB21
+ 1360               	.LM191:
+ 1361 03ac 2D9A      		sbi 0x5,5
+ 198:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 			//key_data += '0';
+ 1362               		.stabn	68,0,198,.LM192-.LFBB21
+ 1363               	.LM192:
+ 1364 03ae 81E1      		ldi r24,lo8(17)
+ 1365 03b0 91E3      		ldi r25,lo8(49)
+ 1366 03b2 0E94 0000 		call LCD_CharWrite
+ 1367               	.L91:
+ 204:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         }
+ 1368               		.stabn	68,0,204,.LM193-.LFBB21
+ 1369               	.LM193:
+ 1370 03b6 0E94 0000 		call LED_ON
+ 1371 03ba 00C0      		rjmp .L92
+ 1372               	.L89:
+ 207:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c ****         }
+ 1373               		.stabn	68,0,207,.LM194-.LFBB21
+ 1374               	.LM194:
+ 1375 03bc 0E94 0000 		call LED_OFF
+ 1376               	.L92:
+ 209:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	DDRB &= ~0x20;
+ 1377               		.stabn	68,0,209,.LM195-.LFBB21
+ 1378               	.LM195:
+ 1379 03c0 2D98      		cbi 0x5,5
+ 210:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	DDRB |= 0x20;
+ 1380               		.stabn	68,0,210,.LM196-.LFBB21
+ 1381               	.LM196:
+ 1382 03c2 2598      		cbi 0x4,5
+ 211:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** }
+ 1383               		.stabn	68,0,211,.LM197-.LFBB21
+ 1384               	.LM197:
+ 1385 03c4 259A      		sbi 0x4,5
+ 1386               	.L88:
+ 1387               	/* epilogue start */
+ 212:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** ISR(INT0_vect){
+ 1388               		.stabn	68,0,212,.LM198-.LFBB21
+ 1389               	.LM198:
+ 1390 03c6 FF91      		pop r31
+ 1391 03c8 EF91      		pop r30
+ 1392 03ca BF91      		pop r27
+ 1393 03cc AF91      		pop r26
+ 1394 03ce 9F91      		pop r25
+ 1395 03d0 8F91      		pop r24
+ 1396 03d2 7F91      		pop r23
+ 1397 03d4 6F91      		pop r22
+ 1398 03d6 5F91      		pop r21
+ 1399 03d8 4F91      		pop r20
+ 1400 03da 3F91      		pop r19
+ 1401 03dc 2F91      		pop r18
+ 1402 03de 0F90      		pop r0
+ 1403 03e0 0FBE      		out __SREG__,r0
+ 1404 03e2 0F90      		pop r0
+ 1405 03e4 1F90      		pop r1
+ 1406 03e6 1895      		reti
+ 1407               		.size	__vector_11, .-__vector_11
+ 1408               	.Lscope21:
+ 1409               		.stabs	"",36,0,0,.Lscope21-.LFBB21
+ 1410               		.stabd	78,0,0
+ 1411               		.stabs	"LCD_NEBIT:F(0,49)",36,0,441,LCD_NEBIT
+ 1412               		.stabs	"byte:P(0,13)",64,0,441,24
+ 1413               	.global	LCD_NEBIT
+ 1414               		.type	LCD_NEBIT, @function
+ 1415               	LCD_NEBIT:
+ 1416               		.stabd	46,0,0
+ 441:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/mtpS/mtpS.c **** 	write_AT24Cxx_i2c_LCDAddressing(byte);
+ 1417               		.stabn	68,0,441,.LM199-.LFBB22
+ 1418               	.LM199:
+ 1419               	.LFBB22:
+ 1420               	/* prologue: function */
+ 1421               	/* frame size = 0 */
+ 1422               	/* stack size = 0 */
+ 1423               	.L__stack_usage = 0
+ 1424               		.stabn	68,0,442,.LM200-.LFBB22
+ 1425               	.LM200:
+ 1426 03e8 0C94 0000 		jmp write_AT24Cxx_i2c_LCDAddressing
+ 1427               		.size	LCD_NEBIT, .-LCD_NEBIT
+ 1428               	.Lscope22:
+ 1429               		.stabs	"",36,0,0,.Lscope22-.LFBB22
+ 1430               		.stabd	78,0,0
+ 1431               	.global	ASCII_Table
+ 1432               		.data
+ 1433               		.type	ASCII_Table, @object
+ 1434               		.size	ASCII_Table, 16
+ 1435               	ASCII_Table:
+ 1436 0000 30        		.byte	48
+ 1437 0001 31        		.byte	49
+ 1438 0002 32        		.byte	50
+ 1439 0003 33        		.byte	51
+ 1440 0004 34        		.byte	52
+ 1441 0005 35        		.byte	53
+ 1442 0006 36        		.byte	54
+ 1443 0007 37        		.byte	55
+ 1444 0008 38        		.byte	56
+ 1445 0009 39        		.byte	57
+ 1446 000a 41        		.byte	65
+ 1447 000b 42        		.byte	66
+ 1448 000c 43        		.byte	67
+ 1449 000d 44        		.byte	68
+ 1450 000e 45        		.byte	69
+ 1451 000f 46        		.byte	70
+ 1452               		.comm	digit,3,1
+ 1453               	.global	Wait_time
+ 1454               		.section .bss
+ 1455               		.type	Wait_time, @object
+ 1456               		.size	Wait_time, 1
+ 1457               	Wait_time:
+ 1458 0000 00        		.zero	1
+ 1459               	.global	flag_time
+ 1460               		.type	flag_time, @object
+ 1461               		.size	flag_time, 1
+ 1462               	flag_time:
+ 1463 0001 00        		.zero	1
+ 1464               		.comm	old_key,1,1
+ 1465               	.global	current_key
+ 1466               		.type	current_key, @object
+ 1467               		.size	current_key, 1
+ 1468               	current_key:
+ 1469 0002 00        		.zero	1
+ 1470               	.global	keyNum
+ 1471               		.type	keyNum, @object
+ 1472               		.size	keyNum, 1
+ 1473               	keyNum:
+ 1474 0003 00        		.zero	1
+ 1475               	.global	pressing_flag
+ 1476               		.type	pressing_flag, @object
+ 1477               		.size	pressing_flag, 1
+ 1478               	pressing_flag:
+ 1479 0004 00        		.zero	1
+ 1480               	.global	key_data
+ 1481               		.type	key_data, @object
+ 1482               		.size	key_data, 1
+ 1483               	key_data:
+ 1484 0005 00        		.zero	1
+ 1485               	.global	new_key
+ 1486               		.type	new_key, @object
+ 1487               		.size	new_key, 1
+ 1488               	new_key:
+ 1489 0006 00        		.zero	1
+ 1490               	.global	key_flag
+ 1491               		.type	key_flag, @object
+ 1492               		.size	key_flag, 1
+ 1493               	key_flag:
+ 1494 0007 00        		.zero	1
+ 1495               	.global	addr
+ 1496               		.type	addr, @object
+ 1497               		.size	addr, 1
+ 1498               	addr:
+ 1499 0008 00        		.zero	1
+ 1500               	.global	job
+ 1501               		.type	job, @object
+ 1502               		.size	job, 1
+ 1503               	job:
+ 1504 0009 00        		.zero	1
+ 1505               		.stabs	"job:G(0,50)=B(0,13)",32,0,33,0
+ 1506               		.stabs	"addr:G(0,50)",32,0,34,0
+ 1507               		.stabs	"key_flag:G(0,50)",32,0,35,0
+ 1508               		.stabs	"new_key:G(0,50)",32,0,36,0
+ 1509               		.stabs	"key_data:G(0,50)",32,0,37,0
+ 1510               		.stabs	"pressing_flag:G(0,50)",32,0,38,0
+ 1511               		.stabs	"keyNum:G(0,50)",32,0,39,0
+ 1512               		.stabs	"current_key:G(0,50)",32,0,40,0
+ 1513               		.stabs	"old_key:G(0,50)",32,0,41,0
+ 1514               		.stabs	"flag_time:G(0,50)",32,0,42,0
+ 1515               		.stabs	"Wait_time:G(0,50)",32,0,43,0
+ 1516               		.stabs	"digit:G(0,51)=ar(0,52)=r(0,52);0;0177777;;0;2;(0,50)",32,0,44,0
+ 1517               		.stabs	"ASCII_Table:G(0,53)=ar(0,52);0;15;(0,50)",32,0,45,0
+ 1518               		.text
+ 1519               		.stabs	"",100,0,0,.Letext0
+ 1520               	.Letext0:
+ 1521               		.ident	"GCC: (GNU) 5.4.0"
+ 1522               	.global __do_copy_data
+ 1523               	.global __do_clear_bss
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mtpS.c
+     /tmp/cctfIPLL.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cctfIPLL.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cctfIPLL.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cctfIPLL.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cctfIPLL.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cctfIPLL.s:107    .text:0000000000000000 Timer1_init
+     /tmp/cctfIPLL.s:146    .text:0000000000000026 Timer1_delay
+     /tmp/cctfIPLL.s:1457   .bss:0000000000000000 Wait_time
+     /tmp/cctfIPLL.s:188    .text:0000000000000040 Port_init
+     /tmp/cctfIPLL.s:216    .text:000000000000004c LED_ON
+     /tmp/cctfIPLL.s:243    .text:000000000000005a LED_OFF
+     /tmp/cctfIPLL.s:275    .text:000000000000006e __vector_1
+     /tmp/cctfIPLL.s:304    .text:0000000000000082 USART_init
+     /tmp/cctfIPLL.s:340    .text:00000000000000a2 Tx_char
+     /tmp/cctfIPLL.s:368    .text:00000000000000b0 key_analysis
+     /tmp/cctfIPLL.s:1493   .bss:0000000000000007 key_flag
+     /tmp/cctfIPLL.s:519    .text:0000000000000136 key_scan
+     /tmp/cctfIPLL.s:1488   .bss:0000000000000006 new_key
+                            *COM*:0000000000000001 old_key
+     /tmp/cctfIPLL.s:1478   .bss:0000000000000004 pressing_flag
+     /tmp/cctfIPLL.s:666    .text:00000000000001d6 num2lcdbyte
+     /tmp/cctfIPLL.s:798    .text:0000000000000240 write_AT24Cxx_i2c_LCDAddressing
+     /tmp/cctfIPLL.s:858    .text:0000000000000262 AT24Cxx_i2c_start
+     /tmp/cctfIPLL.s:882    .text:0000000000000268 AT24Cxx_ACK_send
+     /tmp/cctfIPLL.s:921    .text:000000000000027a AT24Cxx_i2c_stop
+     /tmp/cctfIPLL.s:948    .text:0000000000000282 write_AT24Cxx_i2c_byte
+     /tmp/cctfIPLL.s:974    .text:000000000000028a LCD_Write
+     /tmp/cctfIPLL.s:1014   .text:000000000000029a I2C_LCD_init
+     /tmp/cctfIPLL.s:1498   .bss:0000000000000008 addr
+     /tmp/cctfIPLL.s:1198   .text.startup:0000000000000000 main
+     /tmp/cctfIPLL.s:1242   .text:0000000000000324 LCD_CharWrite
+     /tmp/cctfIPLL.s:1301   .text:0000000000000358 __vector_11
+     /tmp/cctfIPLL.s:1483   .bss:0000000000000005 key_data
+     /tmp/cctfIPLL.s:1415   .text:00000000000003e8 LCD_NEBIT
+     /tmp/cctfIPLL.s:1435   .data:0000000000000000 ASCII_Table
+                            *COM*:0000000000000003 digit
+     /tmp/cctfIPLL.s:1462   .bss:0000000000000001 flag_time
+     /tmp/cctfIPLL.s:1468   .bss:0000000000000002 current_key
+     /tmp/cctfIPLL.s:1473   .bss:0000000000000003 keyNum
+     /tmp/cctfIPLL.s:1503   .bss:0000000000000009 job
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
