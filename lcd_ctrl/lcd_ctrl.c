@@ -100,9 +100,7 @@ int main(){
 		write_AT24Cxx_i2c_LCDAddressing(0x60);
 		AT24Cxx_i2c_stop();
 
-
-  	while(1){
-		
+_delay_ms(20);
 		AT24Cxx_i2c_start();
 		write_AT24Cxx_i2c_LCDAddressing((I2CLCD_ADDR << 1)); //to write
   		//글자 영역
@@ -151,8 +149,16 @@ int main(){
 
 
 
+
+
 		AT24Cxx_i2c_stop();
-		_delay_ms(1);
+
+		
+
+
+  	while(1){
+
+		
 	}
 }
 
@@ -168,7 +174,7 @@ void Timer_init(void){
 	TCCR1B = (0 << WGM13) | (1 << WGM12) | (0 << CS12) | (1 << CS11) | (1 << CS10);
 	TCCR1C = 0;
 	OCR1A = 0x09C4;
-	TIMSK0 = (1 << OCIE1A); 
+	TIMSK1 = (1 << OCIE1A); 
 }
 
 void ADC_init(void){
@@ -239,6 +245,7 @@ void AT24Cxx_ACK_send(unsigned char ack_data){
 }
 
 void AT24Cxx_i2c_stop(void){
+	
 	//AT24Cxx_SDA_OUT(); //set SDA to output
 	AT24Cxx_SDA_LOW(); //clear SDA
 	
