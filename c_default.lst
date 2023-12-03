@@ -4,7 +4,7 @@
    4               	__SREG__ = 0x3f
    5               	__tmp_reg__ = 0
    6               	__zero_reg__ = 1
-   7               		.stabs	"/home/student/avr_linux_compiler/",100,0,2,.Ltext0
+   7               		.stabs	"/home/student/build-avr_linux_compiler-Desktop-Debug/",100,0,2,.Ltext0
    8               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/c_default.c",100,0,2,.Ltext0
    9               		.text
   10               	.Ltext0:
@@ -133,11 +133,11 @@
  126               		.ident	"GCC: (GNU) 5.4.0"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 c_default.c
-     /tmp/ccpgG44n.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccpgG44n.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccpgG44n.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccpgG44n.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccpgG44n.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccpgG44n.s:108    .text.startup:0000000000000000 main
+     /tmp/ccYxLcmO.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccYxLcmO.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccYxLcmO.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccYxLcmO.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccYxLcmO.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccYxLcmO.s:108    .text.startup:0000000000000000 main
 
 NO UNDEFINED SYMBOLS

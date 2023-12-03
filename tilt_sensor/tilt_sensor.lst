@@ -1,0 +1,1127 @@
+   1               		.file	"tilt_sensor.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.stabs	"/home/student/build-avr_linux_compiler-Desktop-Debug/",100,0,2,.Ltext0
+   8               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c",100,0,2,.Ltext0
+   9               		.text
+  10               	.Ltext0:
+  11               		.stabs	"gcc2_compiled.",60,0,0,0
+  12               		.stabs	"int:t(0,1)=r(0,1);-32768;32767;",128,0,0,0
+  13               		.stabs	"char:t(0,2)=r(0,2);0;127;",128,0,0,0
+  14               		.stabs	"long int:t(0,3)=@s32;r(0,3);020000000000;017777777777;",128,0,0,0
+  15               		.stabs	"unsigned int:t(0,4)=r(0,4);0;0177777;",128,0,0,0
+  16               		.stabs	"long unsigned int:t(0,5)=@s32;r(0,5);0;037777777777;",128,0,0,0
+  17               		.stabs	"__int128:t(0,6)=@s128;r(0,6);02000000000000000000000000000000000000000000;0177777777777777
+  18               		.stabs	"__int128 unsigned:t(0,7)=@s128;r(0,7);0;03777777777777777777777777777777777777777777;",128
+  19               		.stabs	"long long int:t(0,8)=@s64;r(0,8);01000000000000000000000;00777777777777777777777;",128,0,0
+  20               		.stabs	"long long unsigned int:t(0,9)=@s64;r(0,9);0;01777777777777777777777;",128,0,0,0
+  21               		.stabs	"short int:t(0,10)=r(0,10);-32768;32767;",128,0,0,0
+  22               		.stabs	"short unsigned int:t(0,11)=r(0,11);0;0177777;",128,0,0,0
+  23               		.stabs	"signed char:t(0,12)=@s8;r(0,12);-128;127;",128,0,0,0
+  24               		.stabs	"unsigned char:t(0,13)=@s8;r(0,13);0;255;",128,0,0,0
+  25               		.stabs	"float:t(0,14)=r(0,1);4;0;",128,0,0,0
+  26               		.stabs	"double:t(0,15)=r(0,1);4;0;",128,0,0,0
+  27               		.stabs	"long double:t(0,16)=r(0,1);4;0;",128,0,0,0
+  28               		.stabs	"short _Fract:t(0,17)=r(0,1);1;0;",128,0,0,0
+  29               		.stabs	"_Fract:t(0,18)=r(0,1);2;0;",128,0,0,0
+  30               		.stabs	"long _Fract:t(0,19)=r(0,1);4;0;",128,0,0,0
+  31               		.stabs	"long long _Fract:t(0,20)=r(0,1);8;0;",128,0,0,0
+  32               		.stabs	"unsigned short _Fract:t(0,21)=r(0,1);1;0;",128,0,0,0
+  33               		.stabs	"unsigned _Fract:t(0,22)=r(0,1);2;0;",128,0,0,0
+  34               		.stabs	"unsigned long _Fract:t(0,23)=r(0,1);4;0;",128,0,0,0
+  35               		.stabs	"unsigned long long _Fract:t(0,24)=r(0,1);8;0;",128,0,0,0
+  36               		.stabs	"_Sat short _Fract:t(0,25)=r(0,1);1;0;",128,0,0,0
+  37               		.stabs	"_Sat _Fract:t(0,26)=r(0,1);2;0;",128,0,0,0
+  38               		.stabs	"_Sat long _Fract:t(0,27)=r(0,1);4;0;",128,0,0,0
+  39               		.stabs	"_Sat long long _Fract:t(0,28)=r(0,1);8;0;",128,0,0,0
+  40               		.stabs	"_Sat unsigned short _Fract:t(0,29)=r(0,1);1;0;",128,0,0,0
+  41               		.stabs	"_Sat unsigned _Fract:t(0,30)=r(0,1);2;0;",128,0,0,0
+  42               		.stabs	"_Sat unsigned long _Fract:t(0,31)=r(0,1);4;0;",128,0,0,0
+  43               		.stabs	"_Sat unsigned long long _Fract:t(0,32)=r(0,1);8;0;",128,0,0,0
+  44               		.stabs	"short _Accum:t(0,33)=r(0,1);2;0;",128,0,0,0
+  45               		.stabs	"_Accum:t(0,34)=r(0,1);4;0;",128,0,0,0
+  46               		.stabs	"long _Accum:t(0,35)=r(0,1);8;0;",128,0,0,0
+  47               		.stabs	"long long _Accum:t(0,36)=r(0,1);8;0;",128,0,0,0
+  48               		.stabs	"unsigned short _Accum:t(0,37)=r(0,1);2;0;",128,0,0,0
+  49               		.stabs	"unsigned _Accum:t(0,38)=r(0,1);4;0;",128,0,0,0
+  50               		.stabs	"unsigned long _Accum:t(0,39)=r(0,1);8;0;",128,0,0,0
+  51               		.stabs	"unsigned long long _Accum:t(0,40)=r(0,1);8;0;",128,0,0,0
+  52               		.stabs	"_Sat short _Accum:t(0,41)=r(0,1);2;0;",128,0,0,0
+  53               		.stabs	"_Sat _Accum:t(0,42)=r(0,1);4;0;",128,0,0,0
+  54               		.stabs	"_Sat long _Accum:t(0,43)=r(0,1);8;0;",128,0,0,0
+  55               		.stabs	"_Sat long long _Accum:t(0,44)=r(0,1);8;0;",128,0,0,0
+  56               		.stabs	"_Sat unsigned short _Accum:t(0,45)=r(0,1);2;0;",128,0,0,0
+  57               		.stabs	"_Sat unsigned _Accum:t(0,46)=r(0,1);4;0;",128,0,0,0
+  58               		.stabs	"_Sat unsigned long _Accum:t(0,47)=r(0,1);8;0;",128,0,0,0
+  59               		.stabs	"_Sat unsigned long long _Accum:t(0,48)=r(0,1);8;0;",128,0,0,0
+  60               		.stabs	"void:t(0,49)=(0,49)",128,0,0,0
+  61               		.stabs	"/usr/lib/avr/include/avr/io.h",130,0,0,0
+  62               		.stabs	"/usr/lib/avr/include/avr/sfr_defs.h",130,0,0,0
+  63               		.stabs	"/usr/lib/avr/include/inttypes.h",130,0,0,0
+  64               		.stabs	"/usr/lib/gcc/avr/5.4.0/include/stdint.h",130,0,0,0
+  65               		.stabs	"/usr/lib/avr/include/stdint.h",130,0,0,0
+  66               		.stabs	"int8_t:t(5,1)=(0,12)",128,0,125,0
+  67               		.stabs	"uint8_t:t(5,2)=(0,13)",128,0,126,0
+  68               		.stabs	"int16_t:t(5,3)=(0,1)",128,0,127,0
+  69               		.stabs	"uint16_t:t(5,4)=(0,4)",128,0,128,0
+  70               		.stabs	"int32_t:t(5,5)=(0,3)",128,0,129,0
+  71               		.stabs	"uint32_t:t(5,6)=(0,5)",128,0,130,0
+  72               		.stabs	"int64_t:t(5,7)=(0,8)",128,0,132,0
+  73               		.stabs	"uint64_t:t(5,8)=(0,9)",128,0,133,0
+  74               		.stabs	"intptr_t:t(5,9)=(5,3)",128,0,146,0
+  75               		.stabs	"uintptr_t:t(5,10)=(5,4)",128,0,151,0
+  76               		.stabs	"int_least8_t:t(5,11)=(5,1)",128,0,163,0
+  77               		.stabs	"uint_least8_t:t(5,12)=(5,2)",128,0,168,0
+  78               		.stabs	"int_least16_t:t(5,13)=(5,3)",128,0,173,0
+  79               		.stabs	"uint_least16_t:t(5,14)=(5,4)",128,0,178,0
+  80               		.stabs	"int_least32_t:t(5,15)=(5,5)",128,0,183,0
+  81               		.stabs	"uint_least32_t:t(5,16)=(5,6)",128,0,188,0
+  82               		.stabs	"int_least64_t:t(5,17)=(5,7)",128,0,196,0
+  83               		.stabs	"uint_least64_t:t(5,18)=(5,8)",128,0,203,0
+  84               		.stabs	"int_fast8_t:t(5,19)=(5,1)",128,0,217,0
+  85               		.stabs	"uint_fast8_t:t(5,20)=(5,2)",128,0,222,0
+  86               		.stabs	"int_fast16_t:t(5,21)=(5,3)",128,0,227,0
+  87               		.stabs	"uint_fast16_t:t(5,22)=(5,4)",128,0,232,0
+  88               		.stabs	"int_fast32_t:t(5,23)=(5,5)",128,0,237,0
+  89               		.stabs	"uint_fast32_t:t(5,24)=(5,6)",128,0,242,0
+  90               		.stabs	"int_fast64_t:t(5,25)=(5,7)",128,0,250,0
+  91               		.stabs	"uint_fast64_t:t(5,26)=(5,8)",128,0,257,0
+  92               		.stabs	"intmax_t:t(5,27)=(5,7)",128,0,277,0
+  93               		.stabs	"uintmax_t:t(5,28)=(5,8)",128,0,282,0
+  94               		.stabn	162,0,0,0
+  95               		.stabn	162,0,0,0
+  96               		.stabs	"int_farptr_t:t(3,1)=(5,5)",128,0,77,0
+  97               		.stabs	"uint_farptr_t:t(3,2)=(5,6)",128,0,81,0
+  98               		.stabn	162,0,0,0
+  99               		.stabn	162,0,0,0
+ 100               		.stabs	"/usr/lib/avr/include/avr/fuse.h",130,0,0,0
+ 101               		.stabs	"__fuse_t:t(6,1)=(6,2)=s3low:(0,13),0,8;high:(0,13),8,8;extended:(0,13),16,8;;",128,0,244,0
+ 102               		.stabn	162,0,0,0
+ 103               		.stabn	162,0,0,0
+ 104               		.stabs	"__vector_1:F(0,49)",36,0,39,__vector_1
+ 105               	.global	__vector_1
+ 106               		.type	__vector_1, @function
+ 107               	__vector_1:
+ 108               		.stabd	46,0,0
+   1:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** #ifndef F_CPU
+   2:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** #define F_CPU 16000000UL // or whatever may be your frequency
+   3:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** #endif
+   4:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** #include <avr/io.h>
+   5:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** #include <util/delay.h>
+   6:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** #include <avr/interrupt.h>
+   7:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** #define DEGREEperUS 1.33
+   8:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** //=============================================================
+   9:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** volatile unsigned char Flag_start = 0;
+  10:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** volatile unsigned char Flag_end = 0;
+  11:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** volatile unsigned char avg_cnt = 0;
+  12:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** volatile unsigned char read_cnt = 0;
+  13:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** volatile unsigned long sum = 0;
+  14:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** volatile unsigned long angle_time;
+  15:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** volatile unsigned int overflow_cnt = 0;
+  16:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** volatile unsigned char angle_value = 0;
+  17:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** //=============================================================
+  18:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void Timer2_init(void);
+  19:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void Timer1_init(void);
+  20:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void USART_init(void);
+  21:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void PORT_init(void);
+  22:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void Tx_char(unsigned char data);
+  23:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** //=============================================================
+  24:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** int main(void){
+  25:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     sei();
+  26:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     Timer1_init();
+  27:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     Timer2_init();
+  28:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 	USART_init();
+  29:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     PORT_init();
+  30:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     angle_value = 0;
+  31:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  32:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  33:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     EICRA = 0b00000011; //INT0 상승 에지 인터럽트 설정
+  34:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     
+  35:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     EIMSK |= 1<<INT0;
+  36:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  37:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** }
+  38:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** //=============================================================
+  39:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** ISR(INT0_vect){
+ 109               		.stabn	68,0,39,.LM0-.LFBB1
+ 110               	.LM0:
+ 111               	.LFBB1:
+ 112 0000 1F92      		push r1
+ 113 0002 0F92      		push r0
+ 114 0004 0FB6      		in r0,__SREG__
+ 115 0006 0F92      		push r0
+ 116 0008 1124      		clr __zero_reg__
+ 117 000a 2F93      		push r18
+ 118 000c 3F93      		push r19
+ 119 000e 5F93      		push r21
+ 120 0010 6F93      		push r22
+ 121 0012 7F93      		push r23
+ 122 0014 8F93      		push r24
+ 123 0016 9F93      		push r25
+ 124 0018 AF93      		push r26
+ 125 001a BF93      		push r27
+ 126               	/* prologue: Signal */
+ 127               	/* frame size = 0 */
+ 128               	/* stack size = 12 */
+ 129               	.L__stack_usage = 12
+  40:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     TCCR1B = 0;
+ 130               		.stabn	68,0,40,.LM1-.LFBB1
+ 131               	.LM1:
+ 132 001c 1092 8100 		sts 129,__zero_reg__
+  41:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     TCNT1 = 0;
+ 133               		.stabn	68,0,41,.LM2-.LFBB1
+ 134               	.LM2:
+ 135 0020 1092 8500 		sts 132+1,__zero_reg__
+ 136 0024 1092 8400 		sts 132,__zero_reg__
+  42:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     if(!Flag_start){
+ 137               		.stabn	68,0,42,.LM3-.LFBB1
+ 138               	.LM3:
+ 139 0028 8091 0000 		lds r24,Flag_start
+ 140 002c 8111      		cpse r24,__zero_reg__
+ 141 002e 00C0      		rjmp .L2
+  43:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  44:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****         EIMSK &= ~(1<<INT0);
+ 142               		.stabn	68,0,44,.LM4-.LFBB1
+ 143               	.LM4:
+ 144 0030 E898      		cbi 0x1d,0
+  45:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****         return;
+ 145               		.stabn	68,0,45,.LM5-.LFBB1
+ 146               	.LM5:
+ 147 0032 00C0      		rjmp .L1
+ 148               	.L2:
+  46:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     }
+  47:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  48:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     TCCR1B =  (1 << WGM12) | (0 << CS12) | (1 << CS11) | (0 << CS10);
+ 149               		.stabn	68,0,48,.LM6-.LFBB1
+ 150               	.LM6:
+ 151 0034 8AE0      		ldi r24,lo8(10)
+ 152 0036 8093 8100 		sts 129,r24
+  49:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     TIMSK1 |=  (1 << OCIE1A);
+ 153               		.stabn	68,0,49,.LM7-.LFBB1
+ 154               	.LM7:
+ 155 003a 8091 6F00 		lds r24,111
+ 156 003e 8260      		ori r24,lo8(2)
+ 157 0040 8093 6F00 		sts 111,r24
+  50:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     if(read_cnt != (avg_cnt+1)){
+ 158               		.stabn	68,0,50,.LM8-.LFBB1
+ 159               	.LM8:
+ 160 0044 2091 0000 		lds r18,read_cnt
+ 161 0048 8091 0000 		lds r24,avg_cnt
+ 162 004c 30E0      		ldi r19,0
+ 163 004e 90E0      		ldi r25,0
+ 164 0050 0196      		adiw r24,1
+ 165 0052 2817      		cp r18,r24
+ 166 0054 3907      		cpc r19,r25
+ 167 0056 01F0      		breq .L4
+  51:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****         
+  52:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****         read_cnt ++;
+ 168               		.stabn	68,0,52,.LM9-.LFBB1
+ 169               	.LM9:
+ 170 0058 8091 0000 		lds r24,read_cnt
+ 171 005c 8F5F      		subi r24,lo8(-(1))
+ 172 005e 8093 0000 		sts read_cnt,r24
+  53:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****         return;
+ 173               		.stabn	68,0,53,.LM10-.LFBB1
+ 174               	.LM10:
+ 175 0062 00C0      		rjmp .L1
+ 176               	.L4:
+  54:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     }
+  55:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     TIMSK1 &= ~(1 << OCIE1A);
+ 177               		.stabn	68,0,55,.LM11-.LFBB1
+ 178               	.LM11:
+ 179 0064 8091 6F00 		lds r24,111
+ 180 0068 8D7F      		andi r24,lo8(-3)
+ 181 006a 8093 6F00 		sts 111,r24
+  56:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     
+  57:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     
+  58:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     angle_time = ((overflow_cnt)/avg_cnt);
+ 182               		.stabn	68,0,58,.LM12-.LFBB1
+ 183               	.LM12:
+ 184 006e 8091 0000 		lds r24,overflow_cnt
+ 185 0072 9091 0000 		lds r25,overflow_cnt+1
+ 186 0076 6091 0000 		lds r22,avg_cnt
+ 187 007a 70E0      		ldi r23,0
+ 188 007c 0E94 0000 		call __udivmodhi4
+ 189 0080 CB01      		movw r24,r22
+ 190 0082 A0E0      		ldi r26,0
+ 191 0084 B0E0      		ldi r27,0
+ 192 0086 8093 0000 		sts angle_time,r24
+ 193 008a 9093 0000 		sts angle_time+1,r25
+ 194 008e A093 0000 		sts angle_time+2,r26
+ 195 0092 B093 0000 		sts angle_time+3,r27
+  59:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     Flag_end=1;
+ 196               		.stabn	68,0,59,.LM13-.LFBB1
+ 197               	.LM13:
+ 198 0096 81E0      		ldi r24,lo8(1)
+ 199 0098 8093 0000 		sts Flag_end,r24
+ 200               	.L1:
+ 201               	/* epilogue start */
+  60:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  61:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** }
+ 202               		.stabn	68,0,61,.LM14-.LFBB1
+ 203               	.LM14:
+ 204 009c BF91      		pop r27
+ 205 009e AF91      		pop r26
+ 206 00a0 9F91      		pop r25
+ 207 00a2 8F91      		pop r24
+ 208 00a4 7F91      		pop r23
+ 209 00a6 6F91      		pop r22
+ 210 00a8 5F91      		pop r21
+ 211 00aa 3F91      		pop r19
+ 212 00ac 2F91      		pop r18
+ 213 00ae 0F90      		pop r0
+ 214 00b0 0FBE      		out __SREG__,r0
+ 215 00b2 0F90      		pop r0
+ 216 00b4 1F90      		pop r1
+ 217 00b6 1895      		reti
+ 218               		.size	__vector_1, .-__vector_1
+ 219               	.Lscope1:
+ 220               		.stabs	"",36,0,0,.Lscope1-.LFBB1
+ 221               		.stabd	78,0,0
+ 222               		.stabs	"__vector_11:F(0,49)",36,0,63,__vector_11
+ 223               	.global	__vector_11
+ 224               		.type	__vector_11, @function
+ 225               	__vector_11:
+ 226               		.stabd	46,0,0
+  62:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  63:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** ISR(TIMER1_COMPA_vect){
+ 227               		.stabn	68,0,63,.LM15-.LFBB2
+ 228               	.LM15:
+ 229               	.LFBB2:
+ 230 00b8 1F92      		push r1
+ 231 00ba 0F92      		push r0
+ 232 00bc 0FB6      		in r0,__SREG__
+ 233 00be 0F92      		push r0
+ 234 00c0 1124      		clr __zero_reg__
+ 235 00c2 8F93      		push r24
+ 236 00c4 9F93      		push r25
+ 237               	/* prologue: Signal */
+ 238               	/* frame size = 0 */
+ 239               	/* stack size = 5 */
+ 240               	.L__stack_usage = 5
+  64:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  65:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     overflow_cnt++;
+ 241               		.stabn	68,0,65,.LM16-.LFBB2
+ 242               	.LM16:
+ 243 00c6 8091 0000 		lds r24,overflow_cnt
+ 244 00ca 9091 0000 		lds r25,overflow_cnt+1
+ 245 00ce 0196      		adiw r24,1
+ 246 00d0 9093 0000 		sts overflow_cnt+1,r25
+ 247 00d4 8093 0000 		sts overflow_cnt,r24
+ 248               	/* epilogue start */
+  66:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** }
+ 249               		.stabn	68,0,66,.LM17-.LFBB2
+ 250               	.LM17:
+ 251 00d8 9F91      		pop r25
+ 252 00da 8F91      		pop r24
+ 253 00dc 0F90      		pop r0
+ 254 00de 0FBE      		out __SREG__,r0
+ 255 00e0 0F90      		pop r0
+ 256 00e2 1F90      		pop r1
+ 257 00e4 1895      		reti
+ 258               		.size	__vector_11, .-__vector_11
+ 259               	.Lscope2:
+ 260               		.stabs	"",36,0,0,.Lscope2-.LFBB2
+ 261               		.stabd	78,0,0
+ 262               		.stabs	"Timer1_init:F(0,49)",36,0,92,Timer1_init
+ 263               	.global	Timer1_init
+ 264               		.type	Timer1_init, @function
+ 265               	Timer1_init:
+ 266               		.stabd	46,0,0
+  67:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  68:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** ISR(TIMER2_COMPA_vect){
+  69:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     if(!Flag_start){
+  70:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             cli();
+  71:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             sum = 0;
+  72:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             overflow_cnt = 0;
+  73:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             avg_cnt = 1;
+  74:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             Flag_start = 1;       
+  75:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             sei();
+  76:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             EIMSK |= 1<<INT0;
+  77:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  78:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****         }
+  79:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****         if(Flag_end){
+  80:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             //cli();
+  81:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             EIMSK &= ~(1<<INT0);
+  82:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             Flag_start = 0; 
+  83:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             Flag_end = 0;
+  84:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             angle_value = angle_time * DEGREEperUS;
+  85:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             Tx_char('0'+angle_value);
+  86:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             read_cnt = 0;
+  87:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             _delay_us(10);
+  88:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             //sei();
+  89:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****         }
+  90:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** }
+  91:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** //=============================================================
+  92:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void Timer1_init(){
+ 267               		.stabn	68,0,92,.LM18-.LFBB3
+ 268               	.LM18:
+ 269               	.LFBB3:
+ 270               	/* prologue: function */
+ 271               	/* frame size = 0 */
+ 272               	/* stack size = 0 */
+ 273               	.L__stack_usage = 0
+  93:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     TCCR1B =  (1 << WGM12) | (0 << CS12) | (1 << CS11) | (0 << CS10);
+ 274               		.stabn	68,0,93,.LM19-.LFBB3
+ 275               	.LM19:
+ 276 00e6 8AE0      		ldi r24,lo8(10)
+ 277 00e8 8093 8100 		sts 129,r24
+  94:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 	TCNT1 = 0;
+ 278               		.stabn	68,0,94,.LM20-.LFBB3
+ 279               	.LM20:
+ 280 00ec 1092 8500 		sts 132+1,__zero_reg__
+ 281 00f0 1092 8400 		sts 132,__zero_reg__
+  95:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     OCR1A = 0x0002;
+ 282               		.stabn	68,0,95,.LM21-.LFBB3
+ 283               	.LM21:
+ 284 00f4 82E0      		ldi r24,lo8(2)
+ 285 00f6 90E0      		ldi r25,0
+ 286 00f8 9093 8900 		sts 136+1,r25
+ 287 00fc 8093 8800 		sts 136,r24
+  96:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     TIMSK1 |=  (1 << OCIE1A);
+ 288               		.stabn	68,0,96,.LM22-.LFBB3
+ 289               	.LM22:
+ 290 0100 EFE6      		ldi r30,lo8(111)
+ 291 0102 F0E0      		ldi r31,0
+ 292 0104 8081      		ld r24,Z
+ 293 0106 8260      		ori r24,lo8(2)
+ 294 0108 8083      		st Z,r24
+ 295 010a 0895      		ret
+ 296               		.size	Timer1_init, .-Timer1_init
+ 297               	.Lscope3:
+ 298               		.stabs	"",36,0,0,.Lscope3-.LFBB3
+ 299               		.stabd	78,0,0
+ 300               		.stabs	"Timer2_init:F(0,49)",36,0,99,Timer2_init
+ 301               	.global	Timer2_init
+ 302               		.type	Timer2_init, @function
+ 303               	Timer2_init:
+ 304               		.stabd	46,0,0
+  97:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** }
+  98:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+  99:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void Timer2_init(){
+ 305               		.stabn	68,0,99,.LM23-.LFBB4
+ 306               	.LM23:
+ 307               	.LFBB4:
+ 308               	/* prologue: function */
+ 309               	/* frame size = 0 */
+ 310               	/* stack size = 0 */
+ 311               	.L__stack_usage = 0
+ 100:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     TCCR2B =  (1 << WGM22) | (0 << CS22) | (1 << CS21) | (1 << CS20);
+ 312               		.stabn	68,0,100,.LM24-.LFBB4
+ 313               	.LM24:
+ 314 010c 8BE0      		ldi r24,lo8(11)
+ 315 010e 8093 B100 		sts 177,r24
+ 101:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 	TCNT2 = 0;
+ 316               		.stabn	68,0,101,.LM25-.LFBB4
+ 317               	.LM25:
+ 318 0112 1092 B200 		sts 178,__zero_reg__
+ 102:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     OCR2A = 0xFF;
+ 319               		.stabn	68,0,102,.LM26-.LFBB4
+ 320               	.LM26:
+ 321 0116 8FEF      		ldi r24,lo8(-1)
+ 322 0118 8093 B300 		sts 179,r24
+ 103:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     OCR2B = 
+ 104:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     TIMSK2 |=  (1 << OCIE2A);
+ 323               		.stabn	68,0,104,.LM27-.LFBB4
+ 324               	.LM27:
+ 325 011c E0E7      		ldi r30,lo8(112)
+ 326 011e F0E0      		ldi r31,0
+ 327 0120 8081      		ld r24,Z
+ 328 0122 8260      		ori r24,lo8(2)
+ 329 0124 8083      		st Z,r24
+ 103:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     OCR2B = 
+ 330               		.stabn	68,0,103,.LM28-.LFBB4
+ 331               	.LM28:
+ 332 0126 8093 B400 		sts 180,r24
+ 333 012a 0895      		ret
+ 334               		.size	Timer2_init, .-Timer2_init
+ 335               	.Lscope4:
+ 336               		.stabs	"",36,0,0,.Lscope4-.LFBB4
+ 337               		.stabd	78,0,0
+ 338               		.stabs	"USART_init:F(0,49)",36,0,107,USART_init
+ 339               	.global	USART_init
+ 340               		.type	USART_init, @function
+ 341               	USART_init:
+ 342               		.stabd	46,0,0
+ 105:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** }
+ 106:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+ 107:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void USART_init(){
+ 343               		.stabn	68,0,107,.LM29-.LFBB5
+ 344               	.LM29:
+ 345               	.LFBB5:
+ 346               	/* prologue: function */
+ 347               	/* frame size = 0 */
+ 348               	/* stack size = 0 */
+ 349               	.L__stack_usage = 0
+ 108:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     UCSR0A = 0x20;
+ 350               		.stabn	68,0,108,.LM30-.LFBB5
+ 351               	.LM30:
+ 352 012c 80E2      		ldi r24,lo8(32)
+ 353 012e 8093 C000 		sts 192,r24
+ 109:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     UCSR0B = 0x18;
+ 354               		.stabn	68,0,109,.LM31-.LFBB5
+ 355               	.LM31:
+ 356 0132 88E1      		ldi r24,lo8(24)
+ 357 0134 8093 C100 		sts 193,r24
+ 110:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     UCSR0C = 0x06;
+ 358               		.stabn	68,0,110,.LM32-.LFBB5
+ 359               	.LM32:
+ 360 0138 86E0      		ldi r24,lo8(6)
+ 361 013a 8093 C200 		sts 194,r24
+ 111:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     UBRR0 = 8;
+ 362               		.stabn	68,0,111,.LM33-.LFBB5
+ 363               	.LM33:
+ 364 013e 88E0      		ldi r24,lo8(8)
+ 365 0140 90E0      		ldi r25,0
+ 366 0142 9093 C500 		sts 196+1,r25
+ 367 0146 8093 C400 		sts 196,r24
+ 368 014a 0895      		ret
+ 369               		.size	USART_init, .-USART_init
+ 370               	.Lscope5:
+ 371               		.stabs	"",36,0,0,.Lscope5-.LFBB5
+ 372               		.stabd	78,0,0
+ 373               		.section	.text.startup,"ax",@progbits
+ 374               		.stabs	"main:F(0,1)",36,0,24,main
+ 375               	.global	main
+ 376               		.type	main, @function
+ 377               	main:
+ 378               		.stabd	46,0,0
+  24:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     sei();
+ 379               		.stabn	68,0,24,.LM34-.LFBB6
+ 380               	.LM34:
+ 381               	.LFBB6:
+ 382               	/* prologue: function */
+ 383               	/* frame size = 0 */
+ 384               	/* stack size = 0 */
+ 385               	.L__stack_usage = 0
+  25:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     Timer1_init();
+ 386               		.stabn	68,0,25,.LM35-.LFBB6
+ 387               	.LM35:
+ 388               	/* #APP */
+ 389               	 ;  25 "/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c" 1
+ 390 0000 7894      		sei
+ 391               	 ;  0 "" 2
+  26:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     Timer2_init();
+ 392               		.stabn	68,0,26,.LM36-.LFBB6
+ 393               	.LM36:
+ 394               	/* #NOAPP */
+ 395 0002 0E94 0000 		call Timer1_init
+  27:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 	USART_init();
+ 396               		.stabn	68,0,27,.LM37-.LFBB6
+ 397               	.LM37:
+ 398 0006 0E94 0000 		call Timer2_init
+  28:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     PORT_init();
+ 399               		.stabn	68,0,28,.LM38-.LFBB6
+ 400               	.LM38:
+ 401 000a 0E94 0000 		call USART_init
+ 402               	.LBB6:
+ 403               	.LBB7:
+ 112:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** }
+ 113:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void PORT_init(){
+ 114:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     DDRD = 0x00;
+ 404               		.stabn	68,0,114,.LM39-.LFBB6
+ 405               	.LM39:
+ 406 000e 1AB8      		out 0xa,__zero_reg__
+ 407               	.LBE7:
+ 408               	.LBE6:
+  30:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+ 409               		.stabn	68,0,30,.LM40-.LFBB6
+ 410               	.LM40:
+ 411 0010 1092 0000 		sts angle_value,__zero_reg__
+  33:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     
+ 412               		.stabn	68,0,33,.LM41-.LFBB6
+ 413               	.LM41:
+ 414 0014 83E0      		ldi r24,lo8(3)
+ 415 0016 8093 6900 		sts 105,r24
+  35:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+ 416               		.stabn	68,0,35,.LM42-.LFBB6
+ 417               	.LM42:
+ 418 001a E89A      		sbi 0x1d,0
+  37:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** //=============================================================
+ 419               		.stabn	68,0,37,.LM43-.LFBB6
+ 420               	.LM43:
+ 421 001c 80E0      		ldi r24,0
+ 422 001e 90E0      		ldi r25,0
+ 423 0020 0895      		ret
+ 424               		.size	main, .-main
+ 425               	.Lscope6:
+ 426               		.stabs	"",36,0,0,.Lscope6-.LFBB6
+ 427               		.stabd	78,0,0
+ 428               		.text
+ 429               		.stabs	"PORT_init:F(0,49)",36,0,113,PORT_init
+ 430               	.global	PORT_init
+ 431               		.type	PORT_init, @function
+ 432               	PORT_init:
+ 433               		.stabd	46,0,0
+ 113:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     DDRD = 0x00;
+ 434               		.stabn	68,0,113,.LM44-.LFBB7
+ 435               	.LM44:
+ 436               	.LFBB7:
+ 437               	/* prologue: function */
+ 438               	/* frame size = 0 */
+ 439               	/* stack size = 0 */
+ 440               	.L__stack_usage = 0
+ 441               		.stabn	68,0,114,.LM45-.LFBB7
+ 442               	.LM45:
+ 443 014c 1AB8      		out 0xa,__zero_reg__
+ 444 014e 0895      		ret
+ 445               		.size	PORT_init, .-PORT_init
+ 446               	.Lscope7:
+ 447               		.stabs	"",36,0,0,.Lscope7-.LFBB7
+ 448               		.stabd	78,0,0
+ 449               		.stabs	"Tx_char:F(0,49)",36,0,118,Tx_char
+ 450               		.stabs	"data:P(0,13)",64,0,118,24
+ 451               	.global	Tx_char
+ 452               		.type	Tx_char, @function
+ 453               	Tx_char:
+ 454               		.stabd	46,0,0
+ 115:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     //PORTD = 0xFE;
+ 116:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** }
+ 117:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** //=============================================================
+ 118:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** void Tx_char(unsigned char data){
+ 455               		.stabn	68,0,118,.LM46-.LFBB8
+ 456               	.LM46:
+ 457               	.LFBB8:
+ 458               	/* prologue: function */
+ 459               	/* frame size = 0 */
+ 460               	/* stack size = 0 */
+ 461               	.L__stack_usage = 0
+ 462               	.L13:
+ 119:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     while(!(UCSR0A & (1 << UDRE0)));
+ 463               		.stabn	68,0,119,.LM47-.LFBB8
+ 464               	.LM47:
+ 465 0150 9091 C000 		lds r25,192
+ 466 0154 95FF      		sbrs r25,5
+ 467 0156 00C0      		rjmp .L13
+ 120:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     UDR0 = data;
+ 468               		.stabn	68,0,120,.LM48-.LFBB8
+ 469               	.LM48:
+ 470 0158 8093 C600 		sts 198,r24
+ 471 015c 0895      		ret
+ 472               		.size	Tx_char, .-Tx_char
+ 473               	.Lscope8:
+ 474               		.stabs	"",36,0,0,.Lscope8-.LFBB8
+ 475               		.stabd	78,0,0
+ 476               	.global	__floatunsisf
+ 477               	.global	__mulsf3
+ 478               	.global	__fixunssfsi
+ 479               		.stabs	"__vector_7:F(0,49)",36,0,68,__vector_7
+ 480               	.global	__vector_7
+ 481               		.type	__vector_7, @function
+ 482               	__vector_7:
+ 483               		.stabd	46,0,0
+  68:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****     if(!Flag_start){
+ 484               		.stabn	68,0,68,.LM49-.LFBB9
+ 485               	.LM49:
+ 486               	.LFBB9:
+ 487 015e 1F92      		push r1
+ 488 0160 0F92      		push r0
+ 489 0162 0FB6      		in r0,__SREG__
+ 490 0164 0F92      		push r0
+ 491 0166 1124      		clr __zero_reg__
+ 492 0168 2F93      		push r18
+ 493 016a 3F93      		push r19
+ 494 016c 4F93      		push r20
+ 495 016e 5F93      		push r21
+ 496 0170 6F93      		push r22
+ 497 0172 7F93      		push r23
+ 498 0174 8F93      		push r24
+ 499 0176 9F93      		push r25
+ 500 0178 AF93      		push r26
+ 501 017a BF93      		push r27
+ 502 017c EF93      		push r30
+ 503 017e FF93      		push r31
+ 504               	/* prologue: Signal */
+ 505               	/* frame size = 0 */
+ 506               	/* stack size = 15 */
+ 507               	.L__stack_usage = 15
+  69:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             cli();
+ 508               		.stabn	68,0,69,.LM50-.LFBB9
+ 509               	.LM50:
+ 510 0180 8091 0000 		lds r24,Flag_start
+ 511 0184 8111      		cpse r24,__zero_reg__
+ 512 0186 00C0      		rjmp .L17
+  70:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             sum = 0;
+ 513               		.stabn	68,0,70,.LM51-.LFBB9
+ 514               	.LM51:
+ 515               	/* #APP */
+ 516               	 ;  70 "/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c" 1
+ 517 0188 F894      		cli
+ 518               	 ;  0 "" 2
+  71:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             overflow_cnt = 0;
+ 519               		.stabn	68,0,71,.LM52-.LFBB9
+ 520               	.LM52:
+ 521               	/* #NOAPP */
+ 522 018a 1092 0000 		sts sum,__zero_reg__
+ 523 018e 1092 0000 		sts sum+1,__zero_reg__
+ 524 0192 1092 0000 		sts sum+2,__zero_reg__
+ 525 0196 1092 0000 		sts sum+3,__zero_reg__
+  72:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             avg_cnt = 1;
+ 526               		.stabn	68,0,72,.LM53-.LFBB9
+ 527               	.LM53:
+ 528 019a 1092 0000 		sts overflow_cnt+1,__zero_reg__
+ 529 019e 1092 0000 		sts overflow_cnt,__zero_reg__
+  73:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             Flag_start = 1;       
+ 530               		.stabn	68,0,73,.LM54-.LFBB9
+ 531               	.LM54:
+ 532 01a2 81E0      		ldi r24,lo8(1)
+ 533 01a4 8093 0000 		sts avg_cnt,r24
+  74:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             sei();
+ 534               		.stabn	68,0,74,.LM55-.LFBB9
+ 535               	.LM55:
+ 536 01a8 8093 0000 		sts Flag_start,r24
+  75:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             EIMSK |= 1<<INT0;
+ 537               		.stabn	68,0,75,.LM56-.LFBB9
+ 538               	.LM56:
+ 539               	/* #APP */
+ 540               	 ;  75 "/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c" 1
+ 541 01ac 7894      		sei
+ 542               	 ;  0 "" 2
+  76:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** 
+ 543               		.stabn	68,0,76,.LM57-.LFBB9
+ 544               	.LM57:
+ 545               	/* #NOAPP */
+ 546 01ae E89A      		sbi 0x1d,0
+ 547               	.L17:
+  79:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             //cli();
+ 548               		.stabn	68,0,79,.LM58-.LFBB9
+ 549               	.LM58:
+ 550 01b0 8091 0000 		lds r24,Flag_end
+ 551 01b4 8823      		tst r24
+ 552 01b6 01F0      		breq .L16
+  81:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             Flag_start = 0; 
+ 553               		.stabn	68,0,81,.LM59-.LFBB9
+ 554               	.LM59:
+ 555 01b8 E898      		cbi 0x1d,0
+  82:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             Flag_end = 0;
+ 556               		.stabn	68,0,82,.LM60-.LFBB9
+ 557               	.LM60:
+ 558 01ba 1092 0000 		sts Flag_start,__zero_reg__
+  83:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             angle_value = angle_time * DEGREEperUS;
+ 559               		.stabn	68,0,83,.LM61-.LFBB9
+ 560               	.LM61:
+ 561 01be 1092 0000 		sts Flag_end,__zero_reg__
+  84:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             Tx_char('0'+angle_value);
+ 562               		.stabn	68,0,84,.LM62-.LFBB9
+ 563               	.LM62:
+ 564 01c2 6091 0000 		lds r22,angle_time
+ 565 01c6 7091 0000 		lds r23,angle_time+1
+ 566 01ca 8091 0000 		lds r24,angle_time+2
+ 567 01ce 9091 0000 		lds r25,angle_time+3
+ 568 01d2 0E94 0000 		call __floatunsisf
+ 569 01d6 21E7      		ldi r18,lo8(113)
+ 570 01d8 3DE3      		ldi r19,lo8(61)
+ 571 01da 4AEA      		ldi r20,lo8(-86)
+ 572 01dc 5FE3      		ldi r21,lo8(63)
+ 573 01de 0E94 0000 		call __mulsf3
+ 574 01e2 0E94 0000 		call __fixunssfsi
+ 575 01e6 6093 0000 		sts angle_value,r22
+  85:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             read_cnt = 0;
+ 576               		.stabn	68,0,85,.LM63-.LFBB9
+ 577               	.LM63:
+ 578 01ea 8091 0000 		lds r24,angle_value
+ 579 01ee 805D      		subi r24,lo8(-(48))
+ 580 01f0 0E94 0000 		call Tx_char
+  86:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c ****             _delay_us(10);
+ 581               		.stabn	68,0,86,.LM64-.LFBB9
+ 582               	.LM64:
+ 583 01f4 1092 0000 		sts read_cnt,__zero_reg__
+ 584               	.LBB8:
+ 585               	.LBB9:
+ 586               		.stabs	"/usr/lib/avr/include/util/delay.h",132,0,0,.Ltext1
+ 587               	.Ltext1:
+   1:/usr/lib/avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
+   2:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
+   3:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
+   4:/usr/lib/avr/include/util/delay.h ****    All rights reserved.
+   5:/usr/lib/avr/include/util/delay.h **** 
+   6:/usr/lib/avr/include/util/delay.h ****    Redistribution and use in source and binary forms, with or without
+   7:/usr/lib/avr/include/util/delay.h ****    modification, are permitted provided that the following conditions are met:
+   8:/usr/lib/avr/include/util/delay.h **** 
+   9:/usr/lib/avr/include/util/delay.h ****    * Redistributions of source code must retain the above copyright
+  10:/usr/lib/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer.
+  11:/usr/lib/avr/include/util/delay.h **** 
+  12:/usr/lib/avr/include/util/delay.h ****    * Redistributions in binary form must reproduce the above copyright
+  13:/usr/lib/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer in
+  14:/usr/lib/avr/include/util/delay.h ****      the documentation and/or other materials provided with the
+  15:/usr/lib/avr/include/util/delay.h ****      distribution.
+  16:/usr/lib/avr/include/util/delay.h **** 
+  17:/usr/lib/avr/include/util/delay.h ****    * Neither the name of the copyright holders nor the names of
+  18:/usr/lib/avr/include/util/delay.h ****      contributors may be used to endorse or promote products derived
+  19:/usr/lib/avr/include/util/delay.h ****      from this software without specific prior written permission.
+  20:/usr/lib/avr/include/util/delay.h **** 
+  21:/usr/lib/avr/include/util/delay.h ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:/usr/lib/avr/include/util/delay.h ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:/usr/lib/avr/include/util/delay.h ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:/usr/lib/avr/include/util/delay.h ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  25:/usr/lib/avr/include/util/delay.h ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:/usr/lib/avr/include/util/delay.h ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:/usr/lib/avr/include/util/delay.h ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:/usr/lib/avr/include/util/delay.h ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:/usr/lib/avr/include/util/delay.h ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:/usr/lib/avr/include/util/delay.h ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:/usr/lib/avr/include/util/delay.h ****   POSSIBILITY OF SUCH DAMAGE. */
+  32:/usr/lib/avr/include/util/delay.h **** 
+  33:/usr/lib/avr/include/util/delay.h **** /* $Id$ */
+  34:/usr/lib/avr/include/util/delay.h **** 
+  35:/usr/lib/avr/include/util/delay.h **** #ifndef _UTIL_DELAY_H_
+  36:/usr/lib/avr/include/util/delay.h **** #define _UTIL_DELAY_H_ 1
+  37:/usr/lib/avr/include/util/delay.h **** 
+  38:/usr/lib/avr/include/util/delay.h **** #ifndef __DOXYGEN__
+  39:/usr/lib/avr/include/util/delay.h **** #  ifndef __HAS_DELAY_CYCLES
+  40:/usr/lib/avr/include/util/delay.h **** #    define __HAS_DELAY_CYCLES 1
+  41:/usr/lib/avr/include/util/delay.h **** #  endif
+  42:/usr/lib/avr/include/util/delay.h **** #endif  /* __DOXYGEN__ */
+  43:/usr/lib/avr/include/util/delay.h **** 
+  44:/usr/lib/avr/include/util/delay.h **** #include <inttypes.h>
+  45:/usr/lib/avr/include/util/delay.h **** #include <util/delay_basic.h>
+  46:/usr/lib/avr/include/util/delay.h **** #include <math.h>
+  47:/usr/lib/avr/include/util/delay.h **** 
+  48:/usr/lib/avr/include/util/delay.h **** /** \file */
+  49:/usr/lib/avr/include/util/delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
+  50:/usr/lib/avr/include/util/delay.h ****     \code
+  51:/usr/lib/avr/include/util/delay.h ****     #define F_CPU 1000000UL  // 1 MHz
+  52:/usr/lib/avr/include/util/delay.h ****     //#define F_CPU 14.7456E6
+  53:/usr/lib/avr/include/util/delay.h ****     #include <util/delay.h>
+  54:/usr/lib/avr/include/util/delay.h ****     \endcode
+  55:/usr/lib/avr/include/util/delay.h **** 
+  56:/usr/lib/avr/include/util/delay.h ****     \note As an alternative method, it is possible to pass the
+  57:/usr/lib/avr/include/util/delay.h ****     F_CPU macro down to the compiler from the Makefile.
+  58:/usr/lib/avr/include/util/delay.h ****     Obviously, in that case, no \c \#define statement should be
+  59:/usr/lib/avr/include/util/delay.h ****     used.
+  60:/usr/lib/avr/include/util/delay.h **** 
+  61:/usr/lib/avr/include/util/delay.h ****     The functions in this header file are wrappers around the basic
+  62:/usr/lib/avr/include/util/delay.h ****     busy-wait functions from <util/delay_basic.h>.  They are meant as
+  63:/usr/lib/avr/include/util/delay.h ****     convenience functions where actual time values can be specified
+  64:/usr/lib/avr/include/util/delay.h ****     rather than a number of cycles to wait for.  The idea behind is
+  65:/usr/lib/avr/include/util/delay.h ****     that compile-time constant expressions will be eliminated by
+  66:/usr/lib/avr/include/util/delay.h ****     compiler optimization so floating-point expressions can be used
+  67:/usr/lib/avr/include/util/delay.h ****     to calculate the number of delay cycles needed based on the CPU
+  68:/usr/lib/avr/include/util/delay.h ****     frequency passed by the macro F_CPU.
+  69:/usr/lib/avr/include/util/delay.h **** 
+  70:/usr/lib/avr/include/util/delay.h ****     \note In order for these functions to work as intended, compiler
+  71:/usr/lib/avr/include/util/delay.h ****     optimizations <em>must</em> be enabled, and the delay time
+  72:/usr/lib/avr/include/util/delay.h ****     <em>must</em> be an expression that is a known constant at
+  73:/usr/lib/avr/include/util/delay.h ****     compile-time.  If these requirements are not met, the resulting
+  74:/usr/lib/avr/include/util/delay.h ****     delay will be much longer (and basically unpredictable), and
+  75:/usr/lib/avr/include/util/delay.h ****     applications that otherwise do not use floating-point calculations
+  76:/usr/lib/avr/include/util/delay.h ****     will experience severe code bloat by the floating-point library
+  77:/usr/lib/avr/include/util/delay.h ****     routines linked into the application.
+  78:/usr/lib/avr/include/util/delay.h **** 
+  79:/usr/lib/avr/include/util/delay.h ****     The functions available allow the specification of microsecond, and
+  80:/usr/lib/avr/include/util/delay.h ****     millisecond delays directly, using the application-supplied macro
+  81:/usr/lib/avr/include/util/delay.h ****     F_CPU as the CPU clock frequency (in Hertz).
+  82:/usr/lib/avr/include/util/delay.h **** 
+  83:/usr/lib/avr/include/util/delay.h **** */
+  84:/usr/lib/avr/include/util/delay.h **** 
+  85:/usr/lib/avr/include/util/delay.h **** #if !defined(__DOXYGEN__)
+  86:/usr/lib/avr/include/util/delay.h **** static __inline__ void _delay_us(double __us) __attribute__((__always_inline__));
+  87:/usr/lib/avr/include/util/delay.h **** static __inline__ void _delay_ms(double __ms) __attribute__((__always_inline__));
+  88:/usr/lib/avr/include/util/delay.h **** #endif
+  89:/usr/lib/avr/include/util/delay.h **** 
+  90:/usr/lib/avr/include/util/delay.h **** #ifndef F_CPU
+  91:/usr/lib/avr/include/util/delay.h **** /* prevent compiler error by supplying a default */
+  92:/usr/lib/avr/include/util/delay.h **** # warning "F_CPU not defined for <util/delay.h>"
+  93:/usr/lib/avr/include/util/delay.h **** /** \ingroup util_delay
+  94:/usr/lib/avr/include/util/delay.h ****     \def F_CPU
+  95:/usr/lib/avr/include/util/delay.h ****     \brief CPU frequency in Hz
+  96:/usr/lib/avr/include/util/delay.h **** 
+  97:/usr/lib/avr/include/util/delay.h ****     The macro F_CPU specifies the CPU frequency to be considered by
+  98:/usr/lib/avr/include/util/delay.h ****     the delay macros.  This macro is normally supplied by the
+  99:/usr/lib/avr/include/util/delay.h ****     environment (e.g. from within a project header, or the project's
+ 100:/usr/lib/avr/include/util/delay.h ****     Makefile).  The value 1 MHz here is only provided as a "vanilla"
+ 101:/usr/lib/avr/include/util/delay.h ****     fallback if no such user-provided definition could be found.
+ 102:/usr/lib/avr/include/util/delay.h **** 
+ 103:/usr/lib/avr/include/util/delay.h ****     In terms of the delay functions, the CPU frequency can be given as
+ 104:/usr/lib/avr/include/util/delay.h ****     a floating-point constant (e.g. 3.6864E6 for 3.6864 MHz).
+ 105:/usr/lib/avr/include/util/delay.h ****     However, the macros in <util/setbaud.h> require it to be an
+ 106:/usr/lib/avr/include/util/delay.h ****     integer value.
+ 107:/usr/lib/avr/include/util/delay.h ****  */
+ 108:/usr/lib/avr/include/util/delay.h **** # define F_CPU 1000000UL
+ 109:/usr/lib/avr/include/util/delay.h **** #endif
+ 110:/usr/lib/avr/include/util/delay.h **** 
+ 111:/usr/lib/avr/include/util/delay.h **** #ifndef __OPTIMIZE__
+ 112:/usr/lib/avr/include/util/delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+ 113:/usr/lib/avr/include/util/delay.h **** #endif
+ 114:/usr/lib/avr/include/util/delay.h **** 
+ 115:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 116:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 117:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 118:/usr/lib/avr/include/util/delay.h **** #  include <math.h>
+ 119:/usr/lib/avr/include/util/delay.h **** #endif
+ 120:/usr/lib/avr/include/util/delay.h **** 
+ 121:/usr/lib/avr/include/util/delay.h **** /**
+ 122:/usr/lib/avr/include/util/delay.h ****    \ingroup util_delay
+ 123:/usr/lib/avr/include/util/delay.h **** 
+ 124:/usr/lib/avr/include/util/delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
+ 125:/usr/lib/avr/include/util/delay.h **** 
+ 126:/usr/lib/avr/include/util/delay.h ****    The macro F_CPU is supposed to be defined to a
+ 127:/usr/lib/avr/include/util/delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 128:/usr/lib/avr/include/util/delay.h **** 
+ 129:/usr/lib/avr/include/util/delay.h ****    The maximal possible delay is 262.14 ms / F_CPU in MHz.
+ 130:/usr/lib/avr/include/util/delay.h **** 
+ 131:/usr/lib/avr/include/util/delay.h ****    When the user request delay which exceed the maximum possible one,
+ 132:/usr/lib/avr/include/util/delay.h ****    _delay_ms() provides a decreased resolution functionality. In this
+ 133:/usr/lib/avr/include/util/delay.h ****    mode _delay_ms() will work with a resolution of 1/10 ms, providing
+ 134:/usr/lib/avr/include/util/delay.h ****    delays up to 6.5535 seconds (independent from CPU frequency).  The
+ 135:/usr/lib/avr/include/util/delay.h ****    user will not be informed about decreased resolution.
+ 136:/usr/lib/avr/include/util/delay.h **** 
+ 137:/usr/lib/avr/include/util/delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 138:/usr/lib/avr/include/util/delay.h ****    support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+ 139:/usr/lib/avr/include/util/delay.h ****    values greater than the maximal possible delay, overflows results in
+ 140:/usr/lib/avr/include/util/delay.h ****    no delay i.e., 0ms.
+ 141:/usr/lib/avr/include/util/delay.h **** 
+ 142:/usr/lib/avr/include/util/delay.h ****    Conversion of \c __ms into clock cycles may not always result in
+ 143:/usr/lib/avr/include/util/delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 144:/usr/lib/avr/include/util/delay.h ****    integer. This ensures that the user gets at least \c __ms
+ 145:/usr/lib/avr/include/util/delay.h ****    microseconds of delay.
+ 146:/usr/lib/avr/include/util/delay.h **** 
+ 147:/usr/lib/avr/include/util/delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 148:/usr/lib/avr/include/util/delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 149:/usr/lib/avr/include/util/delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 150:/usr/lib/avr/include/util/delay.h ****    respectively.
+ 151:/usr/lib/avr/include/util/delay.h **** 
+ 152:/usr/lib/avr/include/util/delay.h ****    \note
+ 153:/usr/lib/avr/include/util/delay.h **** 
+ 154:/usr/lib/avr/include/util/delay.h ****    The implementation of _delay_ms() based on
+ 155:/usr/lib/avr/include/util/delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 156:/usr/lib/avr/include/util/delay.h ****    implementations.  In order to get functionality backward compatible
+ 157:/usr/lib/avr/include/util/delay.h ****    with previous versions, the macro \c "__DELAY_BACKWARD_COMPATIBLE__"
+ 158:/usr/lib/avr/include/util/delay.h ****    must be defined before including this header file. Also, the
+ 159:/usr/lib/avr/include/util/delay.h ****    backward compatible algorithm will be chosen if the code is
+ 160:/usr/lib/avr/include/util/delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 161:/usr/lib/avr/include/util/delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 162:/usr/lib/avr/include/util/delay.h ****    not available to the compiler then.
+ 163:/usr/lib/avr/include/util/delay.h **** 
+ 164:/usr/lib/avr/include/util/delay.h ****  */
+ 165:/usr/lib/avr/include/util/delay.h **** void
+ 166:/usr/lib/avr/include/util/delay.h **** _delay_ms(double __ms)
+ 167:/usr/lib/avr/include/util/delay.h **** {
+ 168:/usr/lib/avr/include/util/delay.h **** 	double __tmp ;
+ 169:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 170:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 171:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 172:/usr/lib/avr/include/util/delay.h **** 	uint32_t __ticks_dc;
+ 173:/usr/lib/avr/include/util/delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 174:/usr/lib/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+ 175:/usr/lib/avr/include/util/delay.h **** 
+ 176:/usr/lib/avr/include/util/delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 177:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 178:/usr/lib/avr/include/util/delay.h **** 
+ 179:/usr/lib/avr/include/util/delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 180:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 181:/usr/lib/avr/include/util/delay.h **** 
+ 182:/usr/lib/avr/include/util/delay.h **** 	#else
+ 183:/usr/lib/avr/include/util/delay.h **** 		//round up by default
+ 184:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 185:/usr/lib/avr/include/util/delay.h **** 	#endif
+ 186:/usr/lib/avr/include/util/delay.h **** 
+ 187:/usr/lib/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 188:/usr/lib/avr/include/util/delay.h **** 
+ 189:/usr/lib/avr/include/util/delay.h **** #else
+ 190:/usr/lib/avr/include/util/delay.h **** 	uint16_t __ticks;
+ 191:/usr/lib/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 4e3) * __ms;
+ 192:/usr/lib/avr/include/util/delay.h **** 	if (__tmp < 1.0)
+ 193:/usr/lib/avr/include/util/delay.h **** 		__ticks = 1;
+ 194:/usr/lib/avr/include/util/delay.h **** 	else if (__tmp > 65535)
+ 195:/usr/lib/avr/include/util/delay.h **** 	{
+ 196:/usr/lib/avr/include/util/delay.h **** 		//	__ticks = requested delay in 1/10 ms
+ 197:/usr/lib/avr/include/util/delay.h **** 		__ticks = (uint16_t) (__ms * 10.0);
+ 198:/usr/lib/avr/include/util/delay.h **** 		while(__ticks)
+ 199:/usr/lib/avr/include/util/delay.h **** 		{
+ 200:/usr/lib/avr/include/util/delay.h **** 			// wait 1/10 ms
+ 201:/usr/lib/avr/include/util/delay.h **** 			_delay_loop_2(((F_CPU) / 4e3) / 10);
+ 202:/usr/lib/avr/include/util/delay.h **** 			__ticks --;
+ 203:/usr/lib/avr/include/util/delay.h **** 		}
+ 204:/usr/lib/avr/include/util/delay.h **** 		return;
+ 205:/usr/lib/avr/include/util/delay.h **** 	}
+ 206:/usr/lib/avr/include/util/delay.h **** 	else
+ 207:/usr/lib/avr/include/util/delay.h **** 		__ticks = (uint16_t)__tmp;
+ 208:/usr/lib/avr/include/util/delay.h **** 	_delay_loop_2(__ticks);
+ 209:/usr/lib/avr/include/util/delay.h **** #endif
+ 210:/usr/lib/avr/include/util/delay.h **** }
+ 211:/usr/lib/avr/include/util/delay.h **** 
+ 212:/usr/lib/avr/include/util/delay.h **** /**
+ 213:/usr/lib/avr/include/util/delay.h ****    \ingroup util_delay
+ 214:/usr/lib/avr/include/util/delay.h **** 
+ 215:/usr/lib/avr/include/util/delay.h ****    Perform a delay of \c __us microseconds, using _delay_loop_1().
+ 216:/usr/lib/avr/include/util/delay.h **** 
+ 217:/usr/lib/avr/include/util/delay.h ****    The macro F_CPU is supposed to be defined to a
+ 218:/usr/lib/avr/include/util/delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 219:/usr/lib/avr/include/util/delay.h **** 
+ 220:/usr/lib/avr/include/util/delay.h ****    The maximal possible delay is 768 us / F_CPU in MHz.
+ 221:/usr/lib/avr/include/util/delay.h **** 
+ 222:/usr/lib/avr/include/util/delay.h ****    If the user requests a delay greater than the maximal possible one,
+ 223:/usr/lib/avr/include/util/delay.h ****    _delay_us() will automatically call _delay_ms() instead.  The user
+ 224:/usr/lib/avr/include/util/delay.h ****    will not be informed about this case.
+ 225:/usr/lib/avr/include/util/delay.h **** 
+ 226:/usr/lib/avr/include/util/delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 227:/usr/lib/avr/include/util/delay.h ****    support, maximal possible delay is 4294967.295 us/ F_CPU in MHz. For
+ 228:/usr/lib/avr/include/util/delay.h ****    values greater than the maximal possible delay, overflow results in
+ 229:/usr/lib/avr/include/util/delay.h ****    no delay i.e., 0us.
+ 230:/usr/lib/avr/include/util/delay.h **** 
+ 231:/usr/lib/avr/include/util/delay.h ****    Conversion of \c __us into clock cycles may not always result in
+ 232:/usr/lib/avr/include/util/delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 233:/usr/lib/avr/include/util/delay.h ****    integer. This ensures that the user gets at least \c __us
+ 234:/usr/lib/avr/include/util/delay.h ****    microseconds of delay.
+ 235:/usr/lib/avr/include/util/delay.h **** 
+ 236:/usr/lib/avr/include/util/delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 237:/usr/lib/avr/include/util/delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 238:/usr/lib/avr/include/util/delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 239:/usr/lib/avr/include/util/delay.h ****    respectively.
+ 240:/usr/lib/avr/include/util/delay.h **** 
+ 241:/usr/lib/avr/include/util/delay.h ****    \note
+ 242:/usr/lib/avr/include/util/delay.h **** 
+ 243:/usr/lib/avr/include/util/delay.h ****    The implementation of _delay_ms() based on
+ 244:/usr/lib/avr/include/util/delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 245:/usr/lib/avr/include/util/delay.h ****    implementations.  In order to get functionality backward compatible
+ 246:/usr/lib/avr/include/util/delay.h ****    with previous versions, the macro \c __DELAY_BACKWARD_COMPATIBLE__
+ 247:/usr/lib/avr/include/util/delay.h ****    must be defined before including this header file. Also, the
+ 248:/usr/lib/avr/include/util/delay.h ****    backward compatible algorithm will be chosen if the code is
+ 249:/usr/lib/avr/include/util/delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 250:/usr/lib/avr/include/util/delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 251:/usr/lib/avr/include/util/delay.h ****    not available to the compiler then.
+ 252:/usr/lib/avr/include/util/delay.h **** 
+ 253:/usr/lib/avr/include/util/delay.h ****  */
+ 254:/usr/lib/avr/include/util/delay.h **** void
+ 255:/usr/lib/avr/include/util/delay.h **** _delay_us(double __us)
+ 256:/usr/lib/avr/include/util/delay.h **** {
+ 257:/usr/lib/avr/include/util/delay.h **** 	double __tmp ;
+ 258:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 259:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 260:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 261:/usr/lib/avr/include/util/delay.h **** 	uint32_t __ticks_dc;
+ 262:/usr/lib/avr/include/util/delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 263:/usr/lib/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 264:/usr/lib/avr/include/util/delay.h **** 
+ 265:/usr/lib/avr/include/util/delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 266:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 267:/usr/lib/avr/include/util/delay.h **** 
+ 268:/usr/lib/avr/include/util/delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 269:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 270:/usr/lib/avr/include/util/delay.h **** 
+ 271:/usr/lib/avr/include/util/delay.h **** 	#else
+ 272:/usr/lib/avr/include/util/delay.h **** 		//round up by default
+ 273:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 274:/usr/lib/avr/include/util/delay.h **** 	#endif
+ 275:/usr/lib/avr/include/util/delay.h **** 
+ 276:/usr/lib/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 588               		.stabn	68,0,276,.LM65-.LFBB9
+ 589               	.LM65:
+ 590 01f8 85E3      		ldi r24,lo8(53)
+ 591 01fa 8A95      	1:	dec r24
+ 592 01fc 01F4      		brne 1b
+ 593 01fe 0000      		nop
+ 594               	.L16:
+ 595               	/* epilogue start */
+ 596               	.LBE9:
+ 597               	.LBE8:
+ 598               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c",132,0,0,.Ltext2
+ 599               	.Ltext2:
+  90:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/tilt_sensor/tilt_sensor.c **** //=============================================================
+ 600               		.stabn	68,0,90,.LM66-.LFBB9
+ 601               	.LM66:
+ 602 0200 FF91      		pop r31
+ 603 0202 EF91      		pop r30
+ 604 0204 BF91      		pop r27
+ 605 0206 AF91      		pop r26
+ 606 0208 9F91      		pop r25
+ 607 020a 8F91      		pop r24
+ 608 020c 7F91      		pop r23
+ 609 020e 6F91      		pop r22
+ 610 0210 5F91      		pop r21
+ 611 0212 4F91      		pop r20
+ 612 0214 3F91      		pop r19
+ 613 0216 2F91      		pop r18
+ 614 0218 0F90      		pop r0
+ 615 021a 0FBE      		out __SREG__,r0
+ 616 021c 0F90      		pop r0
+ 617 021e 1F90      		pop r1
+ 618 0220 1895      		reti
+ 619               		.size	__vector_7, .-__vector_7
+ 620               	.Lscope9:
+ 621               		.stabs	"",36,0,0,.Lscope9-.LFBB9
+ 622               		.stabd	78,0,0
+ 623               	.global	angle_value
+ 624               		.section .bss
+ 625               		.type	angle_value, @object
+ 626               		.size	angle_value, 1
+ 627               	angle_value:
+ 628 0000 00        		.zero	1
+ 629               	.global	overflow_cnt
+ 630               		.type	overflow_cnt, @object
+ 631               		.size	overflow_cnt, 2
+ 632               	overflow_cnt:
+ 633 0001 0000      		.zero	2
+ 634               		.comm	angle_time,4,1
+ 635               	.global	sum
+ 636               		.type	sum, @object
+ 637               		.size	sum, 4
+ 638               	sum:
+ 639 0003 0000 0000 		.zero	4
+ 640               	.global	read_cnt
+ 641               		.type	read_cnt, @object
+ 642               		.size	read_cnt, 1
+ 643               	read_cnt:
+ 644 0007 00        		.zero	1
+ 645               	.global	avg_cnt
+ 646               		.type	avg_cnt, @object
+ 647               		.size	avg_cnt, 1
+ 648               	avg_cnt:
+ 649 0008 00        		.zero	1
+ 650               	.global	Flag_end
+ 651               		.type	Flag_end, @object
+ 652               		.size	Flag_end, 1
+ 653               	Flag_end:
+ 654 0009 00        		.zero	1
+ 655               	.global	Flag_start
+ 656               		.type	Flag_start, @object
+ 657               		.size	Flag_start, 1
+ 658               	Flag_start:
+ 659 000a 00        		.zero	1
+ 660               		.stabs	"Flag_start:G(0,50)=B(0,13)",32,0,9,0
+ 661               		.stabs	"Flag_end:G(0,50)",32,0,10,0
+ 662               		.stabs	"avg_cnt:G(0,50)",32,0,11,0
+ 663               		.stabs	"read_cnt:G(0,50)",32,0,12,0
+ 664               		.stabs	"sum:G(0,51)=B(0,5)",32,0,13,0
+ 665               		.stabs	"angle_time:G(0,51)",32,0,14,0
+ 666               		.stabs	"overflow_cnt:G(0,52)=B(0,4)",32,0,15,0
+ 667               		.stabs	"angle_value:G(0,50)",32,0,16,0
+ 668               		.text
+ 669               		.stabs	"",100,0,0,.Letext0
+ 670               	.Letext0:
+ 671               		.ident	"GCC: (GNU) 5.4.0"
+ 672               	.global __do_clear_bss
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 tilt_sensor.c
+     /tmp/ccPG6yaC.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccPG6yaC.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccPG6yaC.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccPG6yaC.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccPG6yaC.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccPG6yaC.s:107    .text:0000000000000000 __vector_1
+     /tmp/ccPG6yaC.s:658    .bss:000000000000000a Flag_start
+     /tmp/ccPG6yaC.s:643    .bss:0000000000000007 read_cnt
+     /tmp/ccPG6yaC.s:648    .bss:0000000000000008 avg_cnt
+     /tmp/ccPG6yaC.s:632    .bss:0000000000000001 overflow_cnt
+                            *COM*:0000000000000004 angle_time
+     /tmp/ccPG6yaC.s:653    .bss:0000000000000009 Flag_end
+     /tmp/ccPG6yaC.s:225    .text:00000000000000b8 __vector_11
+     /tmp/ccPG6yaC.s:265    .text:00000000000000e6 Timer1_init
+     /tmp/ccPG6yaC.s:303    .text:000000000000010c Timer2_init
+     /tmp/ccPG6yaC.s:341    .text:000000000000012c USART_init
+     /tmp/ccPG6yaC.s:377    .text.startup:0000000000000000 main
+     /tmp/ccPG6yaC.s:627    .bss:0000000000000000 angle_value
+     /tmp/ccPG6yaC.s:432    .text:000000000000014c PORT_init
+     /tmp/ccPG6yaC.s:453    .text:0000000000000150 Tx_char
+     /tmp/ccPG6yaC.s:482    .text:000000000000015e __vector_7
+     /tmp/ccPG6yaC.s:638    .bss:0000000000000003 sum
+
+UNDEFINED SYMBOLS
+__udivmodhi4
+__floatunsisf
+__mulsf3
+__fixunssfsi
+__do_clear_bss

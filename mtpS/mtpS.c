@@ -72,6 +72,8 @@ void write_AT24Cxx_i2c_LCDPrint(unsigned char line, unsigned char location, unsi
 void write_AT24Cxx_i2c_LCDAddressing(unsigned char byte);
 void LCD_NEBIT(unsigned char byte);
 void I2C_LCD_init(unsigned char data);
+void I2C_LCD_Reset();
+void I2C_LCD_Erase();
 uint16_t num2lcdbyte(unsigned char num);
 //====================================================
 int main(void){
@@ -82,13 +84,12 @@ int main(void){
     USART_init();
 	//Timer0_init();
 	Timer1_init();
-    
 
 	//EICRA = 0x03;
 	//EIMSK = (1 << INT0);
 
 	while(1){
-		
+
     }
 }
 //====================================================
@@ -129,14 +130,46 @@ void Port_init(){
 
 
 }
+void I2C_LCD_Erase(){
+	LCD_CharWrite(0x0040);
+	LCD_CharWrite(0xA101);
+	LCD_CharWrite(0x0060);
+}
+
+void I2C_LCD_Reset(){
+	cli();
+	LCD_CharWrite(0x0010);
+	_delay_ms(30);
+	LCD_CharWrite(0x10);
+	_delay_us(38);
+	LCD_CharWrite(0x30);
+	_delay_ms(5);
+
+	I2C_LCD_init(0x27);
+	_delay_ms(5);
+
+	LCD_CharWrite(0x10);
+	_delay_us(38);
+	LCD_CharWrite(0x30);
+	_delay_ms(10);
+
+	I2C_LCD_init(0x27);
+	_delay_ms(10);
+	I2C_LCD_init(0x27);
+	LCD_CharWrite(0x20C0);
+	LCD_CharWrite(0x0020);
+	I2C_LCD_init(0x27);
+	sei();
+}
 void I2C_LCD_init(unsigned char address){
 	cli();
 
-	PORTC ^= 0xff;
 	_delay_ms(18);
 	AT24Cxx_i2c_start();
 	write_AT24Cxx_i2c_LCDAddressing(I2CLCD_ADDR  << 1); //write mode
 	LCD_Write(0x20);
+
+
 	_delay_ms(5);
 	write_AT24Cxx_i2c_LCDAddressing(0x20);
 	_delay_ms(5);
@@ -160,8 +193,11 @@ void I2C_LCD_init(unsigned char address){
 	LCD_Write(0x60);
 	write_AT24Cxx_i2c_LCDAddressing(0x60);
 	_delay_ms(5);
+
 	AT24Cxx_i2c_stop();
-	PORTC ^= 0xff;
+
+
+	
 	sei();
 	
 	
@@ -196,37 +232,24 @@ ISR(TIMER1_COMPA_vect){
 
         if(key_data == 10){
             //key_data += 32; // 42 -> *
-			I2C_LCD_init(0x27);
+			
+			I2C_LCD_Reset();
+			
+			
         }
         if(key_data == 11){
             //key_data += 24; // 35 -> #
-			LCD_CharWrite(0x10);
-			_delay_us(38);
-			LCD_CharWrite(0x30);
-			_delay_ms(5);
-
-			I2C_LCD_init(0x27);
-			_delay_ms(5);
-
-			LCD_CharWrite(0x10);
-			_delay_us(38);
-			LCD_CharWrite(0x30);
-			_delay_ms(10);
-
-			I2C_LCD_init(0x27);
-			_delay_ms(10);
-			I2C_LCD_init(0x27);
-
-
-			// _delay_us(38);
-			// I2C_LCD_init(0x27);
-
+			
+			I2C_LCD_Erase();
+			
 		}                                                       
 		if(key_data == 1){
 			LCD_CharWrite(num2lcdbyte(1));
 			//key_data += '0';
 		}
 		if(key_data == 2){
+			// LCD_CharWrite(num2lcdbyte(2));
+			
 			LCD_CharWrite(num2lcdbyte(2));
 			//key_data += '0';
 		}
@@ -269,6 +292,7 @@ ISR(TIMER1_COMPA_vect){
 			//key_data += '0';
 		}
 		LCD_CharWrite(0xF0);
+		
 
 		PORTC |= 0b00100000;
         //Tx_char(key_data);
@@ -451,9 +475,9 @@ void LCD_CharWrite(uint16_t byte){
 	write_AT24Cxx_i2c_LCDAddressing((I2CLCD_ADDR << 1)); 
 	unsigned char upperbits = byte>>8 & 0xFF;
 	unsigned char lowerbits = byte & 0xFF;
-	LCD_NEBIT(upperbits);
+	LCD_NEBIT(0x00);
 	write_AT24Cxx_i2c_byte(upperbits); 
-	LCD_NEBIT(lowerbits);
+	LCD_NEBIT(0x00);
 	write_AT24Cxx_i2c_byte(lowerbits); 
 	AT24Cxx_i2c_stop();
 	sei();
