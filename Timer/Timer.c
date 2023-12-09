@@ -2,10 +2,6 @@
 #define F_CPU 16000000UL // or whatever may be your frequency
 #endif
 //====================================================
-#define Btn1 2
-#define RED 0
-#define BLUE 1
-#define GREEN 2
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -18,7 +14,6 @@
 #define E_BIT 0x04 //location of E BIT
 #define B_BIT 0x08 //location of bright
 #define I2CLCD_ADDR 0x27
-#define AT24Cxx_DELAY 1
 #define ACK 0x00 // ACK LOW
 #define NACK 0x01 // NACK HIGH
 #define EEP_WRITE_WAIT 10 // write wait time
@@ -28,12 +23,13 @@
 #define AT24Cxx_SCL_LOW() (AT24CxxPORT &= ~(AT24Cxx_SCL))
 #define AT24Cxx_SDA_IN() (AT24CxxDDR &= ~AT24Cxx_SDA)
 #define AT24Cxx_SDA_OUT() (AT24CxxDDR |= AT24Cxx_SDA)
-#define wait_for_completion while(!(TWCR & (1 << TWINT)));
 //====================================================
-volatile unsigned char job = 0;
-volatile unsigned char lcd_flag = 0;
-volatile unsigned char addr = 0;
-volatile unsigned char key_flag = 0;
+volatile unsigned char job = 0; //Timer job flag
+volatile unsigned char sel_flag = 0; //Time selector
+volatile unsigned char lcd_flag = 0; //lcd on check flag
+volatile unsigned char end_flag = 0; //timer end flag
+volatile unsigned char addr = 0; 
+volatile unsigned char key_flag = 0; //key check flag
 volatile unsigned char new_key = 0;
 volatile unsigned char key_data = 0;
 volatile unsigned char pressing_flag = 0;
@@ -42,8 +38,13 @@ volatile unsigned char current_key = 0;
 volatile unsigned char old_key;
 volatile unsigned char flag_time = 0;
 volatile unsigned char Wait_time = 0;
-volatile unsigned char digit[3];
-volatile unsigned char ASCII_Table[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+volatile unsigned char timer_start_flag = 0;
+volatile uint16_t time_1s = 0; // 100 : 1s
+volatile uint16_t time_10ms = 0; 
+volatile uint16_t time_tmp = 0;
+volatile unsigned char min = 0;
+volatile unsigned char sec = 0;
+volatile unsigned char test = 1;
 //====================================================
 void Timer0_init();
 void Timer1_init();
@@ -51,15 +52,11 @@ void Port_init();
 void USART_init();
 void setup_watchdog();
 //====================================================
+void Tx_char(unsigned char data);
 unsigned char key_scan(void);
 unsigned char key_analysis(unsigned char key, unsigned char Raw);
 unsigned char read_AT24Cxx_i2c_byte(void);
 unsigned char AT24Cxx_Read(unsigned char address, unsigned char sub_addr1, unsigned char sub_addr2);
-void LCD_clear(void);
-void LED_ON(void);
-void LED_OFF(void);
-void LCD_CharWrite(uint16_t byte);
-void Tx_char(unsigned char data);
 void AT24Cxx_i2c_init(void);
 void AT24Cxx_i2c_start(void);
 void AT24Cxx_ACK_send(unsigned char ack_data);
@@ -67,44 +64,76 @@ void AT24Cxx_i2c_stop(void);
 void write_AT24Cxx_i2c_byte(unsigned char byte);
 void write_AT24Cxx_i2cControl(unsigned char byte);
 void LCD_Write(unsigned char byte);
-void send_EFalling_edge(unsigned char byte);
-void write_AT24Cxx_i2c_LCDPrint(unsigned char line, unsigned char location, unsigned char data);
 void write_AT24Cxx_i2c_LCDAddressing(unsigned char byte);
 void LCD_NEBIT(unsigned char byte);
 void I2C_LCD_init(unsigned char data);
+void LCD_clear(void);
+void LCD_CharWrite(uint16_t byte);
 void I2C_LCD_Reset();
 void I2C_LCD_Erase();
+void I2C_LCD_MoveLeft(unsigned char cnt);
+void I2C_LCD_MoveRight(unsigned char cnt);
+void I2C_LCD_SELECT();
+void I2C_Timer_Default();
+void I2C_Timer_act();
+void I2C_Timer_act_ms();
+void I2C_Timer_test();
+void TIME_SETTING(unsigned char m, unsigned char s);
 uint16_t num2lcdbyte(unsigned char num);
+
+//====================================================
+struct CursorPoint
+{
+	int x;
+}CursorPoint;
+
 //====================================================
 int main(void){
-	
-    //setup_watchdog();
-	sei(); //must be first position
+	sei(); //must be set first position
     Port_init();
+	I2C_LCD_init(0x27);
+	I2C_LCD_Reset();
+	I2C_Timer_Default();
     USART_init();
-	//Timer0_init();
 	Timer1_init();
-	
-	//EICRA = 0x03;
-	//EIMSK = (1 << INT0);
-
+	TIME_SETTING(1,2);
 	while(1){
-
-    }
+		PORTC ^= 0x01;
+		if(end_flag) {
+			end_flag = 0;
+			timer_start_flag = 0;
+			TIME_SETTING(1,2);
+			I2C_Timer_Default();
+			job = 0;
+		}
+		switch (job) //can append command and set timer here
+		{
+		case 0:
+			if(timer_start_flag) {
+				time_1s = 100;
+				job++;
+			}
+			break;
+		case 1:
+			if(time_1s) break;
+			else job++;
+		case 2:
+			I2C_Timer_act();
+			job++;
+		case 3:
+			if(end_flag) job++;
+			else job = 0;
+		default:
+			break;
+		}
+	}
 }
-//====================================================
-
-
-
-// void setup_watchdog() {
-//   // WDTCSR: Watchdog Timer Control Register
-//   // WDCE (Watchdog Change Enable)
-//   // WDTO_1S: Watchdog Timeout 
-//   WDTCSR |= (1<<WDE) | (1<<WDCE) | (1<<WDIE) | (1<<WDP3) | (1<<WDP2) | (1<<WDP1) | (0<<WDP0); 
-// }  
 //===================================================
-
-
+void TIME_SETTING(unsigned char m, unsigned char s){
+	min = m;
+	sec = s;
+}
+//===================================================
 void Timer1_init(){
 
     TCCR1B =  (1 << WGM12) | (0 << CS12) | (1 << CS11) | (1 << CS10);
@@ -113,16 +142,7 @@ void Timer1_init(){
     TIMSK1 |= (1 << TOIE1) | (1 << OCIE1A);
 }
 
-// void Timer0_init(){
-
-//     TCCR0B =  (1 << WGM02) | (0 << CS02) | (1 << CS01) | (0 << CS00);
-// 	TCNT0 = 0;
-//     OCR0A = 0x09c4; 
-//     TIMSK0 |= (1 << TOIE0) | (1 << OCIE0A);
-// }
-
 void Port_init(){
-
     //set B0~D4 as input,  D5, D6, D7 pins are set high to find key vals 
     DDRD = 0b01110000;
     PORTD = 0b00000000;
@@ -130,27 +150,31 @@ void Port_init(){
 
 
 }
+//====================================================
 void I2C_LCD_Erase(){
 	LCD_CharWrite(0x0040);
 	LCD_CharWrite(0xA101);
-	LCD_CharWrite(0x0060);
+    LCD_CharWrite(0x0040);
+    LCD_CharWrite(0xA101);
+    LCD_CharWrite(0x0060);
 }
 
 void I2C_LCD_Reset(){
 	cli();
+    LCD_CharWrite(0x0010);
+	_delay_us(38);
 	LCD_CharWrite(0x0010);
 	_delay_us(38);
-	LCD_CharWrite(0x10);
-	_delay_us(38);
-	LCD_CharWrite(0x30);
+	LCD_CharWrite(0x0030);
 	_delay_us(38);
 
 	I2C_LCD_init(0x27);
 	_delay_us(38);
 
-	LCD_CharWrite(0x10);
+	LCD_CharWrite(0x0010);
 	_delay_us(38);
-	LCD_CharWrite(0x30);
+	LCD_CharWrite(0x0030);
+
 	_delay_us(38);
 
 	I2C_LCD_init(0x27);
@@ -159,20 +183,22 @@ void I2C_LCD_Reset(){
 	LCD_CharWrite(0x20C0);
 	LCD_CharWrite(0x0020);
 	I2C_LCD_init(0x27);
+    
 	sei();
+    LCD_CharWrite(0x00C0);
 }
 void I2C_LCD_init(unsigned char address){
 	cli();
 
 	_delay_ms(18);
 	AT24Cxx_i2c_start();
-	write_AT24Cxx_i2c_LCDAddressing(I2CLCD_ADDR  << 1); //write mode
+	write_AT24Cxx_i2c_LCDAddressing(address  << 1); //write mode
 	LCD_Write(0x20);
 
 
-	_delay_ms(18);
+	_delay_ms(2);
 	write_AT24Cxx_i2c_LCDAddressing(0x20);
-	_delay_ms(1);
+	_delay_ms(2);
 
 	write_AT24Cxx_i2c_LCDAddressing(0x30);
 	LCD_Write(0x00);
@@ -195,102 +221,223 @@ void I2C_LCD_init(unsigned char address){
 	_delay_us(38);
 
 	AT24Cxx_i2c_stop();
-
-
-	
+    _delay_us(40);
 	sei();
 	
-	
+}
+//====================================================
+void I2C_Timer_Default(){
+	I2C_LCD_Reset();
+    LCD_CharWrite(0x2101);
+    LCD_CharWrite(0x2101);
+    LCD_CharWrite(0x2101);
+    LCD_CharWrite(0x2101);
+    LCD_CharWrite(num2lcdbyte(0));
+    LCD_CharWrite(num2lcdbyte(0));
+	LCD_CharWrite(0x31A1);
+    LCD_CharWrite(num2lcdbyte(0));
+    LCD_CharWrite(num2lcdbyte(0));
+    LCD_CharWrite(0x31A1);
+    LCD_CharWrite(num2lcdbyte(0));
+    LCD_CharWrite(num2lcdbyte(0));
+	LCD_CharWrite(0x00C0);
+	I2C_LCD_MoveLeft(4);
+
+}
+
+void I2C_Timer_act(){
+		/*------- Minutes Part start -------*/
+		if(min >= 1){
+			I2C_LCD_MoveLeft(3);
+			LCD_CharWrite(num2lcdbyte(min));
+			I2C_LCD_MoveRight(2);
+			LCD_CharWrite(0x00C0);
+			LCD_CharWrite(0x00C0);
+		}
+		/*-------- Minutes part end --------*/
+
+		/*-------- Second part start -------*/
+		if(sec == 1){
+			if(min){
+				if (min == 1){
+					I2C_LCD_MoveLeft(3);
+					LCD_CharWrite(num2lcdbyte(0));
+					I2C_LCD_MoveRight(2);
+					LCD_CharWrite(0x00C0);
+					LCD_CharWrite(0x00C0);
+				}
+				LCD_CharWrite(num2lcdbyte(0));
+				I2C_LCD_MoveLeft(1);
+				time_10ms = 99;
+				sec = 60;
+				min--;
+			}
+			else {
+				end_flag = 1;
+				// LCD_CharWrite(num2lcdbyte(0));
+				// I2C_LCD_MoveLeft(1);
+			}
+		}
+		else if(sec == 60){
+			I2C_LCD_MoveLeft(1);
+			LCD_CharWrite(num2lcdbyte((5)));
+			LCD_CharWrite(num2lcdbyte((sec-1)%10));
+			I2C_LCD_MoveLeft(1);
+			LCD_CharWrite(0x00C0);
+			LCD_CharWrite(0x00C0);
+			time_10ms = 99;
+			--sec;
+		}
+		else if(sec != 10){
+			if(sec % 10 == 0){
+				I2C_LCD_MoveLeft(1);
+				LCD_CharWrite(num2lcdbyte((sec/10 -1)));
+			}
+			else{
+				I2C_LCD_MoveLeft(1);
+				LCD_CharWrite(num2lcdbyte((sec/10)));
+			}
+			LCD_CharWrite(num2lcdbyte((sec-1)%10));
+			I2C_LCD_MoveLeft(1);
+			LCD_CharWrite(0x00C0);
+			LCD_CharWrite(0x00C0);
+			time_10ms = 99;
+			--sec;
+		}
+		else if(sec == 10){
+			I2C_LCD_MoveLeft(1);
+			LCD_CharWrite(num2lcdbyte((0)));
+			LCD_CharWrite(num2lcdbyte((sec-1)%10));
+			I2C_LCD_MoveLeft(1);
+			LCD_CharWrite(0x00C0);
+			LCD_CharWrite(0x00C0);
+			time_10ms = 99;
+			--sec;
+		}
+		/*-------- Second part end -------*/
+
+		
 	
 }
 //====================================================
-void LED_ON(){
-    DDRC |= (1 << RED) | (1 << GREEN) | (1 << BLUE);
-    PORTC |= (1 << RED) | (1 << GREEN) | (1 << BLUE);
+void I2C_LCD_MoveLeft(unsigned char cnt){
+	
+    while(cnt){
+		LCD_CharWrite(0x1000);
+		cnt--;
+	}
+    LCD_CharWrite(0x0060);
+    LCD_CharWrite(0x00E0); //must add current state
 }
 
-void LED_OFF(){
-    DDRC &= ~(1 << RED) & ~(1 << GREEN) & ~(1 << BLUE); //refresh
-    DDRC |= (1 << RED) | (1 << GREEN) | (1 << BLUE);
-    PORTC &= ~(1 << RED) & ~(1 << GREEN) & ~(1 << BLUE);
+void I2C_LCD_MoveRight(unsigned char cnt){
+	while(cnt){
+		LCD_CharWrite(0x1040);
+		cnt--;
+	}
+    LCD_CharWrite(0x00E0); //must add current state
 }
+
+void I2C_LCD_SELECT(){
+	sel_flag ^= 1;
+	if(sel_flag){
+		LCD_CharWrite(0x00F0);
+		LCD_CharWrite(0x00F0);
+	} 
+	else {
+		LCD_CharWrite(0x00E0);
+		LCD_CharWrite(0x00E0);
+	}
+}
+
 //====================================================
 ISR(TIMER1_COMPA_vect){
+	if(time_1s) time_1s--;
+	if(time_10ms) time_10ms--;
+	PORTC ^= 0x01;
 
-   //**NOTE: Timer must perform only the role of timer otherwise, global variables will be reset **
-    key_data = key_scan();
 
-
-    
-    if(key_flag){
+	if(timer_start_flag && time_10ms){
 		
-        key_flag = 0;
+		I2C_LCD_MoveRight(2);
+		LCD_CharWrite(num2lcdbyte(time_10ms/10));
+		LCD_CharWrite(num2lcdbyte(time_10ms % 10));
+		I2C_LCD_MoveLeft(4);
+		LCD_CharWrite(0x00C0);
+		LCD_CharWrite(0x00C0);
+		return;
+	}
 
-        if(key_data == 0xff){
-            return ;
+   	//**NOTE: Timer must perform only the role of timer otherwise, global variables will be reset **
+    key_data = key_scan();
+	
+	if(sel_flag && key_flag){
+		key_flag = 0;
+		if(key_data == 0xff){
+            return;
+		}
+		if(key_data == 2){
+			LCD_CharWrite(num2lcdbyte(2));
+        	LCD_CharWrite(0x1000);
+        	LCD_CharWrite(0x00F0);
+		}
+		if(key_data == 8){	
+			LCD_CharWrite(num2lcdbyte(8));
+			LCD_CharWrite(0x1000);
+            LCD_CharWrite(0x00F0);
+		}
+		if(key_data == 5){
+			I2C_LCD_SELECT();
+		}
+	}
+
+    if(key_flag && !sel_flag){
+		key_flag = 0;
+		if(key_data == 0xff){
+            return;
 		}
 
         if(key_data == 10){
-            //key_data += 32; // 42 -> *
-			
-			I2C_LCD_Reset();
-			
+			I2C_Timer_Default();
         }
         if(key_data == 11){
-            //key_data += 24; // 35 -> #
-			
-			I2C_LCD_Erase();
-			
+			timer_start_flag ^= 1;
 		}                                                       
 		if(key_data == 1){
-			LCD_CharWrite(num2lcdbyte(1));
+			LCD_CharWrite(0x00E0);
+            LCD_CharWrite(0x00E0);
 			//key_data += '0';
 		}
-		if(key_data == 2){
-			// LCD_CharWrite(num2lcdbyte(2));
-			
-			LCD_CharWrite(num2lcdbyte(2));
-			//key_data += '0';
-		}
+		
 		if(key_data == 3){
-			LCD_CharWrite(num2lcdbyte(3));
-			//key_data += '0';
+			I2C_Timer_act();
 		}
 		if(key_data == 4){
-			LCD_CharWrite(num2lcdbyte(4));
-			//key_data += '0';
+			I2C_LCD_MoveLeft(1);
 		}
 		if(key_data == 5){
-			
-			LCD_CharWrite(num2lcdbyte(5));
-			//key_data += '0';
+			I2C_LCD_SELECT();
 		}
 		if(key_data == 6){
-			
-			LCD_CharWrite(num2lcdbyte(6));
-			//key_data += '0';
+			I2C_LCD_MoveRight(1);
 		}
 		if(key_data == 7){
-			
 			LCD_CharWrite(num2lcdbyte(7));
+            LCD_CharWrite(0x00E0);
 			//key_data += '0';
 		}
-		if(key_data == 8){
-			
-			LCD_CharWrite(num2lcdbyte(8));
-			//key_data += '0';
-		}
+		
 		if(key_data == 9){
-			
 			LCD_CharWrite(num2lcdbyte(9));
+            LCD_CharWrite(0x00E0);
 			//key_data += '0';
 		}
 		if(key_data == 0){
 			
 			LCD_CharWrite(num2lcdbyte(0));
-			//key_data += '0';
+            LCD_CharWrite(0x00E0);
 		}
-		LCD_CharWrite(0xF0);
+		// LCD_CharWrite(0xF0);
 		
 
 		PORTC |= 0b00100000;
@@ -303,28 +450,10 @@ ISR(TIMER1_COMPA_vect){
 			PORTC &= ~0b00100000;
   			PORTC &= ~0x01;
         }
+
+	
 	
 }
-
-ISR(TIMER0_COMPA_vect){ //Timer
-   //**NOTE: Timer must perform only the role of timer otherwise, global variables will be reset **
-	Wait_time =1;
-
-}
-
-// ISR(INT0_vect){
-// cli();
-// 	TIMSK0 &= ~(1 << TOIE0) & ~(1 << OCIE0A);
-	
-//    //AT24Cxx_i2c_start();
-//    DDRC &= ~0x01;
-//    DDRC |= 0x01;
-//    PORTC |= 0x01;
-//    sei();
-//    TIMSK0 |= (1 << TOIE0) | (1 << OCIE0A); 
-//    	//
-//    LCD_CharWrite(num2lcdbyte(1));
-// }
 //====================================================
 void USART_init(){
     UCSR0A = 0x20;
@@ -332,9 +461,6 @@ void USART_init(){
     UCSR0C = 0x06;
     UBRR0 = 8;
 }
-
-
-
 void Tx_char(unsigned char data){
     while(!(UCSR0A & (1 << UDRE0)));
     UDR0 = data;
@@ -385,8 +511,8 @@ unsigned char key_scan(){
                     continue;
                 }
                 else {
-					if(!lcd_flag) I2C_LCD_init(0x27);
-					lcd_flag = 1;
+					// if(!lcd_flag) I2C_LCD_init(0x27);
+					// lcd_flag = 1;
                     pressing_flag = 1;
                     key_flag = 1;
                     return key_analysis(new_key, Raw);
@@ -395,6 +521,8 @@ unsigned char key_scan(){
         
         }
     }
+
+	return -1;
 
     /* end checking */
 }
@@ -469,14 +597,13 @@ void LCD_CharWrite(uint16_t byte){
 	
 	cli();
 
-	_delay_us(1);
 	AT24Cxx_i2c_start();
 	write_AT24Cxx_i2c_LCDAddressing((I2CLCD_ADDR << 1)); 
 	unsigned char upperbits = byte>>8 & 0xFF;
 	unsigned char lowerbits = byte & 0xFF;
-	LCD_NEBIT(0x00);
+	LCD_NEBIT(upperbits);
 	write_AT24Cxx_i2c_byte(upperbits); 
-	LCD_NEBIT(0x00);
+	LCD_NEBIT(lowerbits);
 	write_AT24Cxx_i2c_byte(lowerbits); 
 	AT24Cxx_i2c_stop();
 	sei();
@@ -541,7 +668,6 @@ void AT24Cxx_ACK_send(unsigned char ack_data){
 	_delay_us(1);
 	AT24Cxx_SCL_LOW();
 }
-
 void AT24Cxx_i2c_stop(void){
 	//AT24Cxx_SDA_OUT(); //set SDA to output
 	AT24Cxx_SDA_LOW(); //clear SDA
@@ -550,9 +676,7 @@ void AT24Cxx_i2c_stop(void){
 	AT24Cxx_SCL_HIGH(); // set SCL High
 	_delay_us(1);
 	AT24Cxx_SDA_HIGH(); // set SDA High
-
 }
-
 void write_AT24Cxx_i2c_byte(unsigned char byte){
 	_delay_us(1);
 	if(!(byte & E_BIT)) byte |= E_BIT;
@@ -563,5 +687,4 @@ void write_AT24Cxx_i2c_byte(unsigned char byte){
 void LCD_NEBIT(unsigned char byte){
 	write_AT24Cxx_i2c_LCDAddressing(byte);
 }
-
 //====================================================
