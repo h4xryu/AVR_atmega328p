@@ -23,12 +23,42 @@
 #define AT24Cxx_SCL_LOW() (AT24CxxPORT &= ~(AT24Cxx_SCL))
 #define AT24Cxx_SDA_IN() (AT24CxxDDR &= ~AT24Cxx_SDA)
 #define AT24Cxx_SDA_OUT() (AT24CxxDDR |= AT24Cxx_SDA)
+#define Q_LENGTH 16
+#define true 1
+#define false 0
+typedef struct Point CursorPoint;
+typedef struct timeNum SecNum;
+typedef int bool;
+//====================================================
+struct Point
+{
+	int x;
+};
+struct timeNum
+{
+	int n1;
+	int n2;
+	int n3;
+	int n4;
+	int SecNum;
+	int MinNum;
+};
+//====================================================
+volatile CursorPoint cp;
+volatile SecNum sel;
+volatile unsigned char ptr_read = 0;
+volatile unsigned char ptr_write = 0;
+volatile unsigned char q[Q_LENGTH];
 //====================================================
 volatile unsigned char job = 0; //Timer job flag
 volatile unsigned char sel_flag = 0; //Time selector
 volatile unsigned char lcd_flag = 0; //lcd on check flag
 volatile unsigned char end_flag = 0; //timer end flag
 volatile unsigned char addr = 0; 
+volatile unsigned char timer_start_flag = 0;
+volatile unsigned char counting_timer_start_flag = 0;
+volatile unsigned char first_flag = 1;
+//====================================================
 volatile unsigned char key_flag = 0; //key check flag
 volatile unsigned char new_key = 0;
 volatile unsigned char key_data = 0;
@@ -38,13 +68,18 @@ volatile unsigned char current_key = 0;
 volatile unsigned char old_key;
 volatile unsigned char flag_time = 0;
 volatile unsigned char Wait_time = 0;
-volatile unsigned char timer_start_flag = 0;
+//====================================================
 volatile uint16_t time_1s = 0; // 100 : 1s
 volatile uint16_t time_10ms = 0; 
 volatile uint16_t time_tmp = 0;
 volatile unsigned char min = 0;
 volatile unsigned char sec = 0;
-volatile unsigned char test = 1;
+volatile unsigned char input = 0;
+//====================================================
+volatile unsigned char STX_flag = 0;
+volatile unsigned char ETX_flag = 0;
+volatile unsigned char Command_flag = 0;
+volatile unsigned char instr_flag = 0;
 //====================================================
 void Timer0_init();
 void Timer1_init();
@@ -78,34 +113,56 @@ void I2C_Timer_Default();
 void I2C_Timer_act();
 void I2C_Timer_act_ms();
 void I2C_Timer_test();
+void Value_init();
 void TIME_SETTING(unsigned char m, unsigned char s);
 uint16_t num2lcdbyte(unsigned char num);
-
 //====================================================
-struct CursorPoint
-{
-	int x;
-}CursorPoint;
-
+void q_push(unsigned char data);
+unsigned char q_pop();
+bool q_isFull();
+bool q_isEmpty();
 //====================================================
 int main(void){
+	
 	sei(); //must be set first position
+	Value_init();
     Port_init();
 	I2C_LCD_init(0x27);
 	I2C_LCD_Reset();
 	I2C_Timer_Default();
     USART_init();
 	Timer1_init();
-	TIME_SETTING(1,2);
+	//TIME_SETTING(1,2);
 	while(1){
 		PORTC ^= 0x01;
 		if(end_flag) {
 			end_flag = 0;
 			timer_start_flag = 0;
-			TIME_SETTING(1,2);
+			//TIME_SETTING(1,2);
 			I2C_Timer_Default();
 			job = 0;
+			Value_init();
 		}
+
+		if(Command_flag){
+			Command_flag = 0;
+			q_pop();
+			if(q_pop() == '$'){
+				instr_flag = 1;
+				timer_start_flag = 1;
+			
+				while(instr_flag){
+					unsigned char cmd_tmp;
+					cmd_tmp = q_pop();
+					
+					if(cmd_tmp == '#'){
+						instr_flag = 0;
+					}
+				}
+			}
+				
+		}
+
 		switch (job) //can append command and set timer here
 		{
 		case 0:
@@ -130,8 +187,48 @@ int main(void){
 }
 //===================================================
 void TIME_SETTING(unsigned char m, unsigned char s){
+
+	unsigned char min_tmp[2];
+	unsigned char sec_tmp[2];
+
+	//global variable set
 	min = m;
 	sec = s;
+
+	//display array set
+	if(min > 9){
+		min_tmp[0] = min / 10;
+		min_tmp[1] = min % 10;
+	}
+	else{
+		min_tmp[0] = 0;
+		min_tmp[1] = min % 10;
+	}
+
+	if(sec > 9){
+		sec_tmp[0] = sec / 10;
+		sec_tmp[1] = sec % 10;
+	}
+	else{
+		sec_tmp[0] = 0;
+		sec_tmp[1] = sec % 10;
+	}
+	I2C_LCD_Reset();
+    LCD_CharWrite(0x2101);
+    LCD_CharWrite(0x2101);
+    LCD_CharWrite(0x2101);
+    LCD_CharWrite(0x2101);
+    LCD_CharWrite(num2lcdbyte(min_tmp[0]));
+    LCD_CharWrite(num2lcdbyte(min_tmp[1]));
+	LCD_CharWrite(0x31A1);
+    LCD_CharWrite(num2lcdbyte(sec_tmp[0]));
+    LCD_CharWrite(num2lcdbyte(sec_tmp[1]));
+    LCD_CharWrite(0x31A1);
+    LCD_CharWrite(num2lcdbyte(0));
+    LCD_CharWrite(num2lcdbyte(0));
+	LCD_CharWrite(0x00C0);
+	I2C_LCD_MoveLeft(4);
+	cp.x = 9;
 }
 //===================================================
 void Timer1_init(){
@@ -139,16 +236,12 @@ void Timer1_init(){
     TCCR1B =  (1 << WGM12) | (0 << CS12) | (1 << CS11) | (1 << CS10);
 	TCNT1 = 0;
     OCR1A = 0x09c4; 
-    TIMSK1 |= (1 << TOIE1) | (1 << OCIE1A);
-}
-
-void Port_init(){
-    //set B0~D4 as input,  D5, D6, D7 pins are set high to find key vals 
-    DDRD = 0b01110000;
-    PORTD = 0b00000000;
-    DDRB = 0b00110000;
-
-
+    TIMSK1 |= (1 << TOIE1) | (1 << OCIE1A)			return;
+	sel.n2 = 0;
+	sel.n3 = 0;
+	sel.n4 = 0;
+	sel.SecNum = 0;
+	sel.MinNum = 0;
 }
 //====================================================
 void I2C_LCD_Erase(){
@@ -242,14 +335,35 @@ void I2C_Timer_Default(){
     LCD_CharWrite(num2lcdbyte(0));
 	LCD_CharWrite(0x00C0);
 	I2C_LCD_MoveLeft(4);
-
+	cp.x = 9;
 }
-
+//====================================================
 void I2C_Timer_act(){
+		
+		if(min && !sec){
+			min--;
+			sec = 60;
+		}
 		/*------- Minutes Part start -------*/
-		if(min >= 1){
+		if(min < 10){
 			I2C_LCD_MoveLeft(3);
 			LCD_CharWrite(num2lcdbyte(min));
+			I2C_LCD_MoveRight(2);
+			LCD_CharWrite(0x00C0);
+			LCD_CharWrite(0x00C0);
+		}
+		 if(min > 10){
+			I2C_LCD_MoveLeft(4);
+			LCD_CharWrite(num2lcdbyte(min/10));
+			LCD_CharWrite(num2lcdbyte(min%10));
+			I2C_LCD_MoveRight(2);
+			LCD_CharWrite(0x00C0);
+			LCD_CharWrite(0x00C0);
+		}
+		else if(min == 10){
+			I2C_LCD_MoveLeft(4);
+			LCD_CharWrite(num2lcdbyte(0));
+			LCD_CharWrite(num2lcdbyte(min%10));
 			I2C_LCD_MoveRight(2);
 			LCD_CharWrite(0x00C0);
 			LCD_CharWrite(0x00C0);
@@ -257,15 +371,8 @@ void I2C_Timer_act(){
 		/*-------- Minutes part end --------*/
 
 		/*-------- Second part start -------*/
-		if(sec == 1){
+		if(sec == 1 && !end_flag){
 			if(min){
-				if (min == 1){
-					I2C_LCD_MoveLeft(3);
-					LCD_CharWrite(num2lcdbyte(0));
-					I2C_LCD_MoveRight(2);
-					LCD_CharWrite(0x00C0);
-					LCD_CharWrite(0x00C0);
-				}
 				LCD_CharWrite(num2lcdbyte(0));
 				I2C_LCD_MoveLeft(1);
 				time_10ms = 99;
@@ -274,11 +381,23 @@ void I2C_Timer_act(){
 			}
 			else {
 				end_flag = 1;
-				// LCD_CharWrite(num2lcdbyte(0));
-				// I2C_LCD_MoveLeft(1);
 			}
 		}
 		else if(sec == 60){
+			if (min == 0){
+				I2C_LCD_MoveLeft(3);
+				LCD_CharWrite(num2lcdbyte(0));
+				I2C_LCD_MoveRight(2);
+				LCD_CharWrite(0x00C0);
+				LCD_CharWrite(0x00C0);
+			}
+			else if(min){
+				I2C_LCD_MoveLeft(3);
+				LCD_CharWrite(num2lcdbyte(min));
+				I2C_LCD_MoveRight(2);
+				LCD_CharWrite(0x00C0);
+				LCD_CharWrite(0x00C0);
+			}
 			I2C_LCD_MoveLeft(1);
 			LCD_CharWrite(num2lcdbyte((5)));
 			LCD_CharWrite(num2lcdbyte((sec-1)%10));
@@ -293,7 +412,7 @@ void I2C_Timer_act(){
 				I2C_LCD_MoveLeft(1);
 				LCD_CharWrite(num2lcdbyte((sec/10 -1)));
 			}
-			else{
+			else {
 				I2C_LCD_MoveLeft(1);
 				LCD_CharWrite(num2lcdbyte((sec/10)));
 			}
@@ -314,6 +433,8 @@ void I2C_Timer_act(){
 			time_10ms = 99;
 			--sec;
 		}
+
+
 		/*-------- Second part end -------*/
 
 		
@@ -351,43 +472,108 @@ void I2C_LCD_SELECT(){
 }
 
 //====================================================
+//**NOTE: Timer must perform only the role of timer otherwise, global variables will be reset **
 ISR(TIMER1_COMPA_vect){
-	if(time_1s) time_1s--;
-	if(time_10ms) time_10ms--;
-	PORTC ^= 0x01;
-
-
-	if(timer_start_flag && time_10ms){
-		
-		I2C_LCD_MoveRight(2);
-		LCD_CharWrite(num2lcdbyte(time_10ms/10));
-		LCD_CharWrite(num2lcdbyte(time_10ms % 10));
-		I2C_LCD_MoveLeft(4);
-		LCD_CharWrite(0x00C0);
-		LCD_CharWrite(0x00C0);
-		return;
+	if(timer_start_flag){ 
+		if(time_1s) time_1s--;
+		if(time_10ms) {
+			time_10ms--;
+			I2C_LCD_MoveRight(2);
+			LCD_CharWrite(num2lcdbyte(time_10ms/10));
+			LCD_CharWrite(num2lcdbyte(time_10ms % 10));
+			I2C_LCD_MoveLeft(4);
+			LCD_CharWrite(0x00C0);
+			LCD_CharWrite(0x00C0);
+		}
 	}
 
-   	//**NOTE: Timer must perform only the role of timer otherwise, global variables will be reset **
     key_data = key_scan();
-	
-	if(sel_flag && key_flag){
+	if(sel_flag && key_flag && !timer_start_flag){
 		key_flag = 0;
 		if(key_data == 0xff){
             return;
 		}
+		
 		if(key_data == 2){
-			LCD_CharWrite(num2lcdbyte(2));
-        	LCD_CharWrite(0x1000);
-        	LCD_CharWrite(0x00F0);
-		}
-		if(key_data == 8){	
-			LCD_CharWrite(num2lcdbyte(8));
-			LCD_CharWrite(0x1000);
-            LCD_CharWrite(0x00F0);
+			if(cp.x == 5){
+				if((sel.MinNum + 10)< 60) {
+					sel.MinNum = sel.MinNum + 10;
+					sel.n1++;
+				}
+				LCD_CharWrite(num2lcdbyte(sel.n1));
+        		LCD_CharWrite(0x1000);
+        		LCD_CharWrite(0x00F0);
+			}
+			else if(cp.x == 6){
+				if(sel.MinNum < 9) {
+					sel.MinNum++;
+					sel.n2++;
+				}
+				LCD_CharWrite(num2lcdbyte(sel.n2));
+        		LCD_CharWrite(0x1000);
+        		LCD_CharWrite(0x00F0);
+			}
+			else if(cp.x == 8){
+				if((sel.SecNum + 10) < 60) {
+					sel.SecNum = sel.SecNum + 10;
+					sel.n3++;
+				}
+				LCD_CharWrite(num2lcdbyte(sel.n3));
+        		LCD_CharWrite(0x1000);
+        		LCD_CharWrite(0x00F0);
+			}
+			else if(cp.x == 9){
+				if(sel.SecNum < 9) {
+					sel.SecNum++;
+					sel.n4++;
+				}
+				LCD_CharWrite(num2lcdbyte(sel.n4));
+        		LCD_CharWrite(0x1000);
+        		LCD_CharWrite(0x00F0);
+			}
 		}
 		if(key_data == 5){
 			I2C_LCD_SELECT();
+			TIME_SETTING(sel.MinNum, sel.SecNum);
+		}
+
+		if(key_data == 8){
+			if(cp.x == 5){
+				if(sel.MinNum > 10 && sel.n1 > 0) {
+					sel.MinNum = sel.MinNum - 10;
+					sel.n1--;
+				}
+				LCD_CharWrite(num2lcdbyte(sel.n1));
+        		LCD_CharWrite(0x1000);
+        		LCD_CharWrite(0x00F0);
+			}
+			else if(cp.x == 6){
+				if(sel.MinNum > 0) {
+					sel.MinNum--;
+					sel.n2--;
+				}
+				LCD_CharWrite(num2lcdbyte(sel.n2));
+        		LCD_CharWrite(0x1000);
+        		LCD_CharWrite(0x00F0);
+			}
+			else if(cp.x == 8){
+				if(sel.SecNum > 10 && sel.n3 > 0) {
+					sel.SecNum = sel.SecNum - 10;
+					sel.n3--;
+				}
+				LCD_CharWrite(num2lcdbyte(sel.n3));
+        		LCD_CharWrite(0x1000);
+        		LCD_CharWrite(0x00F0);
+			}
+			else if(cp.x == 9){
+				if(sel.SecNum > 0) {
+					sel.SecNum--;
+					sel.n4--;
+				}
+				LCD_CharWrite(num2lcdbyte(sel.n4));
+        		LCD_CharWrite(0x1000);
+        		LCD_CharWrite(0x00F0);
+			}
 		}
 	}
 
@@ -396,68 +582,78 @@ ISR(TIMER1_COMPA_vect){
 		if(key_data == 0xff){
             return;
 		}
-
         if(key_data == 10){
-			I2C_Timer_Default();
+			I2C_Timer_Default(); //set 00:00:00
         }
         if(key_data == 11){
+			if(cp.x > 9) {
+				I2C_LCD_MoveLeft(cp.x - 9);
+				cp.x = 9;
+				LCD_CharWrite(0x00C0);
+				LCD_CharWrite(0x00C0);
+			}
+			else if(cp.x <9){
+				I2C_LCD_MoveRight(9 -cp.x);
+				cp.x = 9;
+				LCD_CharWrite(0x00C0);
+				LCD_CharWrite(0x00C0);
+			}
 			timer_start_flag ^= 1;
 		}                                                       
-		if(key_data == 1){
-			LCD_CharWrite(0x00E0);
-            LCD_CharWrite(0x00E0);
-			//key_data += '0';
+		if(key_data == 1){ //reverse function
+			
 		}
-		
 		if(key_data == 3){
 			I2C_Timer_act();
 		}
-		if(key_data == 4){
-			I2C_LCD_MoveLeft(1);
+		if(key_data == 4 && !timer_start_flag){
+			if(cp.x > 5){
+				if(cp.x == 8) {
+					I2C_LCD_MoveLeft(2);
+					cp.x = cp.x -2;
+				}
+				else {
+					I2C_LCD_MoveLeft(1);
+					cp.x--;
+				}
+			}
 		}
-		if(key_data == 5){
-			I2C_LCD_SELECT();
+		if(key_data == 5  && !timer_start_flag){
+			if(cp.x == 5 || cp.x == 6 || cp.x == 8 || cp.x == 9) I2C_LCD_SELECT();
 		}
-		if(key_data == 6){
-			I2C_LCD_MoveRight(1);
+		if(key_data == 6 && !timer_start_flag){
+			if(cp.x < 9){
+				if(cp.x == 6){
+					I2C_LCD_MoveRight(2);
+					cp.x = cp.x + 2;
+				}
+				else {
+					I2C_LCD_MoveRight(1);
+					cp.x++;
+				}
+			}
 		}
 		if(key_data == 7){
-			LCD_CharWrite(num2lcdbyte(7));
-            LCD_CharWrite(0x00E0);
-			//key_data += '0';
 		}
-		
 		if(key_data == 9){
-			LCD_CharWrite(num2lcdbyte(9));
-            LCD_CharWrite(0x00E0);
-			//key_data += '0';
+
 		}
 		if(key_data == 0){
 			
-			LCD_CharWrite(num2lcdbyte(0));
-            LCD_CharWrite(0x00E0);
 		}
-		// LCD_CharWrite(0xF0);
-		
-
 		PORTC |= 0b00100000;
-        //Tx_char(key_data);
-        //Tx_char(' ');
-        //LED_ON();
         }
         else{
-            //LED_OFF();
 			PORTC &= ~0b00100000;
   			PORTC &= ~0x01;
         }
 
-	
-	
 }
 //====================================================
 void USART_init(){
     UCSR0A = 0x20;
-    UCSR0B = 0x18;
+	UCSR0A |= (1 << UDRE0);
+    UCSR0B |= (1 << RXEN0)| (1 <<TXEN0) | (1 << RXCIE0);
     UCSR0C = 0x06;
     UBRR0 = 8;
 }
@@ -465,9 +661,39 @@ void Tx_char(unsigned char data){
     while(!(UCSR0A & (1 << UDRE0)));
     UDR0 = data;
 }
+ISR(USART_RX_vect) {
+    input = UDR0;
+	unsigned char IN_2_INT = '`' + input + 0x20 - '0';
+// LCD_CharWrite(num2lcdbyte(in2ascii));
+// LCD_CharWrite(0x00F0);
+// LCD_CharWrite(0x00F0);
+//Tx_char('0'+IN_2_INT);
+
+	if(input == "@"){ //STX
+		if(!STX_flag) {
+			STX_flag = 1;
+		}
+	}
+
+	if(input == "#"){
+		if(!ETX_flag) {
+			ETX_flag = 1;
+		}
+	}
+
+	if(STX_flag){
+		if(ETX_flag){
+			STX_flag = 0;
+			ETX_flag = 0;
+			Command_flag = 1;
+			return;
+		}
+		q_push(input);
+	}
+	
+}
 //====================================================
 unsigned char key_scan(){
-
 
     unsigned char bit_shift = 0b00010000;
     if(key_flag) return -1;
@@ -688,3 +914,41 @@ void LCD_NEBIT(unsigned char byte){
 	write_AT24Cxx_i2c_LCDAddressing(byte);
 }
 //====================================================
+void q_push(unsigned char data){
+    if(q_isFull()){
+        return;
+    }
+    q[ptr_write] = data;
+    ptr_write++;
+    ptr_write &= (Q_LENGTH-1);
+}
+
+unsigned char q_pop(){
+    if(q_isEmpty()){
+        return -1;
+    }
+    unsigned char q_tmp;
+    q_tmp = q[ptr_read];
+    ptr_read++;
+    ptr_read &= (Q_LENGTH-1);
+    return q_tmp;
+}
+
+bool q_isFull(){
+    if(ptr_write - ptr_read >= Q_LENGTH -1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}   
+
+bool q_isEmpty(){
+    if(ptr_read == ptr_write){
+        return true;
+    }
+    else{
+        return false;
+    }
+    
+}
