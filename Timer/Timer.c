@@ -26,9 +26,6 @@
 #define Q_LENGTH 16
 #define true 1
 #define false 0
-typedef struct Point CursorPoint;
-typedef struct timeNum SecNum;
-typedef int bool;
 //====================================================
 struct Point
 {
@@ -44,6 +41,9 @@ struct timeNum
 	int MinNum;
 };
 //====================================================
+typedef struct Point CursorPoint;
+typedef struct timeNum SecNum;
+typedef int bool;
 volatile CursorPoint cp;
 volatile SecNum sel;
 volatile unsigned char ptr_read = 0;
@@ -80,6 +80,7 @@ volatile unsigned char STX_flag = 0;
 volatile unsigned char ETX_flag = 0;
 volatile unsigned char Command_flag = 0;
 volatile unsigned char instr_flag = 0;
+volatile unsigned char time_arr[4];
 //====================================================
 void Timer0_init();
 void Timer1_init();
@@ -143,25 +144,27 @@ int main(void){
 			job = 0;
 			Value_init();
 		}
-
 		if(Command_flag){
+			int index = 0;
 			Command_flag = 0;
 			q_pop();
 			if(q_pop() == '$'){
 				instr_flag = 1;
+				
+			}
+			if(q_pop() == '%'){
 				timer_start_flag = 1;
-			
-				while(instr_flag){
-					unsigned char cmd_tmp;
-					cmd_tmp = q_pop();
-					
-					if(cmd_tmp == '#'){
-						instr_flag = 0;
-					}
+			}
+			while(instr_flag){
+				unsigned char cmd_tmp;
+				cmd_tmp = q_pop();
+				time_arr[index++] = cmd_tmp;
+				if(cmd_tmp == '#'){
+					instr_flag = 0;
+					break;
 				}
 			}
-				
-		}
+		}			
 
 		switch (job) //can append command and set timer here
 		{
@@ -236,7 +239,7 @@ void Timer1_init(){
     TCCR1B =  (1 << WGM12) | (0 << CS12) | (1 << CS11) | (1 << CS10);
 	TCNT1 = 0;
     OCR1A = 0x09c4; 
-    TIMSK1 |= (1 << TOIE1) | (1 << OCIE1A)			return;
+    TIMSK1 |= (1 << TOIE1) | (1 << OCIE1A);
 	sel.n2 = 0;
 	sel.n3 = 0;
 	sel.n4 = 0;
@@ -669,13 +672,13 @@ ISR(USART_RX_vect) {
 // LCD_CharWrite(0x00F0);
 //Tx_char('0'+IN_2_INT);
 
-	if(input == "@"){ //STX
+	if(input == 0x40){ //STX '@'
 		if(!STX_flag) {
 			STX_flag = 1;
 		}
 	}
 
-	if(input == "#"){
+	if(input == 0x23){ //ETX '#'
 		if(!ETX_flag) {
 			ETX_flag = 1;
 		}
@@ -688,7 +691,7 @@ ISR(USART_RX_vect) {
 			Command_flag = 1;
 			return;
 		}
-		q_push(input);
+		q_push(IN_2_INT);
 	}
 	
 }
