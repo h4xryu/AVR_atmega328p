@@ -81,6 +81,9 @@ volatile unsigned char ETX_flag = 0;
 volatile unsigned char Command_flag = 0;
 volatile unsigned char instr_flag = 0;
 volatile unsigned char time_arr[4];
+volatile unsigned char IN_2_CHAR;
+volatile unsigned char RX_flag = 0;
+volatile unsigned char c_index = 0;
 //====================================================
 void Timer0_init();
 void Timer1_init();
@@ -115,6 +118,9 @@ void I2C_Timer_act();
 void I2C_Timer_act_ms();
 void I2C_Timer_test();
 void Value_init();
+void ERROR_MESSAGE();
+void COMMAND_RESET();
+void RX_init();
 void TIME_SETTING(unsigned char m, unsigned char s);
 uint16_t num2lcdbyte(unsigned char num);
 //====================================================
@@ -122,6 +128,7 @@ void q_push(unsigned char data);
 unsigned char q_pop();
 bool q_isFull();
 bool q_isEmpty();
+void q_clear();
 //====================================================
 int main(void){
 	
@@ -131,66 +138,116 @@ int main(void){
 	I2C_LCD_init(0x27);
 	I2C_LCD_Reset();
 	I2C_Timer_Default();
-    USART_init();
 	Timer1_init();
-	//TIME_SETTING(1,2);
+    USART_init();
+	RX_init();
+
 	while(1){
-		PORTC ^= 0x01;
+
 		if(end_flag) {
+
 			end_flag = 0;
 			timer_start_flag = 0;
-			//TIME_SETTING(1,2);
 			I2C_Timer_Default();
 			job = 0;
 			Value_init();
 		}
+
 		if(Command_flag){
-			int index = 0;
+
+			c_index = 0;
 			Command_flag = 0;
-			q_pop();
-			if(q_pop() == '$'){
+			unsigned char c_tmp = q_pop();
+			c_tmp = q_pop();
+
+			if(c_tmp == 0x24){ //$ : Timer set command
 				instr_flag = 1;
-				
 			}
-			if(q_pop() == '%'){
+			else if(c_tmp == 0x25){ //% : Timer start command
 				timer_start_flag = 1;
+				q_clear();
 			}
+
 			while(instr_flag){
-				unsigned char cmd_tmp;
-				cmd_tmp = q_pop();
-				time_arr[index++] = cmd_tmp;
-				if(cmd_tmp == '#'){
-					instr_flag = 0;
+				
+				unsigned char cmd_tmp = 0;
+				if(c_index < 4) {
+					cmd_tmp = q_pop();
+					Tx_char(cmd_tmp);
+					if ((cmd_tmp-'0') <= 9 && (cmd_tmp-'0') >=0) time_arr[c_index] = cmd_tmp;
+					else {
+						//ERROR
+						ERROR_MESSAGE();
+						COMMAND_RESET();
+						break;
+					}
+					c_index ++;
+				}
+				if(c_index == 4) cmd_tmp = q_pop();
+				if(c_index > 4) {
+					//ERROR
+					ERROR_MESSAGE();
+					COMMAND_RESET();
+					break;
+				}
+				if(cmd_tmp == 0x23){ //#
+					if((((time_arr[0] - '0')*10 + (time_arr[1] - '0')) <= 60) && ((time_arr[2] - '0')*10 + (time_arr[3] - '0')) <= 60) {
+						TIME_SETTING(((time_arr[0] - '0')*10 + (time_arr[1] - '0')), ((time_arr[2] - '0')*10 + (time_arr[3] - '0')));
+						COMMAND_RESET();
+						break;
+					}
+					else {
+						//ERROR
+						ERROR_MESSAGE();
+						COMMAND_RESET();
+						break;
+					}
 					break;
 				}
 			}
 		}			
 
-		switch (job) //can append command and set timer here
-		{
-		case 0:
-			if(timer_start_flag) {
-				time_1s = 100;
+		switch (job) {//can append command and set timer here
+			case 0:
+				if(timer_start_flag) {
+					time_1s = 100;
+					job++;
+				}
+				break;
+			case 1:
+				if(time_1s) break;
+				else job++;
+			case 2:
+				I2C_Timer_act();
 				job++;
-			}
-			break;
-		case 1:
-			if(time_1s) break;
-			else job++;
-		case 2:
-			I2C_Timer_act();
-			job++;
-		case 3:
-			if(end_flag) job++;
-			else job = 0;
-		default:
-			break;
+			case 3:
+				if(end_flag) job++;
+				else job = 0;
+			default:
+				break;
 		}
 	}
 }
 //===================================================
-void TIME_SETTING(unsigned char m, unsigned char s){
+void Value_init(){
+	sel.n1 = 0;
+	sel.n2 = 0;
+	sel.n3 = 0;
+	sel.n4 = 0;
+	sel.MinNum = 0;
+	sel.SecNum = 0;
+	cp.x = 9;
+}
 
+void Port_init(){
+	//set B0~D4 as input,  D5, D6, D7 pins are set high to find key vals
+	DDRD = 0b01110000;
+	PORTD = 0b00000000;
+	DDRB = 0b00110000;
+}
+//===================================================
+void TIME_SETTING(unsigned char m, unsigned char s){
+	cli();
 	unsigned char min_tmp[2];
 	unsigned char sec_tmp[2];
 
@@ -232,6 +289,7 @@ void TIME_SETTING(unsigned char m, unsigned char s){
 	LCD_CharWrite(0x00C0);
 	I2C_LCD_MoveLeft(4);
 	cp.x = 9;
+	sei();
 }
 //===================================================
 void Timer1_init(){
@@ -477,6 +535,33 @@ void I2C_LCD_SELECT(){
 //====================================================
 //**NOTE: Timer must perform only the role of timer otherwise, global variables will be reset **
 ISR(TIMER1_COMPA_vect){
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	if(RX_flag){
+		RX_flag = 0;
+		if(IN_2_CHAR == '@' && !ETX_flag){ //STX '@'
+			if(!STX_flag) {
+				STX_flag = 1;
+			}
+		}
+
+		if(IN_2_CHAR == '#' && STX_flag){ //ETX '#'
+			if(!ETX_flag) {
+				ETX_flag = 1;
+			}
+		}
+
+		if(STX_flag){
+			if(ETX_flag){
+				STX_flag = 0;
+				ETX_flag = 0;
+				q_push('#');
+				Command_flag = 1;
+				return;
+			}
+			q_push(IN_2_CHAR);
+		}
+	}
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	if(timer_start_flag){ 
 		if(time_1s) time_1s--;
 		if(time_10ms) {
@@ -489,7 +574,7 @@ ISR(TIMER1_COMPA_vect){
 			LCD_CharWrite(0x00C0);
 		}
 	}
-
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     key_data = key_scan();
 	if(sel_flag && key_flag && !timer_start_flag){
 		key_flag = 0;
@@ -579,7 +664,7 @@ ISR(TIMER1_COMPA_vect){
 			}
 		}
 	}
-
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     if(key_flag && !sel_flag){
 		key_flag = 0;
 		if(key_data == 0xff){
@@ -656,7 +741,7 @@ ISR(TIMER1_COMPA_vect){
 void USART_init(){
     UCSR0A = 0x20;
 	UCSR0A |= (1 << UDRE0);
-    UCSR0B |= (1 << RXEN0)| (1 <<TXEN0) | (1 << RXCIE0);
+    UCSR0B |= (1 <<TXEN0);
     UCSR0C = 0x06;
     UBRR0 = 8;
 }
@@ -664,35 +749,13 @@ void Tx_char(unsigned char data){
     while(!(UCSR0A & (1 << UDRE0)));
     UDR0 = data;
 }
+void RX_init(){
+	UCSR0B |= (1 << RXEN0) | (1 << RXCIE0);
+}
 ISR(USART_RX_vect) {
     input = UDR0;
-	unsigned char IN_2_INT = '`' + input + 0x20 - '0';
-// LCD_CharWrite(num2lcdbyte(in2ascii));
-// LCD_CharWrite(0x00F0);
-// LCD_CharWrite(0x00F0);
-//Tx_char('0'+IN_2_INT);
-
-	if(input == 0x40){ //STX '@'
-		if(!STX_flag) {
-			STX_flag = 1;
-		}
-	}
-
-	if(input == 0x23){ //ETX '#'
-		if(!ETX_flag) {
-			ETX_flag = 1;
-		}
-	}
-
-	if(STX_flag){
-		if(ETX_flag){
-			STX_flag = 0;
-			ETX_flag = 0;
-			Command_flag = 1;
-			return;
-		}
-		q_push(IN_2_INT);
-	}
+	IN_2_CHAR = '`' + input + 0x20;
+	RX_flag = 1;
 	
 }
 //====================================================
@@ -954,4 +1017,44 @@ bool q_isEmpty(){
         return false;
     }
     
+}
+
+void q_clear(){
+	while(!q_isEmpty()){
+		q_pop();
+	}
+}
+
+void ERROR_MESSAGE(){
+	Tx_char('E');
+	Tx_char('R');
+	Tx_char('R');
+	Tx_char('O');
+	Tx_char('R');
+	Tx_char(':');
+	Tx_char('i');
+	Tx_char('n');
+	Tx_char('c');
+	Tx_char('o');
+	Tx_char('r');
+	Tx_char('r');
+	Tx_char('e');
+	Tx_char('c');
+	Tx_char('t');
+	Tx_char(' ');
+	Tx_char('c');
+	Tx_char('o');
+	Tx_char('m');
+	Tx_char('m');
+	Tx_char('a');
+	Tx_char('n');
+	Tx_char('d');
+	Tx_char(0x13);
+}
+
+void COMMAND_RESET(){
+	c_index = 0;
+	instr_flag = 0;
+	Command_flag = 0;
+	q_clear();
 }
