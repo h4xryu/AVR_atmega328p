@@ -273,10 +273,10 @@
  160:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 			unsigned char c_tmp = q_pop();
  161:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 			c_tmp = q_pop();
  162:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 
- 163:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 			if(c_tmp == 0x24){ //$
+ 163:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 			if(c_tmp == 0x24){ //$ : Timer set command
  164:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 				instr_flag = 1;
  165:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 			}
- 166:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 			else if(c_tmp == 0x25){ //%
+ 166:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 			else if(c_tmp == 0x25){ //% : Timer start command
  167:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 				timer_start_flag = 1;
  168:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 				q_clear();
  169:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/Timer/Timer.c **** 			}
@@ -5999,83 +5999,83 @@
  4227               	.global __do_clear_bss
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Timer.c
-     /tmp/ccBJRfJe.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccBJRfJe.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccBJRfJe.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccBJRfJe.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccBJRfJe.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccBJRfJe.s:112    .text:0000000000000000 Value_init
+     /tmp/cc03t2gG.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc03t2gG.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc03t2gG.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc03t2gG.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc03t2gG.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc03t2gG.s:112    .text:0000000000000000 Value_init
                             *COM*:000000000000000c sel
                             *COM*:0000000000000002 cp
-     /tmp/ccBJRfJe.s:161    .text:000000000000002a Port_init
-     /tmp/ccBJRfJe.s:189    .text:0000000000000036 Timer1_init
-     /tmp/ccBJRfJe.s:249    .text:0000000000000074 USART_init
-     /tmp/ccBJRfJe.s:295    .text:00000000000000a0 Tx_char
-     /tmp/ccBJRfJe.s:321    .text:00000000000000ae RX_init
-     /tmp/ccBJRfJe.s:345    .text:00000000000000ba __vector_18
-     /tmp/ccBJRfJe.s:4063   .bss:0000000000000006 input
+     /tmp/cc03t2gG.s:161    .text:000000000000002a Port_init
+     /tmp/cc03t2gG.s:189    .text:0000000000000036 Timer1_init
+     /tmp/cc03t2gG.s:249    .text:0000000000000074 USART_init
+     /tmp/cc03t2gG.s:295    .text:00000000000000a0 Tx_char
+     /tmp/cc03t2gG.s:321    .text:00000000000000ae RX_init
+     /tmp/cc03t2gG.s:345    .text:00000000000000ba __vector_18
+     /tmp/cc03t2gG.s:4063   .bss:0000000000000006 input
                             *COM*:0000000000000001 IN_2_CHAR
-     /tmp/ccBJRfJe.s:4036   .bss:0000000000000001 RX_flag
-     /tmp/ccBJRfJe.s:391    .text:00000000000000ea key_analysis
-     /tmp/ccBJRfJe.s:4129   .bss:0000000000000016 key_flag
-     /tmp/ccBJRfJe.s:542    .text:0000000000000170 key_scan
-     /tmp/ccBJRfJe.s:4124   .bss:0000000000000015 new_key
+     /tmp/cc03t2gG.s:4036   .bss:0000000000000001 RX_flag
+     /tmp/cc03t2gG.s:391    .text:00000000000000ea key_analysis
+     /tmp/cc03t2gG.s:4129   .bss:0000000000000016 key_flag
+     /tmp/cc03t2gG.s:542    .text:0000000000000170 key_scan
+     /tmp/cc03t2gG.s:4124   .bss:0000000000000015 new_key
                             *COM*:0000000000000001 old_key
-     /tmp/ccBJRfJe.s:4114   .bss:0000000000000013 pressing_flag
-     /tmp/ccBJRfJe.s:686    .text:0000000000000210 num2lcdbyte
-     /tmp/ccBJRfJe.s:818    .text:000000000000027a write_AT24Cxx_i2c_LCDAddressing
-     /tmp/ccBJRfJe.s:946    .text:00000000000002c4 AT24Cxx_i2c_start
-     /tmp/ccBJRfJe.s:996    .text:00000000000002da AT24Cxx_ACK_send
-     /tmp/ccBJRfJe.s:1093   .text:000000000000030c AT24Cxx_i2c_stop
-     /tmp/ccBJRfJe.s:1148   .text:0000000000000324 write_AT24Cxx_i2c_byte
-     /tmp/ccBJRfJe.s:1188   .text:0000000000000334 LCD_Write
-     /tmp/ccBJRfJe.s:1222   .text:0000000000000340 I2C_LCD_init
-     /tmp/ccBJRfJe.s:1453   .text:00000000000003fe LCD_CharWrite
-     /tmp/ccBJRfJe.s:1526   .text:0000000000000434 I2C_LCD_Erase
-     /tmp/ccBJRfJe.s:1567   .text:000000000000045c I2C_LCD_Reset
-     /tmp/ccBJRfJe.s:1752   .text:00000000000004f0 I2C_LCD_MoveLeft
-     /tmp/ccBJRfJe.s:1803   .text:0000000000000516 TIME_SETTING
-     /tmp/ccBJRfJe.s:4073   .bss:0000000000000008 min
-     /tmp/ccBJRfJe.s:4068   .bss:0000000000000007 sec
-     /tmp/ccBJRfJe.s:1987   .text:000000000000061a I2C_Timer_Default
-     /tmp/ccBJRfJe.s:2083   .text:000000000000069a I2C_LCD_MoveRight
-     /tmp/ccBJRfJe.s:2127   .text:00000000000006b8 I2C_Timer_act
-     /tmp/ccBJRfJe.s:4156   .bss:000000000000001a end_flag
-     /tmp/ccBJRfJe.s:4083   .bss:000000000000000b time_10ms
-     /tmp/ccBJRfJe.s:2452   .text:00000000000008aa I2C_LCD_SELECT
-     /tmp/ccBJRfJe.s:4166   .bss:000000000000001c sel_flag
-     /tmp/ccBJRfJe.s:2506   .text:00000000000008dc LCD_NEBIT
-     /tmp/ccBJRfJe.s:2525   .text:00000000000008e0 q_isFull
-     /tmp/ccBJRfJe.s:4177   .bss:000000000000001e ptr_write
-     /tmp/ccBJRfJe.s:4182   .bss:000000000000001f ptr_read
-     /tmp/ccBJRfJe.s:2560   .text:00000000000008fe q_push
+     /tmp/cc03t2gG.s:4114   .bss:0000000000000013 pressing_flag
+     /tmp/cc03t2gG.s:686    .text:0000000000000210 num2lcdbyte
+     /tmp/cc03t2gG.s:818    .text:000000000000027a write_AT24Cxx_i2c_LCDAddressing
+     /tmp/cc03t2gG.s:946    .text:00000000000002c4 AT24Cxx_i2c_start
+     /tmp/cc03t2gG.s:996    .text:00000000000002da AT24Cxx_ACK_send
+     /tmp/cc03t2gG.s:1093   .text:000000000000030c AT24Cxx_i2c_stop
+     /tmp/cc03t2gG.s:1148   .text:0000000000000324 write_AT24Cxx_i2c_byte
+     /tmp/cc03t2gG.s:1188   .text:0000000000000334 LCD_Write
+     /tmp/cc03t2gG.s:1222   .text:0000000000000340 I2C_LCD_init
+     /tmp/cc03t2gG.s:1453   .text:00000000000003fe LCD_CharWrite
+     /tmp/cc03t2gG.s:1526   .text:0000000000000434 I2C_LCD_Erase
+     /tmp/cc03t2gG.s:1567   .text:000000000000045c I2C_LCD_Reset
+     /tmp/cc03t2gG.s:1752   .text:00000000000004f0 I2C_LCD_MoveLeft
+     /tmp/cc03t2gG.s:1803   .text:0000000000000516 TIME_SETTING
+     /tmp/cc03t2gG.s:4073   .bss:0000000000000008 min
+     /tmp/cc03t2gG.s:4068   .bss:0000000000000007 sec
+     /tmp/cc03t2gG.s:1987   .text:000000000000061a I2C_Timer_Default
+     /tmp/cc03t2gG.s:2083   .text:000000000000069a I2C_LCD_MoveRight
+     /tmp/cc03t2gG.s:2127   .text:00000000000006b8 I2C_Timer_act
+     /tmp/cc03t2gG.s:4156   .bss:000000000000001a end_flag
+     /tmp/cc03t2gG.s:4083   .bss:000000000000000b time_10ms
+     /tmp/cc03t2gG.s:2452   .text:00000000000008aa I2C_LCD_SELECT
+     /tmp/cc03t2gG.s:4166   .bss:000000000000001c sel_flag
+     /tmp/cc03t2gG.s:2506   .text:00000000000008dc LCD_NEBIT
+     /tmp/cc03t2gG.s:2525   .text:00000000000008e0 q_isFull
+     /tmp/cc03t2gG.s:4177   .bss:000000000000001e ptr_write
+     /tmp/cc03t2gG.s:4182   .bss:000000000000001f ptr_read
+     /tmp/cc03t2gG.s:2560   .text:00000000000008fe q_push
                             *COM*:0000000000000010 q
-     /tmp/ccBJRfJe.s:2610   .text:000000000000092e __vector_11
-     /tmp/ccBJRfJe.s:4053   .bss:0000000000000004 ETX_flag
-     /tmp/ccBJRfJe.s:4058   .bss:0000000000000005 STX_flag
-     /tmp/ccBJRfJe.s:4048   .bss:0000000000000003 Command_flag
-     /tmp/ccBJRfJe.s:4146   .bss:0000000000000018 timer_start_flag
-     /tmp/ccBJRfJe.s:4088   .bss:000000000000000d time_1s
-     /tmp/ccBJRfJe.s:4119   .bss:0000000000000014 key_data
-     /tmp/ccBJRfJe.s:3431   .text:0000000000000f06 q_isEmpty
-     /tmp/ccBJRfJe.s:3461   .text:0000000000000f1c q_pop
-     /tmp/ccBJRfJe.s:3514   .text:0000000000000f4a q_clear
-     /tmp/ccBJRfJe.s:3545   .text:0000000000000f5a ERROR_MESSAGE
-     /tmp/ccBJRfJe.s:3657   .text:0000000000000fea COMMAND_RESET
-     /tmp/ccBJRfJe.s:4031   .bss:0000000000000000 c_index
-     /tmp/ccBJRfJe.s:4043   .bss:0000000000000002 instr_flag
-     /tmp/ccBJRfJe.s:3686   .text.startup:0000000000000000 main
-     /tmp/ccBJRfJe.s:4171   .bss:000000000000001d job
+     /tmp/cc03t2gG.s:2610   .text:000000000000092e __vector_11
+     /tmp/cc03t2gG.s:4053   .bss:0000000000000004 ETX_flag
+     /tmp/cc03t2gG.s:4058   .bss:0000000000000005 STX_flag
+     /tmp/cc03t2gG.s:4048   .bss:0000000000000003 Command_flag
+     /tmp/cc03t2gG.s:4146   .bss:0000000000000018 timer_start_flag
+     /tmp/cc03t2gG.s:4088   .bss:000000000000000d time_1s
+     /tmp/cc03t2gG.s:4119   .bss:0000000000000014 key_data
+     /tmp/cc03t2gG.s:3431   .text:0000000000000f06 q_isEmpty
+     /tmp/cc03t2gG.s:3461   .text:0000000000000f1c q_pop
+     /tmp/cc03t2gG.s:3514   .text:0000000000000f4a q_clear
+     /tmp/cc03t2gG.s:3545   .text:0000000000000f5a ERROR_MESSAGE
+     /tmp/cc03t2gG.s:3657   .text:0000000000000fea COMMAND_RESET
+     /tmp/cc03t2gG.s:4031   .bss:0000000000000000 c_index
+     /tmp/cc03t2gG.s:4043   .bss:0000000000000002 instr_flag
+     /tmp/cc03t2gG.s:3686   .text.startup:0000000000000000 main
+     /tmp/cc03t2gG.s:4171   .bss:000000000000001d job
                             *COM*:0000000000000004 time_arr
-     /tmp/ccBJRfJe.s:4078   .bss:0000000000000009 time_tmp
-     /tmp/ccBJRfJe.s:4093   .bss:000000000000000f Wait_time
-     /tmp/ccBJRfJe.s:4098   .bss:0000000000000010 flag_time
-     /tmp/ccBJRfJe.s:4104   .bss:0000000000000011 current_key
-     /tmp/ccBJRfJe.s:4109   .bss:0000000000000012 keyNum
-     /tmp/ccBJRfJe.s:4135   .data:0000000000000000 first_flag
-     /tmp/ccBJRfJe.s:4141   .bss:0000000000000017 counting_timer_start_flag
-     /tmp/ccBJRfJe.s:4151   .bss:0000000000000019 addr
-     /tmp/ccBJRfJe.s:4161   .bss:000000000000001b lcd_flag
+     /tmp/cc03t2gG.s:4078   .bss:0000000000000009 time_tmp
+     /tmp/cc03t2gG.s:4093   .bss:000000000000000f Wait_time
+     /tmp/cc03t2gG.s:4098   .bss:0000000000000010 flag_time
+     /tmp/cc03t2gG.s:4104   .bss:0000000000000011 current_key
+     /tmp/cc03t2gG.s:4109   .bss:0000000000000012 keyNum
+     /tmp/cc03t2gG.s:4135   .data:0000000000000000 first_flag
+     /tmp/cc03t2gG.s:4141   .bss:0000000000000017 counting_timer_start_flag
+     /tmp/cc03t2gG.s:4151   .bss:0000000000000019 addr
+     /tmp/cc03t2gG.s:4161   .bss:000000000000001b lcd_flag
 
 UNDEFINED SYMBOLS
 __udivmodqi4
