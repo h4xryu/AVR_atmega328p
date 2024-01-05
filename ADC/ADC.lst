@@ -1,0 +1,433 @@
+   1               		.file	"ADC.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.stabs	"/home/student/avr_linux_compiler/",100,0,2,.Ltext0
+   8               		.stabs	"/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c",100,0,2,.Ltext0
+   9               		.text
+  10               	.Ltext0:
+  11               		.stabs	"gcc2_compiled.",60,0,0,0
+  12               		.stabs	"int:t(0,1)=r(0,1);-32768;32767;",128,0,0,0
+  13               		.stabs	"char:t(0,2)=r(0,2);0;127;",128,0,0,0
+  14               		.stabs	"long int:t(0,3)=@s32;r(0,3);020000000000;017777777777;",128,0,0,0
+  15               		.stabs	"unsigned int:t(0,4)=r(0,4);0;0177777;",128,0,0,0
+  16               		.stabs	"long unsigned int:t(0,5)=@s32;r(0,5);0;037777777777;",128,0,0,0
+  17               		.stabs	"__int128:t(0,6)=@s128;r(0,6);02000000000000000000000000000000000000000000;0177777777777777
+  18               		.stabs	"__int128 unsigned:t(0,7)=@s128;r(0,7);0;03777777777777777777777777777777777777777777;",128
+  19               		.stabs	"long long int:t(0,8)=@s64;r(0,8);01000000000000000000000;00777777777777777777777;",128,0,0
+  20               		.stabs	"long long unsigned int:t(0,9)=@s64;r(0,9);0;01777777777777777777777;",128,0,0,0
+  21               		.stabs	"short int:t(0,10)=r(0,10);-32768;32767;",128,0,0,0
+  22               		.stabs	"short unsigned int:t(0,11)=r(0,11);0;0177777;",128,0,0,0
+  23               		.stabs	"signed char:t(0,12)=@s8;r(0,12);-128;127;",128,0,0,0
+  24               		.stabs	"unsigned char:t(0,13)=@s8;r(0,13);0;255;",128,0,0,0
+  25               		.stabs	"float:t(0,14)=r(0,1);4;0;",128,0,0,0
+  26               		.stabs	"double:t(0,15)=r(0,1);4;0;",128,0,0,0
+  27               		.stabs	"long double:t(0,16)=r(0,1);4;0;",128,0,0,0
+  28               		.stabs	"short _Fract:t(0,17)=r(0,1);1;0;",128,0,0,0
+  29               		.stabs	"_Fract:t(0,18)=r(0,1);2;0;",128,0,0,0
+  30               		.stabs	"long _Fract:t(0,19)=r(0,1);4;0;",128,0,0,0
+  31               		.stabs	"long long _Fract:t(0,20)=r(0,1);8;0;",128,0,0,0
+  32               		.stabs	"unsigned short _Fract:t(0,21)=r(0,1);1;0;",128,0,0,0
+  33               		.stabs	"unsigned _Fract:t(0,22)=r(0,1);2;0;",128,0,0,0
+  34               		.stabs	"unsigned long _Fract:t(0,23)=r(0,1);4;0;",128,0,0,0
+  35               		.stabs	"unsigned long long _Fract:t(0,24)=r(0,1);8;0;",128,0,0,0
+  36               		.stabs	"_Sat short _Fract:t(0,25)=r(0,1);1;0;",128,0,0,0
+  37               		.stabs	"_Sat _Fract:t(0,26)=r(0,1);2;0;",128,0,0,0
+  38               		.stabs	"_Sat long _Fract:t(0,27)=r(0,1);4;0;",128,0,0,0
+  39               		.stabs	"_Sat long long _Fract:t(0,28)=r(0,1);8;0;",128,0,0,0
+  40               		.stabs	"_Sat unsigned short _Fract:t(0,29)=r(0,1);1;0;",128,0,0,0
+  41               		.stabs	"_Sat unsigned _Fract:t(0,30)=r(0,1);2;0;",128,0,0,0
+  42               		.stabs	"_Sat unsigned long _Fract:t(0,31)=r(0,1);4;0;",128,0,0,0
+  43               		.stabs	"_Sat unsigned long long _Fract:t(0,32)=r(0,1);8;0;",128,0,0,0
+  44               		.stabs	"short _Accum:t(0,33)=r(0,1);2;0;",128,0,0,0
+  45               		.stabs	"_Accum:t(0,34)=r(0,1);4;0;",128,0,0,0
+  46               		.stabs	"long _Accum:t(0,35)=r(0,1);8;0;",128,0,0,0
+  47               		.stabs	"long long _Accum:t(0,36)=r(0,1);8;0;",128,0,0,0
+  48               		.stabs	"unsigned short _Accum:t(0,37)=r(0,1);2;0;",128,0,0,0
+  49               		.stabs	"unsigned _Accum:t(0,38)=r(0,1);4;0;",128,0,0,0
+  50               		.stabs	"unsigned long _Accum:t(0,39)=r(0,1);8;0;",128,0,0,0
+  51               		.stabs	"unsigned long long _Accum:t(0,40)=r(0,1);8;0;",128,0,0,0
+  52               		.stabs	"_Sat short _Accum:t(0,41)=r(0,1);2;0;",128,0,0,0
+  53               		.stabs	"_Sat _Accum:t(0,42)=r(0,1);4;0;",128,0,0,0
+  54               		.stabs	"_Sat long _Accum:t(0,43)=r(0,1);8;0;",128,0,0,0
+  55               		.stabs	"_Sat long long _Accum:t(0,44)=r(0,1);8;0;",128,0,0,0
+  56               		.stabs	"_Sat unsigned short _Accum:t(0,45)=r(0,1);2;0;",128,0,0,0
+  57               		.stabs	"_Sat unsigned _Accum:t(0,46)=r(0,1);4;0;",128,0,0,0
+  58               		.stabs	"_Sat unsigned long _Accum:t(0,47)=r(0,1);8;0;",128,0,0,0
+  59               		.stabs	"_Sat unsigned long long _Accum:t(0,48)=r(0,1);8;0;",128,0,0,0
+  60               		.stabs	"void:t(0,49)=(0,49)",128,0,0,0
+  61               		.stabs	"/usr/lib/avr/include/avr/io.h",130,0,0,0
+  62               		.stabs	"/usr/lib/avr/include/avr/sfr_defs.h",130,0,0,0
+  63               		.stabs	"/usr/lib/avr/include/inttypes.h",130,0,0,0
+  64               		.stabs	"/usr/lib/gcc/avr/5.4.0/include/stdint.h",130,0,0,0
+  65               		.stabs	"/usr/lib/avr/include/stdint.h",130,0,0,0
+  66               		.stabs	"int8_t:t(5,1)=(0,12)",128,0,125,0
+  67               		.stabs	"uint8_t:t(5,2)=(0,13)",128,0,126,0
+  68               		.stabs	"int16_t:t(5,3)=(0,1)",128,0,127,0
+  69               		.stabs	"uint16_t:t(5,4)=(0,4)",128,0,128,0
+  70               		.stabs	"int32_t:t(5,5)=(0,3)",128,0,129,0
+  71               		.stabs	"uint32_t:t(5,6)=(0,5)",128,0,130,0
+  72               		.stabs	"int64_t:t(5,7)=(0,8)",128,0,132,0
+  73               		.stabs	"uint64_t:t(5,8)=(0,9)",128,0,133,0
+  74               		.stabs	"intptr_t:t(5,9)=(5,3)",128,0,146,0
+  75               		.stabs	"uintptr_t:t(5,10)=(5,4)",128,0,151,0
+  76               		.stabs	"int_least8_t:t(5,11)=(5,1)",128,0,163,0
+  77               		.stabs	"uint_least8_t:t(5,12)=(5,2)",128,0,168,0
+  78               		.stabs	"int_least16_t:t(5,13)=(5,3)",128,0,173,0
+  79               		.stabs	"uint_least16_t:t(5,14)=(5,4)",128,0,178,0
+  80               		.stabs	"int_least32_t:t(5,15)=(5,5)",128,0,183,0
+  81               		.stabs	"uint_least32_t:t(5,16)=(5,6)",128,0,188,0
+  82               		.stabs	"int_least64_t:t(5,17)=(5,7)",128,0,196,0
+  83               		.stabs	"uint_least64_t:t(5,18)=(5,8)",128,0,203,0
+  84               		.stabs	"int_fast8_t:t(5,19)=(5,1)",128,0,217,0
+  85               		.stabs	"uint_fast8_t:t(5,20)=(5,2)",128,0,222,0
+  86               		.stabs	"int_fast16_t:t(5,21)=(5,3)",128,0,227,0
+  87               		.stabs	"uint_fast16_t:t(5,22)=(5,4)",128,0,232,0
+  88               		.stabs	"int_fast32_t:t(5,23)=(5,5)",128,0,237,0
+  89               		.stabs	"uint_fast32_t:t(5,24)=(5,6)",128,0,242,0
+  90               		.stabs	"int_fast64_t:t(5,25)=(5,7)",128,0,250,0
+  91               		.stabs	"uint_fast64_t:t(5,26)=(5,8)",128,0,257,0
+  92               		.stabs	"intmax_t:t(5,27)=(5,7)",128,0,277,0
+  93               		.stabs	"uintmax_t:t(5,28)=(5,8)",128,0,282,0
+  94               		.stabn	162,0,0,0
+  95               		.stabn	162,0,0,0
+  96               		.stabs	"int_farptr_t:t(3,1)=(5,5)",128,0,77,0
+  97               		.stabs	"uint_farptr_t:t(3,2)=(5,6)",128,0,81,0
+  98               		.stabn	162,0,0,0
+  99               		.stabn	162,0,0,0
+ 100               		.stabs	"/usr/lib/avr/include/avr/fuse.h",130,0,0,0
+ 101               		.stabs	"__fuse_t:t(6,1)=(6,2)=s3low:(0,13),0,8;high:(0,13),8,8;extended:(0,13),16,8;;",128,0,244,0
+ 102               		.stabn	162,0,0,0
+ 103               		.stabn	162,0,0,0
+ 104               		.stabs	"element:t(0,50)=(5,4)",128,0,11,0
+ 105               		.stabs	"bits:t(0,51)=(0,13)",128,0,12,0
+ 106               		.stabs	"USART_init:F(0,49)",36,0,44,USART_init
+ 107               	.global	USART_init
+ 108               		.type	USART_init, @function
+ 109               	USART_init:
+ 110               		.stabd	46,0,0
+   1:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** #ifndef F_CPU
+   2:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** #define F_CPU 16000000UL // or whatever may be your frequency
+   3:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** #endif
+   4:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** #include <avr/io.h>
+   5:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** #include <util/delay.h>
+   6:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** #include <avr/interrupt.h>
+   7:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 
+   8:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** #define PI 3.14159265358979
+   9:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 
+  10:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** // 타입 정의
+  11:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** typedef uint16_t element;
+  12:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** typedef unsigned char bits;
+  13:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 
+  14:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** // ADC 관련
+  15:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** void adc_init(void);
+  16:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** element adc_read(element adc_pin);
+  17:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** void send_data();
+  18:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** void seperate_data();
+  19:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 
+  20:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** // 시리얼 통신 관련
+  21:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** void USART_init();
+  22:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** void TX0_char(char Data);
+  23:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** int start;	 // 초 셀 때
+  24:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** element avg; // 값의 평균 구하기
+  25:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** element sum;
+  26:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 
+  27:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** void setup()
+  28:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** {
+  29:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	adc_init();
+  30:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	USART_init();
+  31:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	sei();
+  32:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** }
+  33:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 
+  34:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** int main()
+  35:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** {
+  36:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	setup();
+  37:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	while (1)
+  38:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	{
+  39:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 		double value = adc_read(1);
+  40:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 		char scaledValue = (int)(((double)value / 4096) * 255);
+  41:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 		TX0_char(scaledValue);
+  42:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	}
+  43:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** }
+  44:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** void USART_init(void)
+  45:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** {
+ 111               		.stabn	68,0,45,.LM0-.LFBB1
+ 112               	.LM0:
+ 113               	.LFBB1:
+ 114               	/* prologue: function */
+ 115               	/* frame size = 0 */
+ 116               	/* stack size = 0 */
+ 117               	.L__stack_usage = 0
+  46:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	UCSR0A = (1 << UDRE0);
+ 118               		.stabn	68,0,46,.LM1-.LFBB1
+ 119               	.LM1:
+ 120 0000 80E2      		ldi r24,lo8(32)
+ 121 0002 8093 C000 		sts 192,r24
+  47:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	UCSR0B = (1 << RXCIE0) | (1 << TXCIE0) | (1 << TXEN0) | (1 << RXEN0);
+ 122               		.stabn	68,0,47,.LM2-.LFBB1
+ 123               	.LM2:
+ 124 0006 88ED      		ldi r24,lo8(-40)
+ 125 0008 8093 C100 		sts 193,r24
+  48:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	UCSR0C = 0x06;
+ 126               		.stabn	68,0,48,.LM3-.LFBB1
+ 127               	.LM3:
+ 128 000c 86E0      		ldi r24,lo8(6)
+ 129 000e 8093 C200 		sts 194,r24
+  49:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	UBRR0 = 8;
+ 130               		.stabn	68,0,49,.LM4-.LFBB1
+ 131               	.LM4:
+ 132 0012 88E0      		ldi r24,lo8(8)
+ 133 0014 90E0      		ldi r25,0
+ 134 0016 9093 C500 		sts 196+1,r25
+ 135 001a 8093 C400 		sts 196,r24
+ 136 001e 0895      		ret
+ 137               		.size	USART_init, .-USART_init
+ 138               	.Lscope1:
+ 139               		.stabs	"",36,0,0,.Lscope1-.LFBB1
+ 140               		.stabd	78,0,0
+ 141               		.stabs	"TX0_char:F(0,49)",36,0,51,TX0_char
+ 142               		.stabs	"Data:P(0,2)",64,0,51,24
+ 143               	.global	TX0_char
+ 144               		.type	TX0_char, @function
+ 145               	TX0_char:
+ 146               		.stabd	46,0,0
+  50:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** }
+  51:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** void TX0_char(char Data)
+  52:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** {
+ 147               		.stabn	68,0,52,.LM5-.LFBB2
+ 148               	.LM5:
+ 149               	.LFBB2:
+ 150               	/* prologue: function */
+ 151               	/* frame size = 0 */
+ 152               	/* stack size = 0 */
+ 153               	.L__stack_usage = 0
+ 154               	.L3:
+  53:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 
+  54:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	while (!(UCSR0A & (1 << UDRE0)))
+ 155               		.stabn	68,0,54,.LM6-.LFBB2
+ 156               	.LM6:
+ 157 0020 9091 C000 		lds r25,192
+ 158 0024 95FF      		sbrs r25,5
+ 159 0026 00C0      		rjmp .L3
+  55:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	{
+  56:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	};
+  57:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	UDR0 = Data; // UDR0 I/O 레지스터에 값 보냄
+ 160               		.stabn	68,0,57,.LM7-.LFBB2
+ 161               	.LM7:
+ 162 0028 8093 C600 		sts 198,r24
+ 163 002c 0895      		ret
+ 164               		.size	TX0_char, .-TX0_char
+ 165               	.Lscope2:
+ 166               		.stabs	"",36,0,0,.Lscope2-.LFBB2
+ 167               		.stabd	78,0,0
+ 168               		.stabs	"adc_init:F(0,49)",36,0,59,adc_init
+ 169               	.global	adc_init
+ 170               		.type	adc_init, @function
+ 171               	adc_init:
+ 172               		.stabd	46,0,0
+  58:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** }
+  59:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** void adc_init(void)
+  60:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** {
+ 173               		.stabn	68,0,60,.LM8-.LFBB3
+ 174               	.LM8:
+ 175               	.LFBB3:
+ 176               	/* prologue: function */
+ 177               	/* frame size = 0 */
+ 178               	/* stack size = 0 */
+ 179               	.L__stack_usage = 0
+  61:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	ADMUX = (1 << REFS0);				 // set voltage reference
+ 180               		.stabn	68,0,61,.LM9-.LFBB3
+ 181               	.LM9:
+ 182 002e ECE7      		ldi r30,lo8(124)
+ 183 0030 F0E0      		ldi r31,0
+ 184 0032 80E4      		ldi r24,lo8(64)
+ 185 0034 8083      		st Z,r24
+  62:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	ADMUX &= ~(1 << ADLAR);				 // right-side adjust
+ 186               		.stabn	68,0,62,.LM10-.LFBB3
+ 187               	.LM10:
+ 188 0036 8081      		ld r24,Z
+ 189 0038 8F7D      		andi r24,lo8(-33)
+ 190 003a 8083      		st Z,r24
+  63:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	ADCSRA = (1 << ADEN) | (1 << ADPS2); // prescale 64
+ 191               		.stabn	68,0,63,.LM11-.LFBB3
+ 192               	.LM11:
+ 193 003c 84E8      		ldi r24,lo8(-124)
+ 194 003e 8093 7A00 		sts 122,r24
+ 195 0042 0895      		ret
+ 196               		.size	adc_init, .-adc_init
+ 197               	.Lscope3:
+ 198               		.stabs	"",36,0,0,.Lscope3-.LFBB3
+ 199               		.stabd	78,0,0
+ 200               		.stabs	"setup:F(0,49)",36,0,27,setup
+ 201               	.global	setup
+ 202               		.type	setup, @function
+ 203               	setup:
+ 204               		.stabd	46,0,0
+  28:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	adc_init();
+ 205               		.stabn	68,0,28,.LM12-.LFBB4
+ 206               	.LM12:
+ 207               	.LFBB4:
+ 208               	/* prologue: function */
+ 209               	/* frame size = 0 */
+ 210               	/* stack size = 0 */
+ 211               	.L__stack_usage = 0
+  29:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	USART_init();
+ 212               		.stabn	68,0,29,.LM13-.LFBB4
+ 213               	.LM13:
+ 214 0044 0E94 0000 		call adc_init
+  30:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	sei();
+ 215               		.stabn	68,0,30,.LM14-.LFBB4
+ 216               	.LM14:
+ 217 0048 0E94 0000 		call USART_init
+  31:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** }
+ 218               		.stabn	68,0,31,.LM15-.LFBB4
+ 219               	.LM15:
+ 220               	/* #APP */
+ 221               	 ;  31 "/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c" 1
+ 222 004c 7894      		sei
+ 223               	 ;  0 "" 2
+ 224               	/* #NOAPP */
+ 225 004e 0895      		ret
+ 226               		.size	setup, .-setup
+ 227               	.Lscope4:
+ 228               		.stabs	"",36,0,0,.Lscope4-.LFBB4
+ 229               		.stabd	78,0,0
+ 230               		.stabs	"adc_read:F(0,50)",36,0,65,adc_read
+ 231               	.global	adc_read
+ 232               		.type	adc_read, @function
+ 233               	adc_read:
+ 234               		.stabd	46,0,0
+  64:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** }
+  65:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** element adc_read(element adc_pin)
+  66:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** {
+ 235               		.stabn	68,0,66,.LM16-.LFBB5
+ 236               	.LM16:
+ 237               	.LFBB5:
+ 238               	/* prologue: function */
+ 239               	/* frame size = 0 */
+ 240               	/* stack size = 0 */
+ 241               	.L__stack_usage = 0
+  67:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	ADMUX |= (adc_pin & 0x0F);
+ 242               		.stabn	68,0,67,.LM17-.LFBB5
+ 243               	.LM17:
+ 244 0050 9091 7C00 		lds r25,124
+ 245 0054 8F70      		andi r24,lo8(15)
+ 246 0056 982B      		or r25,r24
+ 247 0058 9093 7C00 		sts 124,r25
+  68:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	ADCSRA |= (1 << ADSC);
+ 248               		.stabn	68,0,68,.LM18-.LFBB5
+ 249               	.LM18:
+ 250 005c 8091 7A00 		lds r24,122
+ 251 0060 8064      		ori r24,lo8(64)
+ 252 0062 8093 7A00 		sts 122,r24
+ 253               	.L10:
+  69:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	while (!(ADCSRA & (1 << ADSC)))
+ 254               		.stabn	68,0,69,.LM19-.LFBB5
+ 255               	.LM19:
+ 256 0066 8091 7A00 		lds r24,122
+ 257 006a 86FF      		sbrs r24,6
+ 258 006c 00C0      		rjmp .L10
+  70:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 		; // 변환 완료시까지 대기
+  71:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	return ADC;
+ 259               		.stabn	68,0,71,.LM20-.LFBB5
+ 260               	.LM20:
+ 261 006e 8091 7800 		lds r24,120
+ 262 0072 9091 7900 		lds r25,120+1
+  72:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** }
+ 263               		.stabn	68,0,72,.LM21-.LFBB5
+ 264               	.LM21:
+ 265 0076 0895      		ret
+ 266               		.size	adc_read, .-adc_read
+ 267               	.Lscope5:
+ 268               		.stabs	"",36,0,0,.Lscope5-.LFBB5
+ 269               		.stabd	78,0,0
+ 270               	.global	__floatunsisf
+ 271               	.global	__mulsf3
+ 272               	.global	__fixsfsi
+ 273               		.section	.text.startup,"ax",@progbits
+ 274               		.stabs	"main:F(0,1)",36,0,34,main
+ 275               	.global	main
+ 276               		.type	main, @function
+ 277               	main:
+ 278               		.stabd	46,0,0
+  35:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	setup();
+ 279               		.stabn	68,0,35,.LM22-.LFBB6
+ 280               	.LM22:
+ 281               	.LFBB6:
+ 282               	/* prologue: function */
+ 283               	/* frame size = 0 */
+ 284               	/* stack size = 0 */
+ 285               	.L__stack_usage = 0
+  36:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	while (1)
+ 286               		.stabn	68,0,36,.LM23-.LFBB6
+ 287               	.LM23:
+ 288 0000 0E94 0000 		call setup
+ 289               	.L14:
+ 290               	.LBB2:
+  39:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 		char scaledValue = (int)(((double)value / 4096) * 255);
+ 291               		.stabn	68,0,39,.LM24-.LFBB6
+ 292               	.LM24:
+ 293 0004 81E0      		ldi r24,lo8(1)
+ 294 0006 90E0      		ldi r25,0
+ 295 0008 0E94 0000 		call adc_read
+  41:/home/student/avr_src/SimulIDE_1.0.0-SR1_Lin64/ADC/ADC.c **** 	}
+ 296               		.stabn	68,0,41,.LM25-.LFBB6
+ 297               	.LM25:
+ 298 000c BC01      		movw r22,r24
+ 299 000e 80E0      		ldi r24,0
+ 300 0010 90E0      		ldi r25,0
+ 301 0012 0E94 0000 		call __floatunsisf
+ 302 0016 20E0      		ldi r18,0
+ 303 0018 30E0      		ldi r19,0
+ 304 001a 40E8      		ldi r20,lo8(-128)
+ 305 001c 59E3      		ldi r21,lo8(57)
+ 306 001e 0E94 0000 		call __mulsf3
+ 307 0022 20E0      		ldi r18,0
+ 308 0024 30E0      		ldi r19,0
+ 309 0026 4FE7      		ldi r20,lo8(127)
+ 310 0028 53E4      		ldi r21,lo8(67)
+ 311 002a 0E94 0000 		call __mulsf3
+ 312 002e 0E94 0000 		call __fixsfsi
+ 313 0032 862F      		mov r24,r22
+ 314 0034 0E94 0000 		call TX0_char
+ 315 0038 00C0      		rjmp .L14
+ 316               	.LBE2:
+ 317               		.size	main, .-main
+ 318               	.Lscope6:
+ 319               		.stabs	"",36,0,0,.Lscope6-.LFBB6
+ 320               		.stabd	78,0,0
+ 321               		.comm	sum,2,1
+ 322               		.comm	avg,2,1
+ 323               		.comm	start,2,1
+ 324               		.stabs	"start:G(0,1)",32,0,23,0
+ 325               		.stabs	"avg:G(0,50)",32,0,24,0
+ 326               		.stabs	"sum:G(0,50)",32,0,25,0
+ 327               		.text
+ 328               		.stabs	"",100,0,0,.Letext0
+ 329               	.Letext0:
+ 330               		.ident	"GCC: (GNU) 5.4.0"
+ 331               	.global __do_clear_bss
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ADC.c
+     /tmp/ccLUWs91.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccLUWs91.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccLUWs91.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccLUWs91.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccLUWs91.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccLUWs91.s:109    .text:0000000000000000 USART_init
+     /tmp/ccLUWs91.s:145    .text:0000000000000020 TX0_char
+     /tmp/ccLUWs91.s:171    .text:000000000000002e adc_init
+     /tmp/ccLUWs91.s:203    .text:0000000000000044 setup
+     /tmp/ccLUWs91.s:233    .text:0000000000000050 adc_read
+     /tmp/ccLUWs91.s:277    .text.startup:0000000000000000 main
+                            *COM*:0000000000000002 sum
+                            *COM*:0000000000000002 avg
+                            *COM*:0000000000000002 start
+
+UNDEFINED SYMBOLS
+__floatunsisf
+__mulsf3
+__fixsfsi
+__do_clear_bss
